@@ -5,6 +5,8 @@
  */
 package com.ubaya.disprog;
 
+import com.disprog.model.DbConnection;
+import com.disprog.model.*;
 import com.mysql.jdbc.PreparedStatement;
 import java.io.File;
 import java.io.FileInputStream;
@@ -12,6 +14,7 @@ import java.io.FileNotFoundException;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import javax.jws.WebService;
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
@@ -23,38 +26,37 @@ import javax.jws.WebParam;
 @WebService(serviceName = "WebServiceServer")
 public class WebServiceServer extends DbConnection {
 
-    /**
-     * This is a sample web service operation
-     */
+    Users model_User;
+    Villas model_Villa;
+    Reservations model_Reservation;
+    Chats model_Chat;
+    ArrayList<Users> listOfUser = new ArrayList<Users>();
+
+    public WebServiceServer(){
+        listOfUser = model_User.displayAllClient();
+    }
+    
     @WebMethod(operationName = "login")
-    public String Login(@WebParam(name = "email") String email,
+    public String Login(
+            @WebParam(name = "email") String email,
             @WebParam(name = "password") String password) {
-        getConnection();
-        String message = "";
         try {
-            //set query
-            String query = "SELECT `email`,`password` FROM `users` WHERE `email`=? AND `password`=?";
-
-            //set preparedStatement
-            PreparedStatement sql = (PreparedStatement) connect.prepareStatement(query);
-
-            //set paramater
-            sql.setString(1, email);
-            sql.setString(2, password);
-
-            result = sql.executeQuery();
-            if (result.next()) {
-                message = "true";
-                return message;
-            } else {
-                message = "false";
-            }
-            connect.close();
-            return message;
+           String result = model_User.Login(email,password);
+           return result;
         } catch (Exception ex) {
             System.out.println("Error LogIn" + ex);
         }
-        return message;
+        return null;
+    }
+    
+     public String displayAllClient(
+            ) {
+        try {
+           
+        } catch (Exception ex) {
+            System.out.println("Error LogIn" + ex);
+        }
+        return null;
     }
 
     @WebMethod(operationName = "registration")
@@ -63,44 +65,9 @@ public class WebServiceServer extends DbConnection {
             @WebParam(name = "email") String email,
             @WebParam(name = "password") String password,
             @WebParam(name = "ktp") String ktp) {
-        getConnection();
-        String message = "";
-        try {
-            // set query
-            String query = "INSERT INTO users(`name`,`phoneNumber`,`email`,`password`,`ktp`) "
-                    + "VALUES(?,?,?,?,?)";
 
-            // read file
-            File file = new File(ktp);
-            FileInputStream inputFile = new FileInputStream(file);
-
-            // set preparedStatement
-            PreparedStatement sql = (PreparedStatement) connect.prepareStatement(query);
-
-            //set paramater
-            sql.setString(1, name);
-            sql.setString(2, phoneNumber);
-            sql.setString(3, email);
-            sql.setString(4, password);
-            sql.setBinaryStream(5, inputFile);
-
-            // store the resume file in database (to test if we can read the data)
-            System.out.println("Reading file " + file.getAbsolutePath());
-
-            result = sql.executeQuery();
-            if (result.next()) {
-                message = "true";
-                return message;
-            } else {
-                message = "false";
-            }
-            connect.close();
-            return message;
-        } catch (SQLException | FileNotFoundException ex) {
-
-            System.out.println("Error Registration" + ex);
-        }
-        return message;
+        String result = model_User.Registration(name, phoneNumber, email, password, ktp);
+        return result;
     }
 
     //METHOD FOR RESERVATION
@@ -111,80 +78,24 @@ public class WebServiceServer extends DbConnection {
             @WebParam(name = "notes") String notes,
             @WebParam(name = "iduser") Integer iduser,
             @WebParam(name = "idvilla") Integer idvilla) {
-
+        
         getConnection();
-        String message = "";
-        try {
-            // set query
-            String query = "INSERT INTO reservations(`checkin_date`,`checkout_date`,`total_guest`,`notes`,`iduser`,`idvilla`) "
-                    + "VALUES(?,?,?,?,?,?)";
-
-            // set preparedStatement
-            PreparedStatement sql = (PreparedStatement) connect.prepareStatement(query);
-
-            //set paramater
-            sql.setDate(1, checkIn);
-            sql.setDate(2, checkout);
-            sql.setInt(3, total_guest);
-            sql.setString(4, notes);
-            sql.setInt(5, iduser);
-            sql.setInt(6, idvilla);
-
-            result = sql.executeQuery();
-            if (result.next()) {
-                message = "true";
-                return message;
-            } else {
-                message = "false";
-            }
-            connect.close();
-            return message;
-        } catch (SQLException ex) {
-            System.out.println("Error Input Reservation: " + ex);
-        }
-        return message;
+        String result = model_Reservation.InsertReservation(checkIn, checkout, total_guest, notes, iduser, idvilla);
+        return result;
     }
 
     //untuk upload bukti_pembayaran pada reservaasi
-    @WebMethod(operationName = "Check Reservasi")
+    @WebMethod(operationName = "Upload Bukti Pembayaran")
     public String UploadPayment(@WebParam(name = "bukti_pembayaran") String bukti_pembayaran,
             @WebParam(name = "idreservation") Integer idreservation) {
-
-        getConnection();
-        String message = "";
-        try {
-            // set query
-            String query = "UPDATE reservations bukti_pembayaran SET =? WHERE idreservation=?";
-
-            // read file
-            File file = new File(bukti_pembayaran);
-            FileInputStream inputFile = new FileInputStream(file);
-
-            // set preparedStatement
-            PreparedStatement sql = (PreparedStatement) connect.prepareStatement(query);
-
-            //set paramater
-            sql.setBinaryStream(1, inputFile);
-            sql.setInt(2, idreservation);
-
-            result = sql.executeQuery();
-            if (result.next()) {
-                message = "true";
-                return message;
-            } else {
-                message = "false";
-            }
-            connect.close();
-            return message;
-        } catch (SQLException | FileNotFoundException ex) {
-            System.out.println("Error Upload Payment: " + ex);
-        }
-        return message;
+        String result = model_Reservation.uploadPayment(bukti_pembayaran,idreservation);
+        return result;
     }
     
     //chats 
     @WebMethod(operationName = "Insert Chat")
-    public String InsertChat(@WebParam(name = "messages") String messages,
+    public String InsertChat(
+            @WebParam(name = "messages") String messages,
             @WebParam(name = "idsender") Integer idsender,
             @WebParam(name = "idreceiver") Integer idreceiver) {
 
@@ -218,4 +129,39 @@ public class WebServiceServer extends DbConnection {
         return message;
     }
     
+    //display chat
+    
+    @WebMethod(operationName = "Display Chat")
+    public String InsertChat(
+            @WebParam(name = "idsender") Integer idsender,
+            @WebParam(name = "idreceiver") Integer idreceiver) {
+
+        getConnection();
+        String message = "";
+        try {
+            // set query
+            String query = "SELECT * FROM chats WHERE (idsender=? and idreceiver=?) "
+                    + "or (idsender=? and idreceiver=?) ORDER BY cht_timestamp;";
+
+            // set preparedStatement
+            PreparedStatement sql = (PreparedStatement) connect.prepareStatement(query);
+
+            //set paramater
+            sql.setInt(1, idsender);
+            sql.setInt(2, idreceiver);
+
+            result = sql.executeQuery();
+            if (result.next()) {
+                message = "true";
+                return message;
+            } else {
+                message = "false";
+            }
+            connect.close();
+            return message;
+        } catch (SQLException ex) {
+            System.out.println("Error Insert Chat: " + ex);
+        }
+        return message;
+    }
 }
