@@ -1,0 +1,60 @@
+/* Import Rubik and Carla */
+@import url('https://fonts.googleapis.com/css2?family=Karla:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,200;1,300;1,400;1,500;1,600;1,700;1,800&family=Rubik:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+/* 
+font-family: 'Karla', sans-serif;
+font-family: 'Rubik', sans-serif; 
+*/
+
+/* Font Settings */
+.karla-normal {
+    font-family: Karla !important;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 12px;
+
+    color: #E4E4E4;
+}
+
+.karla-bold {
+    font-family: Karla !important;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 12px;
+
+    color: #E4E4E4;
+}
+
+.rubik-normal {
+    font-family: Rubik !important;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 12px;
+    
+    color: #E4E4E4;
+}
+
+.rubik-bold {
+    font-family: Rubik !important;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 12px;
+    
+    color: #E4E4E4;
+}
+/*
+* {
+    padding: 0px;
+    margin: 0px;
+    box-sizing: border-box;
+}
+*/
+
+/* Add Background 
+html {
+    background: url(../images/background-trees.png) no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+*/
