@@ -6,18 +6,32 @@
 package desktopclient;
 
 import java.awt.Color;
+import java.io.BufferedReader;
+import java.io.DataOutputStream;
+import java.net.ServerSocket;
+import java.net.Socket;
 
 /**
  *
  * @author ohanna
  */
 public class FormChat extends javax.swing.JFrame {
-
+    Socket client;
+    ServerSocket ss;
+    BufferedReader input;
+    DataOutputStream output;
     /**
      * Creates new form FormChat
      */
     public FormChat() {
         initComponents();
+        //coloring jform
+        this.getContentPane().setBackground(Color.WHITE);
+    }
+    
+    public FormChat(Socket inClinet, String email )
+    {
+         initComponents();
         //coloring jform
         this.getContentPane().setBackground(Color.WHITE);
     }
