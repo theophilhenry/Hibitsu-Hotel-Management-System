@@ -1,0 +1,23 @@
+.login-container {
+    text-align: center;
+}
+
+.login-details {
+    margin: 0 auto;
+
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.25);
+    width: 340px;
+    padding: 20px;
+}
+
+
+.grid-container {
+    grid-template-areas: "left right";
+}
+.grid-right {
+    align-items: flex-start;
+}
+
+@media (max-width: 992px) {
+    /* Override from main */
+}
