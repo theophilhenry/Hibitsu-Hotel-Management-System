@@ -29,6 +29,7 @@ public class Reservations extends DbConnection {
     private String status;
     private Integer total_gusest;
     private String notes;
+    private Integer total_price;
     private String bukti_pembayaran;
     private Integer idvilla;
     private Integer iduser;
@@ -39,7 +40,7 @@ public class Reservations extends DbConnection {
         getConnection();
     }
 
-    public Reservations(Integer idreservation, Timestamp res_timestamp, Date chekin_date, Date checkout_date, String status, Integer total_gusest, String notes, String bukti_pembayaran, Integer idvilla, Integer iduser) {
+    public Reservations(Integer idreservation, Timestamp res_timestamp, Date chekin_date, Date checkout_date, String status, Integer total_gusest, String notes, Integer total_price, String bukti_pembayaran, Integer idvilla, Integer iduser) {
         getConnection();
         this.idreservation = idreservation;
         this.res_timestamp = res_timestamp;
@@ -48,6 +49,7 @@ public class Reservations extends DbConnection {
         this.status = status;
         this.total_gusest = total_gusest;
         this.notes = notes;
+        this.total_price = total_price;
         this.bukti_pembayaran = bukti_pembayaran;
         this.idvilla = idvilla;
         this.iduser = iduser;
@@ -111,6 +113,14 @@ public class Reservations extends DbConnection {
         this.notes = notes;
     }
 
+    public Integer getTotal_price() {
+        return total_price;
+    }
+
+    public void setTotal_price(Integer total_price) {
+        this.total_price = total_price;
+    }
+
     public String getBukti_pembayaran() {
         return bukti_pembayaran;
     }
@@ -166,6 +176,7 @@ public class Reservations extends DbConnection {
         getConnection();
         String message = "";
         try {
+            //get totalPrice
             Integer totalPrice = this.CalculateTotalPrice(checkIn, checkout, idvilla);
 
             // set query
@@ -231,7 +242,7 @@ public class Reservations extends DbConnection {
         return message;
     }
 
-    public String ChangeStatus(String status, String idreservation) {
+    public String ChangeStatus(String status, Integer idreservation) {
         String message = "";
         try {
             // set query
@@ -247,7 +258,7 @@ public class Reservations extends DbConnection {
 
             //set paramater
             sql.setString(1, status);
-            sql.setString(2, idreservation);
+            sql.setInt(2, idreservation);
 
             result = sql.executeQuery();
             if (result.next()) {
@@ -261,40 +272,71 @@ public class Reservations extends DbConnection {
         return message;
     }
     
-//masih belum 
-    public String BacaData(String kriteria, String dicari) {
+    public String CheckAvailability(Integer idvilla, Date checkin, Date checkout) {
         String message = "";
         try {
             // set query
-            String query = "SELECT r.idreservation, r.res_timestamp, r.checkin_date, "
-                    + "r.checkout_date, r.status, r.total_guest, r.notes, r.bukti_pembayaran "
-                    + "FROM reservations r";
+            String query = "SELECT * FROM reservations WHERE idvilla = ? &&"
+                    + "((checkin_date <= ? AND checkout_date >= ?) || "
+                    + "(checkin_date <= ? AND checkout_date >= ?)|| "
+                    + "(checkin_date >= ? AND checkout_date <= ?))";
 
-            String query2 = "SELECT r.idreservation, r.res_timestamp, r.checkin_date, "
-                    + "r.checkout_date, r.status, r.total_guest, r.notes, r.bukti_pembayaran, "
-                    + "v.idvilla, v.name, v.address, v."
-                    + "FROM reservations r "
-                    + "INNER JOIN villas v ON r.idvilla = v.idvilla";
             // set preparedStatement
             PreparedStatement sql = (PreparedStatement) connect.prepareStatement(query);
 
-            //cek status
-            if (!(status.equals("PENDING") || status.equals("ACCEPTED") || status.equals("DECLINED") || status.equals("CANCELED"))) {
-                return "false";
-            }
-
             //set paramater
-            sql.setString(1, status);
-//            sql.setString(2, idreservation);
+            sql.setInt(1, idvilla);
+            sql.setDate(2, checkin);
+            sql.setDate(3, checkin);
+            sql.setDate(4, checkout);
+            sql.setDate(5, checkout);
+            sql.setDate(6, checkin);
+            sql.setDate(7, checkout);
 
             result = sql.executeQuery();
             if (result.next()) {
-                return "true";
+                return "false";//karena ditemukan yg bentrok
             } else {
-                return "false";
+                return "true";
             }
         } catch (Exception ex) {
-            System.out.println("Error Upload Payment: " + ex);
+            System.out.println("Error Check Avaibility: " + ex);
+        }
+        return message;
+    }
+    
+    //masih belum 
+    public String BacaData(String kriteria, String dicari) {
+        String message = "";
+        String query = "";
+        try {
+            // set query
+            if (kriteria.equals("") && dicari.equals("")) {
+                query = "SELECT r.idreservation, r.res_timestamp, r.checkin_date, "
+                        + "r.checkout_date, r.status, r.total_guest, r.total_price, r.notes, r.bukti_pembayaran, "
+                        + "v.idvilla, v.name, v.address, v.total_bedroom, v.total_bathroom, v.facilities, v.unit_size, v.photo, v.price, v.description"
+                        + "u.iduser, u.name, u.phone_number, u.email, u.role, u.ktp "
+                        + "FROM reservations r "
+                        + "INNER JOIN villas v ON r.idvilla = v.idvilla "
+                        + "INNER JOIN users u ON r.iduser = u.iduser ";
+            } else {
+                query = "SELECT r.idreservation, r.res_timestamp, r.checkin_date, "
+                        + "r.checkout_date, r.status, r.total_guest, r.total_price, r.notes, r.bukti_pembayaran, "
+                        + "v.idvilla, v.name, v.address, v.total_bedroom, v.total_bathroom, v.facilities, v.unit_size, v.photo, v.price, v.description"
+                        + "u.iduser, u.name, u.phone_number, u.email, u.role, u.ktp "
+                        + "FROM reservations r "
+                        + "INNER JOIN villas v ON r.idvilla = v.idvilla "
+                        + "INNER JOIN users u ON r.iduser = u.iduser "
+                        + "WHERE "+kriteria+" = "+dicari+";";
+            }
+            // set preparedStatement
+            PreparedStatement sql = (PreparedStatement) connect.prepareStatement(query);
+            result = sql.executeQuery();
+            while (result.next()) {
+                return "true";
+            }
+        } catch (Exception ex) {
+            System.out.println("Error Baca Data Reservasi: " + ex);
         }
         return message;
     }

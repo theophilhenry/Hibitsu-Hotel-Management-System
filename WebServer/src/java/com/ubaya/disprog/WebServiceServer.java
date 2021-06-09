@@ -32,27 +32,26 @@ public class WebServiceServer extends DbConnection {
     Chats model_Chat;
     ArrayList<Users> listOfUser = new ArrayList<Users>();
 
-    public WebServiceServer(){
+    public WebServiceServer() {
         listOfUser = model_User.displayAllClient();
     }
-    
+
     @WebMethod(operationName = "login")
     public String Login(
             @WebParam(name = "email") String email,
             @WebParam(name = "password") String password) {
         try {
-           String result = model_User.Login(email,password);
-           return result;
+            String result = model_User.Login(email, password);
+            return result;
         } catch (Exception ex) {
             System.out.println("Error LogIn" + ex);
         }
         return null;
     }
-    
-     public String displayAllClient(
-            ) {
+
+    public String displayAllClient() {
         try {
-           
+
         } catch (Exception ex) {
             System.out.println("Error LogIn" + ex);
         }
@@ -78,90 +77,52 @@ public class WebServiceServer extends DbConnection {
             @WebParam(name = "notes") String notes,
             @WebParam(name = "iduser") Integer iduser,
             @WebParam(name = "idvilla") Integer idvilla) {
-        
+
         getConnection();
         String result = model_Reservation.InsertReservation(checkIn, checkout, total_guest, notes, iduser, idvilla);
         return result;
     }
 
     //untuk upload bukti_pembayaran pada reservaasi
-    @WebMethod(operationName = "Upload Bukti Pembayaran")
+    @WebMethod(operationName = "Upload Payment")
     public String UploadPayment(@WebParam(name = "bukti_pembayaran") String bukti_pembayaran,
             @WebParam(name = "idreservation") Integer idreservation) {
-        String result = model_Reservation.uploadPayment(bukti_pembayaran,idreservation);
+        String result = model_Reservation.UploadPayment(bukti_pembayaran, idreservation);
         return result;
     }
-    
+
+    @WebMethod(operationName = "Change Status")
+    public String ChangeStatus(@WebParam(name = "status") String status,
+            @WebParam(name = "idreservation") Integer idreservation) {
+        String result = model_Reservation.ChangeStatus(status, idreservation);
+        return result;
+    }
+
     //chats 
     @WebMethod(operationName = "Insert Chat")
     public String InsertChat(
             @WebParam(name = "messages") String messages,
             @WebParam(name = "idsender") Integer idsender,
             @WebParam(name = "idreceiver") Integer idreceiver) {
-
-        getConnection();
-        String message = "";
         try {
-            // set query
-            String query = "INSERT INTO chats(`messages`,idsender`,`idreceiver`) "
-                    + "VALUES(?,?,?)";
-
-            // set preparedStatement
-            PreparedStatement sql = (PreparedStatement) connect.prepareStatement(query);
-
-            //set paramater
-            sql.setString(1, messages);
-            sql.setInt(2, idsender);
-            sql.setInt(3, idreceiver);
-
-            result = sql.executeQuery();
-            if (result.next()) {
-                message = "true";
-                return message;
-            } else {
-                message = "false";
-            }
-            connect.close();
-            return message;
-        } catch (SQLException ex) {
+            String result = model_Chat.InsertChat(idsender, idreceiver, messages);
+            return result;
+        } catch (Exception ex) {
             System.out.println("Error Insert Chat: " + ex);
         }
-        return message;
+        return null;
     }
-    
+
     //display chat
-    
-    @WebMethod(operationName = "Display Chat")
-    public String DisplayChat(
-            @WebParam(name = "idsender") Integer idsender,
-            @WebParam(name = "idreceiver") Integer idreceiver) {
-
-        getConnection();
-        String message = "";
+    @WebMethod(operationName = "Display Contacts")
+    public String DisplayContacts(
+            @WebParam(name = "iduser") Integer iduser){
         try {
-            // set query
-            String query = "SELECT * FROM chats WHERE (idsender=? and idreceiver=?) "
-                    + "or (idsender=? and idreceiver=?) ORDER BY cht_timestamp;";
-
-            // set preparedStatement
-            PreparedStatement sql = (PreparedStatement) connect.prepareStatement(query);
-
-            //set paramater
-            sql.setInt(1, idsender);
-            sql.setInt(2, idreceiver);
-
-            result = sql.executeQuery();
-            if (result.next()) {
-                message = "true";
-                return message;
-            } else {
-                message = "false";
-            }
-            connect.close();
-            return message;
-        } catch (SQLException ex) {
-            System.out.println("Error Insert Chat: " + ex);
+            String result = model_Chat.DisplayContacts(iduser);
+            return result;
+        } catch (Exception ex) {
+            System.out.println("Error Display Chat: " + ex);
         }
-        return message;
+        return null;
     }
 }
