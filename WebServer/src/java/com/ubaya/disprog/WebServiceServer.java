@@ -132,7 +132,7 @@ public class WebServiceServer extends DbConnection {
     //display chat
     
     @WebMethod(operationName = "Display Chat")
-    public String InsertChat(
+    public String DisplayChat(
             @WebParam(name = "idsender") Integer idsender,
             @WebParam(name = "idreceiver") Integer idreceiver) {
 

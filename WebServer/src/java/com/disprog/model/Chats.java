@@ -5,7 +5,10 @@
  */
 package com.disprog.model;
 
+import com.mysql.jdbc.PreparedStatement;
+import java.sql.SQLException;
 import java.sql.Timestamp;
+import javax.jws.WebParam;
 
 /**
  *
@@ -79,6 +82,35 @@ public class Chats extends DbConnection{
     //</editor-fold>
 
     //<editor-fold defaultstate="collapsed" desc="Methods">
-    
+    public String DisplayChat(Integer idserver, Integer idreceiverd ) {
+
+        getConnection();
+        String message = "";
+        try {
+            // set query
+            String query = "SELECT * FROM chats WHERE (idsender=? and idreceiver=?) "
+                    + "or (idsender=? and idreceiver=?) ORDER BY cht_timestamp;";
+
+            // set preparedStatement
+            PreparedStatement sql = (PreparedStatement) connect.prepareStatement(query);
+
+            //set paramater
+            sql.setInt(1, idsender);
+            sql.setInt(2, idreceiver);
+
+            result = sql.executeQuery();
+            if (result.next()) {
+                message = "true";
+                return message;
+            } else {
+                message = "false";
+            }
+            connect.close();
+            return message;
+        } catch (SQLException ex) {
+            System.out.println("Error Insert Chat: " + ex);
+        }
+        return message;
+    }
     //</editor-fold>
 }
