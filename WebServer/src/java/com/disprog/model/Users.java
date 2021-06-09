@@ -21,7 +21,8 @@ public class Users extends DbConnection {
 
     //<editor-fold defaultstate="collapsed" desc="Data Member">
     private int iduser;
-    private String name;
+    private String fullname;
+    private String display_name;
     private String phoneNumber;
     private String email;
     private String password;
@@ -34,10 +35,11 @@ public class Users extends DbConnection {
         getConnection();
     }
 
-    public Users(int iduser, String name, String phoneNumber, String email, String password, String role, String ktp) {
+    public Users(int iduser, String fullname, String display_name, String phoneNumber, String email, String password, String role, String ktp) {
         getConnection();
         this.iduser = iduser;
-        this.name = name;
+        this.fullname = fullname;
+        this.display_name = display_name;
         this.phoneNumber = phoneNumber;
         this.email = email;
         this.password = password;
@@ -55,12 +57,20 @@ public class Users extends DbConnection {
         this.iduser = iduser;
     }
 
-    public String getName() {
-        return name;
+    public String getFullname() {
+        return fullname;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setFullname(String fullname) {
+        this.fullname = fullname;
+    }
+
+    public String getDisplay_name() {
+        return display_name;
+    }
+
+    public void setDisplay_name(String display_name) {
+        this.display_name = display_name;
     }
 
     public String getPhoneNumber() {
@@ -106,39 +116,49 @@ public class Users extends DbConnection {
 
     //<editor-fold defaultstate="collapsed" desc="Methods">
     public String Login(String email, String password) {
-        Users u = new Users();
         try {
-            //set query
-            String query = "SELECT `email`,`password` FROM `users` WHERE `email`=? AND `password`=?";
+            if (!connect.isClosed()) {
+                //set query
+                String query = "SELECT `iduser`,`fullname`,`display_name`,`email`"
+                                + "FROM `users` WHERE `email`= ? AND `password`= ?";
 
-            //set preparedStatement
-            PreparedStatement sql = (PreparedStatement) connect.prepareStatement(query);
+                //set preparedStatement
+                PreparedStatement sql = (PreparedStatement) connect.prepareStatement(query);
 
-            //set paramater
-            sql.setString(1, email);
-            sql.setString(2, password);
+                //set paramater
+                sql.setString(1, email);
+                sql.setString(2, password);
 
-            result = sql.executeQuery();
-            
-            //nanti mau diatur lagi return nya seperti apa
-            if (result.next()) {
-                return "true";
-            } else {
-                return "false";
+                result = sql.executeQuery();
+
+                //nanti mau diatur lagi return nya seperti apa
+                if (result.next()) {
+                    String ket = "[1]hasilLogin,[2]iduser,[3]fullname,[4]display_name,[5]email;;";
+                    String hasil = result.getInt("iduser")+";;"
+                                    +result.getString("fullname")+";;"
+                                    +result.getString("display_name")+";;"
+                                    +result.getString("email");
+                    
+                    return ket+"true;;"+hasil;
+                } else {
+                    String ket = "[1]hasilLogin";
+                    return ket+"false";
+                }
+            }
+            else{
+                System.out.println("Tidak terkoneksi database");
             }
         } catch (Exception ex) {
             System.out.println("Error Login" + ex);
         }
         return null;
     }
-     
-     public String Registration(String name, String phoneNumber, String email, String password, String ktp){
-        getConnection();
-        String message = "";
+
+    public String Registration(String fullname, String display_name, String phoneNumber, String email, String password, String ktp) {
         try {
             // set query
-            String query = "INSERT INTO users(`name`,`phoneNumber`,`email`,`password`,`ktp`) "
-                    + "VALUES(?,?,?,?,?)";
+            String query = "INSERT INTO users(`fullname`,`display_name`,`phoneNumber`,`email`,`password`,`ktp`) "
+                    + "VALUES(?,?,?,?,?,?)";
 
             // read file
             File file = new File(ktp);
@@ -148,31 +168,31 @@ public class Users extends DbConnection {
             PreparedStatement sql = (PreparedStatement) connect.prepareStatement(query);
 
             //set paramater
-            sql.setString(1, name);
-            sql.setString(2, phoneNumber);
-            sql.setString(3, email);
-            sql.setString(4, password);
-            sql.setBinaryStream(5, inputFile);
+            sql.setString(1, fullname);
+            sql.setString(2, display_name);
+            sql.setString(3, phoneNumber);
+            sql.setString(4, email);
+            sql.setString(5, password);
+            sql.setBinaryStream(6, inputFile);
 
             // store the resume file in database (to test if we can read the data)
             System.out.println("Reading file " + file.getAbsolutePath());
 
             result = sql.executeQuery();
+            String ket = "[1]hasilRegis;;";
             if (result.next()) {
-                message = "true";
-                return message;
+                
+                return ket+"true";
             } else {
-                message = "false";
+                return ket+"false";
             }
-            connect.close();
-            return message;
+            
         } catch (SQLException | FileNotFoundException ex) {
 
-            System.out.println("Error Registration" + ex);
+            System.out.println("Error Registration: " + ex);
         }
-        return message;
-     }
-         
-  
+        return null;
+    }
+
     //</editor-fold>
 }

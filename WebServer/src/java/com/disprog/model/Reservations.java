@@ -178,7 +178,11 @@ public class Reservations extends DbConnection {
         try {
             //get totalPrice
             Integer totalPrice = this.CalculateTotalPrice(checkIn, checkout, idvilla);
-
+            
+            String check = this.CheckAvailability(idvilla, checkIn, checkout);
+            if(check.equals("false")){
+                return "false";
+            }
             // set query
             String query = "INSERT INTO reservations(`checkin_date`,`checkout_date`,`total_guest`,`notes`,`total_price`,`iduser`,`idvilla`) "
                     + "VALUES(?,?,?,?,?,?,?)";
@@ -305,6 +309,17 @@ public class Reservations extends DbConnection {
         return message;
     }
     
+    //belum selesai
+    public String TrackOrder(Integer idreservation){
+        String query = "SELECT r.idreservation, r.res_timestamp, r.checkin_date, "
+                        + "r.checkout_date, r.status, r.total_guest, r.total_price, r.notes, r.bukti_pembayaran, "
+                        + "v.idvilla, v.name, v.address, v.total_bedroom, v.total_bathroom, v.facilities, v.unit_size, v.photo, v.price, v.description"
+                        + "u.iduser, u.fullname, u.display_name, u.phone_number, u.email, u.role, u.ktp "
+                        + "FROM reservations r "
+                        + "INNER JOIN villas v ON r.idvilla = v.idvilla "
+                        + "INNER JOIN users u ON r.iduser = u.iduser ";
+    }
+    
     //masih belum 
     public String BacaData(String kriteria, String dicari) {
         String message = "";
@@ -315,7 +330,7 @@ public class Reservations extends DbConnection {
                 query = "SELECT r.idreservation, r.res_timestamp, r.checkin_date, "
                         + "r.checkout_date, r.status, r.total_guest, r.total_price, r.notes, r.bukti_pembayaran, "
                         + "v.idvilla, v.name, v.address, v.total_bedroom, v.total_bathroom, v.facilities, v.unit_size, v.photo, v.price, v.description"
-                        + "u.iduser, u.name, u.phone_number, u.email, u.role, u.ktp "
+                        + "u.iduser, u.fullname, u.display_name, u.phone_number, u.email, u.role, u.ktp "
                         + "FROM reservations r "
                         + "INNER JOIN villas v ON r.idvilla = v.idvilla "
                         + "INNER JOIN users u ON r.iduser = u.iduser ";
@@ -323,7 +338,7 @@ public class Reservations extends DbConnection {
                 query = "SELECT r.idreservation, r.res_timestamp, r.checkin_date, "
                         + "r.checkout_date, r.status, r.total_guest, r.total_price, r.notes, r.bukti_pembayaran, "
                         + "v.idvilla, v.name, v.address, v.total_bedroom, v.total_bathroom, v.facilities, v.unit_size, v.photo, v.price, v.description"
-                        + "u.iduser, u.name, u.phone_number, u.email, u.role, u.ktp "
+                        + "u.iduser, u.fullname, u.display_name, u.phone_number, u.email, u.role, u.ktp "
                         + "FROM reservations r "
                         + "INNER JOIN villas v ON r.idvilla = v.idvilla "
                         + "INNER JOIN users u ON r.iduser = u.iduser "
@@ -333,7 +348,10 @@ public class Reservations extends DbConnection {
             PreparedStatement sql = (PreparedStatement) connect.prepareStatement(query);
             result = sql.executeQuery();
             while (result.next()) {
+                // ini belum di code
+                 String nanti= "||";
                 return "true";
+               
             }
         } catch (Exception ex) {
             System.out.println("Error Baca Data Reservasi: " + ex);

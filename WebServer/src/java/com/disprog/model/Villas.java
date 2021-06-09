@@ -19,7 +19,7 @@ public class Villas extends DbConnection {
     private String address;
     private int total_bedroom;
     private int total_bathroom;
-    private int unit_size;
+    private String unit_size;
     private String fasilities;
     private String photo;
     private String description;
@@ -30,7 +30,7 @@ public class Villas extends DbConnection {
         getConnection();
     }
 
-    public Villas(int idvilla, String name, String address, int total_bedroom, int total_bathroom, int unit_size, String fasilities, String photo, String description) {
+    public Villas(int idvilla, String name, String address, int total_bedroom, int total_bathroom, String unit_size, String fasilities, String photo, String description) {
         getConnection();
         this.idvilla = idvilla;
         this.name = name;
@@ -85,11 +85,11 @@ public class Villas extends DbConnection {
         this.total_bathroom = total_bathroom;
     }
 
-    public int getUnit_size() {
+    public String getUnit_size() {
         return unit_size;
     }
 
-    public void setUnit_size(int unit_size) {
+    public void setUnit_size(String unit_size) {
         this.unit_size = unit_size;
     }
 

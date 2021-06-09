@@ -159,9 +159,9 @@ public class Chats extends DbConnection {
     public String DisplayContacts(Integer iduser) {
         getConnection();
         try {
-            String query = "SELECT u.iduser, u.name, a.idsender, a.cht_timestamp, a.messages "
+            String query = "SELECT u.iduser, u.display_name, a.idsender, a.cht_timestamp, a.messages "
                     + "FROM users u LEFT JOIN( "
-                    + "SELECT c.*, u1.name AS sender, u2.name AS recipient, "
+                    + "SELECT c.*, u1.display_name AS sender, u2.display_name AS recipient, "
                     + "CASE WHEN c.idsender = ? THEN u2.iduser "
                     + "WHEN c.idreceiver = ? THEN u1.iduser "
                     + "ELSE 'none' END AS idcontact "

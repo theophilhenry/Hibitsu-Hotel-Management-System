@@ -26,15 +26,11 @@ import javax.jws.WebParam;
 @WebService(serviceName = "WebServiceServer")
 public class WebServiceServer extends DbConnection {
 
-    Users model_User;
-    Villas model_Villa;
-    Reservations model_Reservation;
-    Chats model_Chat;
-    ArrayList<Users> listOfUser = new ArrayList<Users>();
-
-    public WebServiceServer() {
-        listOfUser = model_User.displayAllClient();
-    }
+    Users model_User = new Users();
+    Villas model_Villa = new Villas();
+    Reservations model_Reservation = new Reservations();
+    Chats model_Chat = new Chats();
+//    ArrayList<Users> listOfUser = new ArrayList<Users>();
 
     @WebMethod(operationName = "login")
     public String Login(
@@ -42,30 +38,26 @@ public class WebServiceServer extends DbConnection {
             @WebParam(name = "password") String password) {
         try {
             String result = model_User.Login(email, password);
+            if(!result.contains("true;;"))
+            {
+                result = "Sorry Invalid username or password";
+            }
             return result;
         } catch (Exception ex) {
-            System.out.println("Error LogIn" + ex);
-        }
-        return null;
-    }
-
-    public String displayAllClient() {
-        try {
-
-        } catch (Exception ex) {
-            System.out.println("Error LogIn" + ex);
+            System.out.println("Error LogIn: " + ex);
         }
         return null;
     }
 
     @WebMethod(operationName = "registration")
-    public String Registration(@WebParam(name = "name") String name,
+    public String Registration(@WebParam(name = "fullname") String fullname,
+            @WebParam(name = "display_name") String display_name,
             @WebParam(name = "phoneNumber") String phoneNumber,
             @WebParam(name = "email") String email,
             @WebParam(name = "password") String password,
             @WebParam(name = "ktp") String ktp) {
 
-        String result = model_User.Registration(name, phoneNumber, email, password, ktp);
+        String result = model_User.Registration(fullname, display_name, phoneNumber, email, password, ktp);
         return result;
     }
 
@@ -97,6 +89,28 @@ public class WebServiceServer extends DbConnection {
         String result = model_Reservation.ChangeStatus(status, idreservation);
         return result;
     }
+    
+    @WebMethod(operationName = "Track Order")
+    public String TrackOrder(@WebParam(name = "idreservation") Integer idreservation){
+        //belum di code
+        return null;
+    }
+
+    @WebMethod(operationName = "DisplayReservation")
+    public String DisplayReservation(@WebParam(name = "kriteria") String kriteria,
+            @WebParam(name = "dicari") String dicari){
+        //belum di code
+        return null;
+    }
+    
+    //CHECK AVAILABILITY untuk cek apakah pada tanggal yg ditentukan ada yg sudah book
+    @WebMethod(operationName = "Check Availability")
+    public String CheckAvailability(@WebParam(name = "idvilla") Integer idvilla,
+            @WebParam(name = "checkin") Date checkin,
+            @WebParam(name = "checkout") Date checkout) {
+        String result = model_Reservation.CheckAvailability(idvilla, checkin, checkout);
+        return result;
+    }
 
     //chats 
     @WebMethod(operationName = "Insert Chat")
@@ -116,7 +130,7 @@ public class WebServiceServer extends DbConnection {
     //display chat
     @WebMethod(operationName = "Display Contacts")
     public String DisplayContacts(
-            @WebParam(name = "iduser") Integer iduser){
+            @WebParam(name = "iduser") Integer iduser) {
         try {
             String result = model_Chat.DisplayContacts(iduser);
             return result;
