@@ -13,6 +13,7 @@ import java.io.InputStreamReader;
 import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -134,8 +135,26 @@ public class FormLogin extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
-        String email = txtEmail.getText();
-        String password = txtPassword.getText();
+        try {
+            String email = txtEmail.getText();
+            String password = txtPassword.getText();
+            
+            
+            output.writeBytes("LOGIN;;" + email + ";;" + password + "\n");
+            String status = input.readLine();
+            if(status.contains("true;;"))
+            {
+                FormChat fc = new FormChat(client,email);
+                fc.setVisible(true);
+                this.dispose();
+            }
+            else
+            {
+                JOptionPane.showMessageDialog(null, status);
+            }
+        } catch (IOException ex) {
+            Logger.getLogger(FormLogin.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btnLoginActionPerformed
 
     /**

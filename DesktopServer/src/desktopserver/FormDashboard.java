@@ -6,20 +6,88 @@
 package desktopserver;
 
 import java.awt.Color;
+import java.io.BufferedReader;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.net.ServerSocket;
+import java.net.Socket;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
  * @author ohanna
  */
-public class FormDashboard extends javax.swing.JFrame {
+public class FormDashboard extends javax.swing.JFrame implements Runnable {
 
+    ServerSocket ss;
+    Socket client;
+    public ArrayList<HandleSocket> clientsArr = new ArrayList<HandleSocket>();
+    Thread t;
+    HandleSocket hs;
+    
     /**
      * Creates new form FormDashboard
      */
     public FormDashboard() {
-        initComponents();
-        // set color form
-        this.getContentPane().setBackground(Color.WHITE);
+        try {
+            initComponents();
+            
+            this.ss = new ServerSocket(12345);
+            
+            if(t==null)
+            {
+                t = new Thread(this,"Server");
+                t.start();
+            }
+            
+            // set color form
+            this.getContentPane().setBackground(Color.WHITE);
+        } catch (IOException ex) {
+            Logger.getLogger(FormDashboard.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public void ShowChat(String msg)
+    {
+        String[] msgSplit = msg.split(";;");
+        String content = msgSplit[1];
+        
+        textChat.append(msg + "\n");
+        
+    }
+    
+    public String LoginUser(String email,String password)
+    {
+        String status = "Your username or password is incorrect";
+       
+        if(email.equals("1"))
+        {
+            textChat.append("--- LOGIN : 1 ---\n" );
+            status = "true;;";
+        }
+        
+        if(email.equals("2"))
+        {
+            textChat.append("--- LOGIN : 2 ---\n" );
+            status = "true;;";
+        }
+        if(email.equals("3"))
+        {
+            textChat.append("--- LOGIN : 3 ---\n" );
+            status = "true;;";
+        }
+        
+        return(status);
+    }
+    
+     public void BroadCast(String msg)
+    {
+        for(HandleSocket client : clientsArr)
+        {
+            client.SendChat(msg);
+        }
     }
 
     /**
@@ -36,7 +104,7 @@ public class FormDashboard extends javax.swing.JFrame {
         txtChat = new javax.swing.JTextField();
         btnSend = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        textChat = new javax.swing.JTextArea();
         panelTable = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
         txtSearch = new javax.swing.JTextField();
@@ -70,7 +138,6 @@ public class FormDashboard extends javax.swing.JFrame {
         panelChat.setBackground(new java.awt.Color(255, 255, 255));
         panelChat.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
 
-        txtChat.setBackground(java.awt.Color.white);
         txtChat.setFont(new java.awt.Font("Rubik", 0, 14)); // NOI18N
 
         btnSend.setBackground(new java.awt.Color(8, 191, 91));
@@ -78,10 +145,9 @@ public class FormDashboard extends javax.swing.JFrame {
         btnSend.setForeground(new java.awt.Color(255, 255, 255));
         btnSend.setText("CHAT");
 
-        jTextArea1.setBackground(java.awt.Color.white);
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane1.setViewportView(jTextArea1);
+        textChat.setColumns(20);
+        textChat.setRows(5);
+        jScrollPane1.setViewportView(textChat);
 
         javax.swing.GroupLayout panelChatLayout = new javax.swing.GroupLayout(panelChat);
         panelChat.setLayout(panelChatLayout);
@@ -116,7 +182,6 @@ public class FormDashboard extends javax.swing.JFrame {
         jLabel9.setForeground(new java.awt.Color(29, 212, 121));
         jLabel9.setText("Find Order");
 
-        txtSearch.setBackground(java.awt.Color.white);
         txtSearch.setFont(new java.awt.Font("Rubik", 0, 14)); // NOI18N
 
         tblOrder.setModel(new javax.swing.table.DefaultTableModel(
@@ -132,7 +197,6 @@ public class FormDashboard extends javax.swing.JFrame {
         ));
         jScrollPane2.setViewportView(tblOrder);
 
-        comboBoxSelect.setBackground(java.awt.Color.white);
         comboBoxSelect.setFont(new java.awt.Font("Rubik", 1, 14)); // NOI18N
         comboBoxSelect.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
@@ -187,7 +251,6 @@ public class FormDashboard extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("Rubik", 0, 14)); // NOI18N
         jLabel3.setText("Email");
 
-        txtEmail.setBackground(java.awt.Color.white);
         txtEmail.setFont(new java.awt.Font("Rubik", 0, 14)); // NOI18N
 
         jLabel4.setFont(new java.awt.Font("Rubik", 0, 14)); // NOI18N
@@ -205,7 +268,6 @@ public class FormDashboard extends javax.swing.JFrame {
         jLabel8.setFont(new java.awt.Font("Rubik", 0, 14)); // NOI18N
         jLabel8.setText("Notes");
 
-        txtNotes.setBackground(java.awt.Color.white);
         txtNotes.setFont(new java.awt.Font("Rubik", 0, 14)); // NOI18N
 
         btnBook.setBackground(new java.awt.Color(8, 191, 91));
@@ -218,7 +280,6 @@ public class FormDashboard extends javax.swing.JFrame {
         btnCheck.setForeground(new java.awt.Color(255, 255, 255));
         btnCheck.setText("CHECK");
 
-        comboBoxVillaType.setBackground(java.awt.Color.white);
         comboBoxVillaType.setFont(new java.awt.Font("Rubik", 0, 14)); // NOI18N
         comboBoxVillaType.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
@@ -403,15 +464,32 @@ public class FormDashboard extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTextArea jTextArea1;
     private javax.swing.JPanel panelBooking;
     private javax.swing.JPanel panelChat;
     private javax.swing.JPanel panelTable;
     private javax.swing.JTable tblOrder;
+    private javax.swing.JTextArea textChat;
     private javax.swing.JTextField txtChat;
     private javax.swing.JTextField txtEmail;
     private javax.swing.JTextField txtNotes;
     private javax.swing.JTextField txtSearch;
     private com.toedter.components.JSpinField txtTotalGuest;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void run() {
+        while(true)
+        {
+           
+            try {
+                client = ss.accept();
+                HandleSocket hs = new HandleSocket(this, client);
+                hs.start();
+            } catch (IOException ex) {
+                Logger.getLogger(FormDashboard.class.getName()).log(Level.SEVERE, null, ex);
+            }
+                
+           
+        }
+    }
 }
