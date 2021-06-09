@@ -14,11 +14,12 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
+import java.sql.Blob;
 /**
- *
- * @author ohanna
- */
+         *
+         * @author ohanna
+         */
+
 public class Reservations extends DbConnection {
 
     //<editor-fold defaultstate="collapsed" desc="Data Member">
@@ -162,7 +163,7 @@ public class Reservations extends DbConnection {
             sql.setInt(1, idvilla);
             result = sql.executeQuery();
             if (result.next()) {
-                return result.getInt(1);
+                return result.getInt("price") * diffInDays;
             } else {
                 return null;
             }
@@ -176,71 +177,72 @@ public class Reservations extends DbConnection {
         getConnection();
         String message = "";
         try {
-            //get totalPrice
-            Integer totalPrice = this.CalculateTotalPrice(checkIn, checkout, idvilla);
-            
-            String check = this.CheckAvailability(idvilla, checkIn, checkout);
-            if(check.equals("false")){
-                return "false";
-            }
-            // set query
-            String query = "INSERT INTO reservations(`checkin_date`,`checkout_date`,`total_guest`,`notes`,`total_price`,`iduser`,`idvilla`) "
-                    + "VALUES(?,?,?,?,?,?,?)";
+            if (!connect.isClosed()) {
+                //get totalPrice
+                Integer totalPrice = this.CalculateTotalPrice(checkIn, checkout, idvilla);
 
-            // set preparedStatement
-            PreparedStatement sql = (PreparedStatement) connect.prepareStatement(query);
+                String check = this.CheckAvailability(idvilla, checkIn, checkout);
+                if (check.equals("false")) {
+                    return "false";
+                }
+                // set query
+                String query = "INSERT INTO reservations(`checkin_date`,`checkout_date`,"
+                        + "`total_guest`,`notes`,`total_price`,`iduser`,`idvilla`) "
+                        + "VALUES(?,?,?,?,?,?,?)";
 
-            //set paramater
-            sql.setDate(1, checkIn);
-            sql.setDate(2, checkout);
-            sql.setInt(3, total_guest);
-            sql.setString(4, notes);
-            sql.setInt(5, totalPrice);
-            sql.setInt(6, iduser);
-            sql.setInt(7, idvilla);
+                // set preparedStatement
+                PreparedStatement sql = (PreparedStatement) connect.prepareStatement(query);
 
-            result = sql.executeQuery();
-            if (result.next()) {
-                message = "true";
-                return message;
+                //set paramater
+                sql.setDate(1, checkIn);
+                sql.setDate(2, checkout);
+                sql.setInt(3, total_guest);
+                sql.setString(4, notes);
+                sql.setInt(5, totalPrice);
+                sql.setInt(6, iduser);
+                sql.setInt(7, idvilla);
+
+                result = sql.executeQuery();
+                
+                if (result.next()) {
+                    String ket = "[1]hasilInsertReservation,[2]idreservation;;";
+                    int idreservation = result.getInt(1);
+                    return ket + "true;;"+idreservation;
+                } else {
+                    String ket = "[1]hasilInsertReservation;;";
+                    return ket + "false";
+                }
             } else {
-                message = "false";
+                System.out.println("Tidak terkoneksi database");
             }
-            connect.close();
-            return message;
         } catch (SQLException ex) {
-            System.out.println("Error Input Reservation: " + ex);
+            System.out.println("Error InsertReservation: " + ex);
         }
         return message;
     }
 
-    public String UploadPayment(String bukti_pembayaran, Integer idreservation) {
+    //masih bingung
+    public String UploadPayment(Blob bukti_pembayaran, Integer idreservation) {
         String message = "";
         try {
             // set query
             String query = "UPDATE reservations SET bukti_pembayaran =? WHERE idreservation=?";
 
-            // read file
-            File file = new File(bukti_pembayaran);
-            FileInputStream inputFile = new FileInputStream(file);
-
             // set preparedStatement
             PreparedStatement sql = (PreparedStatement) connect.prepareStatement(query);
 
             //set paramater
-            sql.setBinaryStream(1, inputFile);
+            sql.setBlob(1, bukti_pembayaran);
             sql.setInt(2, idreservation);
 
             result = sql.executeQuery();
+            String ket = "[1]hasilUploadPayment;;";
             if (result.next()) {
-                message = "true";
-                return message;
+                return ket + "true";
             } else {
-                message = "false";
+                return ket + "false";
             }
-            connect.close();
-            return message;
-        } catch (SQLException | FileNotFoundException ex) {
+        } catch (SQLException ex) {
             System.out.println("Error Upload Payment: " + ex);
         }
         return message;
@@ -264,62 +266,102 @@ public class Reservations extends DbConnection {
             sql.setString(1, status);
             sql.setInt(2, idreservation);
 
-            result = sql.executeQuery();
+            String ket = "[1]hasilChangeStatus;;";
             if (result.next()) {
-                return "true";
+                return ket + "true";
             } else {
-                return "false";
+                return ket + "false";
             }
         } catch (Exception ex) {
             System.out.println("Error Upload Payment: " + ex);
         }
         return message;
     }
-    
+
     public String CheckAvailability(Integer idvilla, Date checkin, Date checkout) {
         String message = "";
         try {
-            // set query
-            String query = "SELECT * FROM reservations WHERE idvilla = ? &&"
-                    + "((checkin_date <= ? AND checkout_date >= ?) || "
-                    + "(checkin_date <= ? AND checkout_date >= ?)|| "
-                    + "(checkin_date >= ? AND checkout_date <= ?))";
+            if (!connect.isClosed()) {
+                // set query
+                String query = "SELECT * FROM reservations WHERE idvilla = ? &&"
+                        + "((checkin_date <= ? AND checkout_date >= ?) || "
+                        + "(checkin_date <= ? AND checkout_date >= ?)|| "
+                        + "(checkin_date >= ? AND checkout_date <= ?))";
 
-            // set preparedStatement
-            PreparedStatement sql = (PreparedStatement) connect.prepareStatement(query);
+                // set preparedStatement
+                PreparedStatement sql = (PreparedStatement) connect.prepareStatement(query);
 
-            //set paramater
-            sql.setInt(1, idvilla);
-            sql.setDate(2, checkin);
-            sql.setDate(3, checkin);
-            sql.setDate(4, checkout);
-            sql.setDate(5, checkout);
-            sql.setDate(6, checkin);
-            sql.setDate(7, checkout);
+                //set paramater
+                sql.setInt(1, idvilla);
+                sql.setDate(2, checkin);
+                sql.setDate(3, checkin);
+                sql.setDate(4, checkout);
+                sql.setDate(5, checkout);
+                sql.setDate(6, checkin);
+                sql.setDate(7, checkout);
 
-            result = sql.executeQuery();
-            if (result.next()) {
-                return "false";//karena ditemukan yg bentrok
+                result = sql.executeQuery();
+                String ket = "[1]hasilUploadPayment;;";
+                if (result.next()) {
+                    return ket + "false";//karena ditemukan yg bentrok
+                } else {
+                    return ket + "true";
+                }
             } else {
-                return "true";
+                System.out.println("Tidak terkoneksi database");
             }
         } catch (Exception ex) {
             System.out.println("Error Check Avaibility: " + ex);
         }
         return message;
     }
-    
-    //belum selesai
-    public String TrackOrder(Integer idreservation){
-        String query = "SELECT r.idreservation, r.res_timestamp, r.checkin_date, "
-                        + "r.checkout_date, r.status, r.total_guest, r.total_price, r.notes, r.bukti_pembayaran, "
-                        + "v.idvilla, v.name, v.address, v.total_bedroom, v.total_bathroom, v.facilities, v.unit_size, v.photo, v.price, v.description"
-                        + "u.iduser, u.fullname, u.display_name, u.phone_number, u.email, u.role, u.ktp "
-                        + "FROM reservations r "
-                        + "INNER JOIN villas v ON r.idvilla = v.idvilla "
-                        + "INNER JOIN users u ON r.iduser = u.iduser ";
+
+    //BELUM SELESAI BLOB
+    public String TrackOrder(Integer idreservation) {
+        try {
+            String query = "SELECT r.idreservation, r.res_timestamp, r.checkin_date, "
+                    + "r.checkout_date, r.status, r.total_guest, r.total_price, r.notes, r.bukti_pembayaran, "
+                    + "v.idvilla, v.name, "
+                    + "u.iduser, u.fullname, u.display_name, u.phone_number, u.email, u.ktp "
+                    + "FROM reservations r "
+                    + "INNER JOIN villas v ON r.idvilla = v.idvilla "
+                    + "INNER JOIN users u ON r.iduser = u.iduser "
+                    + "WHERE idreservation = ?;";
+            PreparedStatement sql = (PreparedStatement) connect.prepareStatement(query);
+            result = sql.executeQuery();
+
+            if (result.next()) {
+                String ket = "[1]hasilTrackOrder,[2]idreservation,[3]res_timestamp,"
+                        + "[4]chcekin_date,[5]checkout_date,[6]status,[7]total_guest,"
+                        + "[8]notes,[9]bukti_pembayaran,[10]idvilla,[11]villa_name,"
+                        + "[12]iduser,[13]fullname,[14]email,[15]ktp;;";
+                Blob bukti_pembayaran = connect.createBlob();
+                
+                String hasil = String.valueOf(result.getInt("idreservation")) + ";;"
+                        + String.valueOf(result.getTimestamp("res_timestamp")) + ";;"
+                        + result.getDate("checkin_date").toString() + ";;"
+                        + result.getDate("checkout_date").toString() + ";;"
+                        + result.getString("status") + ";;"
+                        + String.valueOf(result.getInt("total_guest")) + ";;"
+                        + result.getString("notes") + ";;"
+                        + result.getString("bukti_pembayaran") + ";;-------------"
+                        + String.valueOf(result.getInt("idvilla")) + ";;"
+                        + result.getString("name") + ";;"
+                        + String.valueOf(result.getInt("iduser")) + ";;"
+                        + result.getString("fullname") + ";;"
+                        + result.getString("email") + ";;"
+                        + result.getBlob("ktp") + ";;";
+                return ket + "true";//karena ditemukan yg bentrok
+            } else {
+                String ket = "[1]hasilTrackOrder;;";
+                return ket + "false";
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Reservations.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
     }
-    
+
     //masih belum 
     public String BacaData(String kriteria, String dicari) {
         String message = "";
@@ -342,16 +384,16 @@ public class Reservations extends DbConnection {
                         + "FROM reservations r "
                         + "INNER JOIN villas v ON r.idvilla = v.idvilla "
                         + "INNER JOIN users u ON r.iduser = u.iduser "
-                        + "WHERE "+kriteria+" = "+dicari+";";
+                        + "WHERE " + kriteria + " = " + dicari + ";";
             }
             // set preparedStatement
             PreparedStatement sql = (PreparedStatement) connect.prepareStatement(query);
             result = sql.executeQuery();
             while (result.next()) {
                 // ini belum di code
-                 String nanti= "||";
+                String nanti = "||";
                 return "true";
-               
+
             }
         } catch (Exception ex) {
             System.out.println("Error Baca Data Reservasi: " + ex);

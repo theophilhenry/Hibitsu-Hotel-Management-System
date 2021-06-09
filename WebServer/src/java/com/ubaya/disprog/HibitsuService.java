@@ -23,4 +23,6 @@ public class HibitsuService {
     public String hello(@WebParam(name = "name") String txt) {
         return "Hello " + txt + " !";
     }
+    
+    
 }

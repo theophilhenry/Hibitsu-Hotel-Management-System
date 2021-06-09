@@ -115,12 +115,12 @@ public class Users extends DbConnection {
     //</editor-fold>
 
     //<editor-fold defaultstate="collapsed" desc="Methods">
-    public String Login(String email, String password) {
+    public String LoginClient(String email, String password) {
         try {
             if (!connect.isClosed()) {
                 //set query
                 String query = "SELECT `iduser`,`fullname`,`display_name`,`email`"
-                                + "FROM `users` WHERE `email`= ? AND `password`= ?";
+                        + "FROM `users` WHERE `email`= ? AND `password`= ? AND `role`='CLIENT'";
 
                 //set preparedStatement
                 PreparedStatement sql = (PreparedStatement) connect.prepareStatement(query);
@@ -133,19 +133,50 @@ public class Users extends DbConnection {
 
                 //nanti mau diatur lagi return nya seperti apa
                 if (result.next()) {
-                    String ket = "[1]hasilLogin,[2]iduser,[3]fullname,[4]display_name,[5]email;;";
-                    String hasil = result.getInt("iduser")+";;"
-                                    +result.getString("fullname")+";;"
-                                    +result.getString("display_name")+";;"
-                                    +result.getString("email");
-                    
-                    return ket+"true;;"+hasil;
+                    String ket = "[1]hasilLoginClient,[2]iduser,[3]fullname,[4]display_name,[5]email,[6]role;;";
+                    String hasil = result.getInt("iduser") + ";;"
+                            + result.getString("fullname") + ";;"
+                            + result.getString("display_name") + ";;"
+                            + result.getString("email") + ";;";
+
+                    return ket + "true;;" + hasil;
                 } else {
-                    String ket = "[1]hasilLogin";
-                    return ket+"false";
+                    String ket = "[1]hasilLoginClient";
+                    return ket + "false";
                 }
+            } else {
+                System.out.println("Tidak terkoneksi database");
             }
-            else{
+        } catch (Exception ex) {
+            System.out.println("Error Login" + ex);
+        }
+        return null;
+    }
+
+    public String LoginAdmin(String email, String password) {
+        try {
+            if (!connect.isClosed()) {
+                //set query
+                String query = "SELECT * "
+                        + "FROM `users` WHERE `email`= ? AND `password`= ? AND `role`='ADMIN'";
+
+                //set preparedStatement
+                PreparedStatement sql = (PreparedStatement) connect.prepareStatement(query);
+
+                //set paramater
+                sql.setString(1, email);
+                sql.setString(2, password);
+
+                result = sql.executeQuery();
+
+                //nanti mau diatur lagi return nya seperti apa
+                String ket = "[1]hasilLoginAdmin;;";
+                if (result.next()) {
+                    return ket + "true;;";
+                } else {
+                    return ket + "false";
+                }
+            } else {
                 System.out.println("Tidak terkoneksi database");
             }
         } catch (Exception ex) {
@@ -181,12 +212,11 @@ public class Users extends DbConnection {
             result = sql.executeQuery();
             String ket = "[1]hasilRegis;;";
             if (result.next()) {
-                
-                return ket+"true";
+                return ket + "true";
             } else {
-                return ket+"false";
+                return ket + "false";
             }
-            
+
         } catch (SQLException | FileNotFoundException ex) {
 
             System.out.println("Error Registration: " + ex);

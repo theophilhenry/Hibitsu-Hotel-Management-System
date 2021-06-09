@@ -1,0 +1,33 @@
+=========== WEB =======================
+Home :
+- 
+Book Now1:
+!- DisplayVillaAll
+Book Now 2:
+!- DisplayVillaId(idvilla)
+- CheckAvaibility(idvilla, checkin, checkout) 
+- InsertReservation(checkin,checkout,total_guest, notes, iduser,idvilla) return idreservation
+BookNow 3:
+- TrackOrder(idreservation)
+TrackOrder:
+- TrackOrder(idreservation) [SAMA] 
+- UploadPayment(idreservation, BLOB upload)
+
+Login Client
+- LoginClient(email, password)
+Register
+- Registration(fullname, display_name, dst)
+
+=================== APP ======================
+Login Admin
+- LoginAdmin(email, password)
+DASHBOARD
+- CheckAvaibility(idvilla, checkin, checkout) [SAMA SEPERTI WEB]
+- InsertReservation(checkin,checkout,total_guest, notes, iduser,idvilla) return idreservation [SAMA SEPERTI WEB]
+!- DisplayReservationAll(kriteria,dicari) [yg ditampilin hanya tanggal checkout diatas sekarang]
+
+ORDER DETAILS
+- ChangeStatus(idreservation, status)
+- TrackOrder(idreservation) [SAMA]
+!- DisplayPayment(idreservation)
+!- UpdateReservation(idreservation,dst(tanpa bukti))
