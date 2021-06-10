@@ -160,8 +160,8 @@ public class Reservations extends DbConnection {
 
             //set paramater
             sql.setInt(1, idvilla);
-            result = sql.executeQuery();
-            if (result.next()) {
+            int affectedResult = sql.executeUpdate();
+            if (affectedResult > 0) {
                 return result.getInt("price") * diffInDays;
             } else {
                 return null;
@@ -184,7 +184,7 @@ public class Reservations extends DbConnection {
                 String check = this.CheckAvailability(idvilla, checkIn, checkOut);
                 if (check.equals("false")) {
                     String ket = "[1]hasilInsertReservation;;";
-                    return ket+"false";
+                    return ket + "false";
                 }
                 // set query
                 String query = "INSERT INTO reservations(`checkin_date`,`checkout_date`,"
@@ -202,10 +202,10 @@ public class Reservations extends DbConnection {
                 sql.setInt(5, totalPrice);
                 sql.setInt(6, iduser);
                 sql.setInt(7, idvilla);
-                
+
                 int affectedResult = sql.executeUpdate();
 
-                if (affectedResult>0) {
+                if (affectedResult > 0) {
                     String ket = "[1]hasilInsertReservation,[2]idreservation;;";
                     int idreservation = result.getInt(1);
                     return ket + "true;;" + idreservation;
@@ -255,9 +255,9 @@ public class Reservations extends DbConnection {
                 sql.setString(6, email);
                 sql.setInt(7, idvilla);
 
-                result = sql.executeQuery();
+                int affectedResult = sql.executeUpdate();
 
-                if (result.next()) {
+                if (affectedResult > 0) {
                     String ket = "[1]hasilInsertReservation,[2]idreservation;;";
                     int idreservation = result.getInt(1);
                     return ket + "true;;" + idreservation;
@@ -278,7 +278,7 @@ public class Reservations extends DbConnection {
         String message = "";
         try {
             if (!connect.isClosed()) {
-
+                String ket = "[1]hasilChangeStatus;;";
                 // set query
                 String query = "UPDATE reservation SET status =? where idreservation =?";
 
@@ -288,11 +288,10 @@ public class Reservations extends DbConnection {
                 //set paramater  
                 sql.setString(1, status);
                 sql.setInt(2, idreservation);
+                int affectedResult = sql.executeUpdate();
 
-                result = sql.executeQuery();
+                if (affectedResult > 0) {
 
-                String ket = "[1]hasilChangeStatus;;";
-                if (result.next()) {
                     return ket + "true";
                 } else {
                     return ket + "false";
@@ -305,8 +304,8 @@ public class Reservations extends DbConnection {
         }
         return message;
     }
-
     //masih bingung
+
     public String UploadPayment(String url_bukti_pembayaran, Integer idreservation) {
         String message = "";
         try {
@@ -319,9 +318,9 @@ public class Reservations extends DbConnection {
 
                 sql.setInt(2, idreservation);
 
-                result = sql.executeQuery();
+                int affectedResult = sql.executeUpdate();
                 String ket = "[1]hasilUploadPayment;;";
-                if (result.next()) {
+                if (affectedResult > 0) {
                     return ket + "true";
                 } else {
                     return ket + "false";
