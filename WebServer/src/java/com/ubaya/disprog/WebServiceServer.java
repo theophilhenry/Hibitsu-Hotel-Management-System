@@ -55,8 +55,8 @@ public class WebServiceServer extends DbConnection {
     //[BOOKNOW - 2], [APP - DASHBOARD]
     @WebMethod(operationName = "CheckAvailability")
     public String CheckAvailability(@WebParam(name = "idvilla") Integer idvilla,
-            @WebParam(name = "checkin") Date checkin,
-            @WebParam(name = "checkout") Date checkout) {
+            @WebParam(name = "checkin") String checkin,
+            @WebParam(name = "checkout") String checkout) {
         try {
             String result = model_Reservation.CheckAvailability(idvilla, checkin, checkout);
             return result;
@@ -68,8 +68,8 @@ public class WebServiceServer extends DbConnection {
 
     //[BOOKNOW - 2], [APP - DASHBOARD]
     @WebMethod(operationName = "InsertReservation")
-    public String InsertReservation(@WebParam(name = "checkin_date") Date checkin,
-            @WebParam(name = "checkout_date") Date checkout,
+    public String InsertReservation(@WebParam(name = "checkin_date") String checkin,
+            @WebParam(name = "checkout_date") String checkout,
             @WebParam(name = "total_guest") Integer total_guest,
             @WebParam(name = "notes") String notes,
             @WebParam(name = "iduser") Integer iduser,
@@ -177,8 +177,8 @@ public class WebServiceServer extends DbConnection {
     //[ORDERDETAILS]
     @WebMethod(operationName = "UpdateReservation")
     public String UpdateReservation(@WebParam(name = "email") String email,
-            @WebParam(name = "checkin_date") Date checkin,
-            @WebParam(name = "checkout_date") Date checkout,
+            @WebParam(name = "checkin_date") String checkin,
+            @WebParam(name = "checkout_date") String checkout,
             @WebParam(name = "total_guest") Integer total_guest,
             @WebParam(name = "notes") String notes,
             @WebParam(name = "iduser") Integer iduser,
