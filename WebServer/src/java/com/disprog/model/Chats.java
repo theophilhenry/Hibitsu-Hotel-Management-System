@@ -86,7 +86,7 @@ public class Chats extends DbConnection {
     //<editor-fold defaultstate="collapsed" desc="Methods">
     public String InsertChat(String email_sender, String email_receiver, String messages) {
         try {
-            String query="";
+            String query = "";
             if (!connect.isClosed()) {
 
                 query = "INSERT INTO chats (idsender, idreceiver, message) "
@@ -95,16 +95,17 @@ public class Chats extends DbConnection {
 
                 // set preparedStatement
                 PreparedStatement sql = (PreparedStatement) connect.prepareStatement(query);
-                
+
                 //set paramater
                 sql.setString(1, email_sender);
                 sql.setString(2, email_receiver);
                 sql.setString(3, messages);
-                result = sql.executeQuery();
 
                 //nanti mau diatur lagi return nya seperti 
                 String ket = "[1]hasilInsertChats;;";
-                if (result.next()) {
+                int affectedResult = sql.executeUpdate();
+
+                if (affectedResult > 0) {
                     return ket + "true";
                 } else {
                     return ket + "false";
@@ -142,9 +143,9 @@ public class Chats extends DbConnection {
                 result = sql.executeQuery();
                 String ket = "[1]hasilInsertChats,[2]idsender,[3]messages;;";
                 while (result.next()) {
-                    String hasil = String.valueOf(result.getInt("idsender"))+
-                                    result.getString("messages");
-                    listOfChat.add(ket+hasil);
+                    String hasil = String.valueOf(result.getInt("idsender"))
+                            + result.getString("messages");
+                    listOfChat.add(ket + hasil);
                 }
                 connect.close();
                 return listOfChat;
