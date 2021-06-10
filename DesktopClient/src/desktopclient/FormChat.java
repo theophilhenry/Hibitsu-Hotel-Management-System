@@ -67,16 +67,18 @@ public class FormChat extends javax.swing.JFrame implements Runnable {
     private void ShowChat()
     {
         try {
-            String message = input.readLine();
             
-            if(chatWithBot != true)
-            {
-                textArea.append("Admin : " + message + "\n");
-            }
-            else
-            {
-                textArea.append("ChatBot : " + message + "\n");
-            }
+            String message = input.readLine();
+            textArea.append("Admin : " + message + "\n");
+           
+//            if(chatWithBot != true)
+//            {
+//                
+//            }
+//            else
+//            {
+//                textArea.append("ChatBot : " + message + "\n");
+//            }
             
         } catch (IOException ex) {
             Logger.getLogger(FormChat.class.getName()).log(Level.SEVERE, null, ex);

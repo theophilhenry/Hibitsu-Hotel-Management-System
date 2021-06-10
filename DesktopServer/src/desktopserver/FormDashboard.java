@@ -49,6 +49,8 @@ public class FormDashboard extends javax.swing.JFrame implements Runnable {
         }
     }
     
+    
+    
     public void ShowChat(String msg)
     {
         String[] msgSplit = msg.split(";;");
@@ -76,25 +78,16 @@ public class FormDashboard extends javax.swing.JFrame implements Runnable {
         String status = "Your username or password is incorrect";
         //Ambil nama panggilan dari webservice 
         
-        if(email.equals("1"))
-        {
-            
-            status = "[1]keteranganTrue/false,[2]nama;;true;;jasti";
-        }
+        String hasil = loginClient(email,password);
         
-        else if(email.equals("2"))
+        if(hasil.contains("true"))
         {
-           
-            status = "[1]keteranganTrue/false,[2]nama;;true;;theo";
-        }
-        else if(email.equals("3"))
-        {
+            String[] arr = hasil.split(";;");
             
-            status = "[1]keteranganTrue/false,[2]nama;;true;;toto";
         }
         else
         {
-            status = "[1]keteranganTrue/false,[2]nama;;Your username or password is incorrect";
+            status = "Your username or password is incorrect";
         }
         
         return(status);
@@ -563,5 +556,23 @@ public class FormDashboard extends javax.swing.JFrame implements Runnable {
                 
            
         }
+    }
+
+    public static String loginClient(java.lang.String email, java.lang.String password) {
+        com.ubaya.disprog.WebServiceServer_Service service = new com.ubaya.disprog.WebServiceServer_Service();
+        com.ubaya.disprog.WebServiceServer port = service.getWebServiceServerPort();
+        return port.loginClient(email, password);
+    }
+
+    private static String insertChat(java.lang.String emailSender, java.lang.String emailReceiver, java.lang.String messages) {
+        com.ubaya.disprog.WebServiceServer_Service service = new com.ubaya.disprog.WebServiceServer_Service();
+        com.ubaya.disprog.WebServiceServer port = service.getWebServiceServerPort();
+        return port.insertChat(emailSender, emailReceiver, messages);
+    }
+
+    private static java.util.List<java.lang.String> displayChat(java.lang.String emailSender, java.lang.String emailReceiver) {
+        com.ubaya.disprog.WebServiceServer_Service service = new com.ubaya.disprog.WebServiceServer_Service();
+        com.ubaya.disprog.WebServiceServer port = service.getWebServiceServerPort();
+        return port.displayChat(emailSender, emailReceiver);
     }
 }

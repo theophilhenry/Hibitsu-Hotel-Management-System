@@ -1,0 +1,328 @@
+<?xml version='1.0' encoding='UTF-8'?><!-- Published by JAX-WS RI (http://jax-ws.java.net). RI's version is Metro/2.3.2-b608 (trunk-7979; 2015-01-21T12:50:19+0000) JAXWS-RI/2.2.11-b150120.1832 JAXWS-API/2.2.12 JAXB-RI/2.2.12-b141219.1637 JAXB-API/2.2.13-b141020.1521 svn-revision#unknown. --><xs:schema xmlns:tns="http://disprog.ubaya.com/" xmlns:xs="http://www.w3.org/2001/XMLSchema" version="1.0" targetNamespace="http://disprog.ubaya.com/">
+
+<xs:element name="ChangeStatus" type="tns:ChangeStatus"/>
+
+<xs:element name="ChangeStatusResponse" type="tns:ChangeStatusResponse"/>
+
+<xs:element name="CheckAvailability" type="tns:CheckAvailability"/>
+
+<xs:element name="CheckAvailabilityResponse" type="tns:CheckAvailabilityResponse"/>
+
+<xs:element name="DisplayAllClient" type="tns:DisplayAllClient"/>
+
+<xs:element name="DisplayAllClientResponse" type="tns:DisplayAllClientResponse"/>
+
+<xs:element name="DisplayChat" type="tns:DisplayChat"/>
+
+<xs:element name="DisplayChatResponse" type="tns:DisplayChatResponse"/>
+
+<xs:element name="DisplayContacts" type="tns:DisplayContacts"/>
+
+<xs:element name="DisplayContactsResponse" type="tns:DisplayContactsResponse"/>
+
+<xs:element name="DisplayPayment" type="tns:DisplayPayment"/>
+
+<xs:element name="DisplayPaymentResponse" type="tns:DisplayPaymentResponse"/>
+
+<xs:element name="DisplayReservationAll" type="tns:DisplayReservationAll"/>
+
+<xs:element name="DisplayReservationAllResponse" type="tns:DisplayReservationAllResponse"/>
+
+<xs:element name="DisplayVillaAll" type="tns:DisplayVillaAll"/>
+
+<xs:element name="DisplayVillaAllResponse" type="tns:DisplayVillaAllResponse"/>
+
+<xs:element name="DisplayVillaId" type="tns:DisplayVillaId"/>
+
+<xs:element name="DisplayVillaIdResponse" type="tns:DisplayVillaIdResponse"/>
+
+<xs:element name="InsertChat" type="tns:InsertChat"/>
+
+<xs:element name="InsertChatResponse" type="tns:InsertChatResponse"/>
+
+<xs:element name="InsertReservation" type="tns:InsertReservation"/>
+
+<xs:element name="InsertReservationResponse" type="tns:InsertReservationResponse"/>
+
+<xs:element name="LoginAdmin" type="tns:LoginAdmin"/>
+
+<xs:element name="LoginAdminResponse" type="tns:LoginAdminResponse"/>
+
+<xs:element name="LoginClient" type="tns:LoginClient"/>
+
+<xs:element name="LoginClientResponse" type="tns:LoginClientResponse"/>
+
+<xs:element name="Registration" type="tns:Registration"/>
+
+<xs:element name="RegistrationResponse" type="tns:RegistrationResponse"/>
+
+<xs:element name="TrackOrder1" type="tns:TrackOrder1"/>
+
+<xs:element name="TrackOrder1Response" type="tns:TrackOrder1Response"/>
+
+<xs:element name="TrackOrder2" type="tns:TrackOrder2"/>
+
+<xs:element name="TrackOrder2Response" type="tns:TrackOrder2Response"/>
+
+<xs:element name="TrackOrderApp" type="tns:TrackOrderApp"/>
+
+<xs:element name="TrackOrderAppResponse" type="tns:TrackOrderAppResponse"/>
+
+<xs:element name="UpdateReservation" type="tns:UpdateReservation"/>
+
+<xs:element name="UpdateReservationResponse" type="tns:UpdateReservationResponse"/>
+
+<xs:element name="UploadPayment" type="tns:UploadPayment"/>
+
+<xs:element name="UploadPaymentResponse" type="tns:UploadPaymentResponse"/>
+
+<xs:complexType name="UploadPayment">
+<xs:sequence>
+<xs:element name="url_bukti_pembayaran" type="xs:string" minOccurs="0"/>
+<xs:element name="idreservation" type="xs:int" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="UploadPaymentResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="ChangeStatus">
+<xs:sequence>
+<xs:element name="status" type="xs:string" minOccurs="0"/>
+<xs:element name="idreservation" type="xs:int" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="ChangeStatusResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="DisplayVillaId">
+<xs:sequence>
+<xs:element name="idvilla" type="xs:int" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="DisplayVillaIdResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="UpdateReservation">
+<xs:sequence>
+<xs:element name="email" type="xs:string" minOccurs="0"/>
+<xs:element name="checkin_date" type="xs:string" minOccurs="0"/>
+<xs:element name="checkout_date" type="xs:string" minOccurs="0"/>
+<xs:element name="total_guest" type="xs:int" minOccurs="0"/>
+<xs:element name="notes" type="xs:string" minOccurs="0"/>
+<xs:element name="iduser" type="xs:int" minOccurs="0"/>
+<xs:element name="idvilla" type="xs:int" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="UpdateReservationResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="DisplayChat">
+<xs:sequence>
+<xs:element name="email_sender" type="xs:string" minOccurs="0"/>
+<xs:element name="email_receiver" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="DisplayChatResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="DisplayPayment">
+<xs:sequence>
+<xs:element name="idreservation" type="xs:int" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="DisplayPaymentResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="DisplayVillaAll">
+<xs:sequence/>
+</xs:complexType>
+
+<xs:complexType name="DisplayVillaAllResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="TrackOrder1">
+<xs:sequence>
+<xs:element name="idreservation" type="xs:int" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="TrackOrder1Response">
+<xs:sequence>
+<xs:element name="return" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="CheckAvailability">
+<xs:sequence>
+<xs:element name="idvilla" type="xs:int" minOccurs="0"/>
+<xs:element name="checkin" type="xs:string" minOccurs="0"/>
+<xs:element name="checkout" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="CheckAvailabilityResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="TrackOrder2">
+<xs:sequence>
+<xs:element name="idreservation" type="xs:int" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="TrackOrder2Response">
+<xs:sequence>
+<xs:element name="return" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="DisplayReservationAll">
+<xs:sequence>
+<xs:element name="kriteria" type="xs:string" minOccurs="0"/>
+<xs:element name="dicari" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="DisplayReservationAllResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="TrackOrderApp">
+<xs:sequence>
+<xs:element name="idreservation" type="xs:int" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="TrackOrderAppResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="InsertChat">
+<xs:sequence>
+<xs:element name="email_sender" type="xs:string" minOccurs="0"/>
+<xs:element name="email_receiver" type="xs:string" minOccurs="0"/>
+<xs:element name="messages" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="InsertChatResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="LoginClient">
+<xs:sequence>
+<xs:element name="email" type="xs:string" minOccurs="0"/>
+<xs:element name="password" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="LoginClientResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="DisplayAllClient">
+<xs:sequence/>
+</xs:complexType>
+
+<xs:complexType name="DisplayAllClientResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="InsertReservation">
+<xs:sequence>
+<xs:element name="checkin_date" type="xs:string" minOccurs="0"/>
+<xs:element name="checkout_date" type="xs:string" minOccurs="0"/>
+<xs:element name="total_guest" type="xs:int" minOccurs="0"/>
+<xs:element name="notes" type="xs:string" minOccurs="0"/>
+<xs:element name="iduser" type="xs:int" minOccurs="0"/>
+<xs:element name="idvilla" type="xs:int" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="InsertReservationResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="Registration">
+<xs:sequence>
+<xs:element name="fullname" type="xs:string" minOccurs="0"/>
+<xs:element name="display_name" type="xs:string" minOccurs="0"/>
+<xs:element name="phoneNumber" type="xs:string" minOccurs="0"/>
+<xs:element name="email" type="xs:string" minOccurs="0"/>
+<xs:element name="password" type="xs:string" minOccurs="0"/>
+<xs:element name="no_ktp" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="RegistrationResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="DisplayContacts">
+<xs:sequence>
+<xs:element name="iduser" type="xs:int" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="DisplayContactsResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="LoginAdmin">
+<xs:sequence>
+<xs:element name="email" type="xs:string" minOccurs="0"/>
+<xs:element name="password" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="LoginAdminResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+</xs:schema>
