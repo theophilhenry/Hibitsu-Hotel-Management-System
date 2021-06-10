@@ -56,15 +56,16 @@ public class HandleSocket extends Thread{
                 String tmp = input.readLine();
                 if(tmp.contains("JOIN"))
                 {
-                    chatWithBot = true;
+                   /* chatWithBot = true;
                     SendChat("Selamat datang di hibitsu Bpk/Ibu " + displayName + "("+email + ") \n "
                             + "Apabila anda ingin konsultasi secara langsung dengan Admin, anda dapat menekan tombol audio/video call di atas,\n" 
                             + "Apabila anda ingin berbincang-bincang dengan saya(bot), anda dapat melakukannya dengan memilih salah satu angka dari opsi di bawah :\n" 
                             + "1. Reservasi\n" 
                             + "2. Check Booking / Track Order\n"
                             + "3. Konsultasi Chat dengan Admin\n");
+                    */
                     
-                    
+                    SendChat("Halo, apa yang bisa dibantu?");
 
                     
                     String selectedComboBox =  parent.comboBoxClient.getSelectedItem().toString();
