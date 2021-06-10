@@ -111,6 +111,11 @@ public class FormChat extends javax.swing.JFrame implements Runnable {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                formWindowClosed(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Rubik", 1, 24)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(29, 212, 121));
@@ -265,6 +270,12 @@ public class FormChat extends javax.swing.JFrame implements Runnable {
         SendChat(msg);
         
     }//GEN-LAST:event_btnSendActionPerformed
+
+    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+       
+          /*  output.writeBytes("LOGOUT \n");*/
+       
+    }//GEN-LAST:event_formWindowClosed
 
     /**
      * @param args the command line arguments

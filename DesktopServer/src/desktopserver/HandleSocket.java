@@ -56,6 +56,15 @@ public class HandleSocket extends Thread{
                 if(tmp.contains("JOIN"))
                 {
                     SendChat("Hai " + displayName + "("+email + ") \n What can i help you?");
+                    
+                    String selectedComboBox =  parent.comboBoxClient.getSelectedItem().toString();
+                    String thisClient = email ;
+                    if(selectedComboBox.contains(thisClient))
+                    {
+                        parent.ShowChat(tmp);
+                    }
+                    
+                    
                     parent.clientsArr.add(this);
                     parent.AddComboBoxClient(displayName, email);
                                       
@@ -81,6 +90,10 @@ public class HandleSocket extends Thread{
                     
                     
                     
+                }
+                else if(tmp.contains("LOGOUT"))
+                {
+                    parent.RemoveComboBoxClient(displayName, email);
                 }
                 else
                 {

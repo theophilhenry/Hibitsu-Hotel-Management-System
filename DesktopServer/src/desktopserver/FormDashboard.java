@@ -63,7 +63,12 @@ public class FormDashboard extends javax.swing.JFrame implements Runnable {
         Integer count = comboBoxClient.getItemCount();
         count +=1;
         
-        comboBoxClient.addItem( count + "." +name + " (" + email + ")");
+        comboBoxClient.addItem( /*count + "." +*/name + " (" + email + ")");
+    }
+    
+    public void RemoveComboBoxClient(String name, String email)
+    {
+        comboBoxClient.removeItem(name + " (" + email + ")");
     }
     
     public String LoginUser(String email,String password)
@@ -401,6 +406,12 @@ public class FormDashboard extends javax.swing.JFrame implements Runnable {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        comboBoxClient.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                comboBoxClientItemStateChanged(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -445,6 +456,10 @@ public class FormDashboard extends javax.swing.JFrame implements Runnable {
         textArea.append("Admin : " + msg + "\n");
         
     }//GEN-LAST:event_buttonSendActionPerformed
+
+    private void comboBoxClientItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_comboBoxClientItemStateChanged
+        textArea.setText("");
+    }//GEN-LAST:event_comboBoxClientItemStateChanged
 
     /**
      * @param args the command line arguments
