@@ -151,24 +151,29 @@ public class Reservations extends DbConnection {
     //<editor-fold defaultstate="collapsed" desc="Methods">
     public Integer CalculateTotalPrice(Date checkIn, Date checkout, Integer idvilla) {
         try {
-            // calculate different days
-            int diffInDays = (int) ((checkout.getTime() - checkIn.getTime()) / (1000 * 60 * 60 * 24)
-                    % 365);
+            if (!connect.isClosed()) {
+                // calculate different days
+                int diffInDays = (int) ((checkout.getTime() - checkIn.getTime()) / (1000 * 60 * 60 * 24)
+                        % 365);
 
-            // calculate price
-            //1. get the price of the villa
-            String query = "SELECT price FROM villas WHERE idvilla =?";
-            PreparedStatement sql = (PreparedStatement) connect.prepareStatement(query);
+                // calculate price
+                //1. get the price of the villa
+                String query = "SELECT price FROM villas WHERE idvilla =?";
+                PreparedStatement sql = (PreparedStatement) connect.prepareStatement(query);
 
-            //set paramater
-            sql.setInt(1, idvilla);
-            result = sql.executeQuery();
+                //set paramater
+                sql.setInt(1, idvilla);
+                result = sql.executeQuery();
 
-            if (result.next()) {
-                return result.getInt("price") * diffInDays;
+                if (result.next()) {
+                    return result.getInt("price") * diffInDays;
+                } else {
+                    return null;
+                }
             } else {
-                return null;
+                System.out.println("Tidak terkoneksi database");
             }
+
         } catch (SQLException ex) {
             Logger.getLogger(Reservations.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -240,7 +245,7 @@ public class Reservations extends DbConnection {
                 String check = this.CheckAvailability(idvilla, checkIn, checkOut);
                 if (check.contains("false")) {
                     String ket = "[1]hasilUpdateReservation;;";
-                    return ket+"false";
+                    return ket + "false";
                 }
 
                 // set query
@@ -346,22 +351,26 @@ public class Reservations extends DbConnection {
     public String DisplayPayment(Integer idreservation) {
         String message = "";
         try {
-            // set query
-            String query = "Select url_bukti_pembayaran WHERE idreservation=?";
+            if (!connect.isClosed()) {
+                // set query
+                String query = "Select url_bukti_pembayaran WHERE idreservation=?";
 
-            // set preparedStatement
-            PreparedStatement sql = (PreparedStatement) connect.prepareStatement(query);
+                // set preparedStatement
+                PreparedStatement sql = (PreparedStatement) connect.prepareStatement(query);
 
-            //set paramater
-            sql.setInt(1, idreservation);
+                //set paramater
+                sql.setInt(1, idreservation);
 
-            result = sql.executeQuery();
+                result = sql.executeQuery();
 
-            String ket = "[1]hasilDisplayPayment,[2]url_bukti_pembayaran;;";
-            if (result.next()) {
-                return ket + "true;;" + result.getString("url_bukti_pembayaran");
+                String ket = "[1]hasilDisplayPayment,[2]url_bukti_pembayaran;;";
+                if (result.next()) {
+                    return ket + "true;;" + result.getString("url_bukti_pembayaran");
+                } else {
+                    return ket + "false";
+                }
             } else {
-                return ket + "false";
+                System.out.println("Tidak terkoneksi database");
             }
         } catch (Exception ex) {
             System.out.println("Error Upload Payment: " + ex);
@@ -380,13 +389,13 @@ public class Reservations extends DbConnection {
                     return ket + "Pleaase input checkout date greater than checkin date";
                 }
                 // set query
-//                String query = "SELECT * FROM reservations WHERE idvilla = ? &&"
-//                        + "((checkin_date <= ? AND checkout_date >= ?) || "
-//                        + "(checkin_date <= ? AND checkout_date >= ?)|| "
-//                        + "(checkin_date >= ? AND checkout_date <= ?))";
-
                 String query = "SELECT * FROM reservations WHERE idvilla = ? &&"
-                        + "checkin <= ? AND checkout >= ?";
+                        + "((checkin_date <= ? AND checkout_date >= ?) || "
+                        + "(checkin_date <= ? AND checkout_date >= ?)|| "
+                        + "(checkin_date >= ? AND checkout_date <= ?))";
+
+//                String query = "SELECT * FROM reservations WHERE idvilla = ? &&"
+//                        + "checkin <= ? AND checkout >= ?";
                 // set preparedStatement
                 PreparedStatement sql = (PreparedStatement) connect.prepareStatement(query);
 
@@ -404,7 +413,7 @@ public class Reservations extends DbConnection {
                 result = sql.executeQuery();
 
                 if (result.next()) {
-                    return ket + "false";//karena ditemukan yg bentrok
+                    return ket + "";//karena ditemukan yg bentrok
                 } else {
                     return ket + "true";
                 }
@@ -420,44 +429,48 @@ public class Reservations extends DbConnection {
     //BELUM SELESAI BLOB
     public String TrackOrder(Integer idreservation) {
         try {
-            String query = "SELECT r.idreservation, r.res_timestamp, r.checkin_date, "
-                    + "r.checkout_date, r.status, r.total_guest, r.total_price, r.notes, r.url_bukti_pembayaran, "
-                    + "v.idvilla, v.name, "
-                    + "u.iduser, u.fullname, u.display_name, u.phone_number, u.email, u.no_ktp "
-                    + "FROM reservations r "
-                    + "INNER JOIN villas v ON r.idvilla = v.idvilla "
-                    + "INNER JOIN users u ON r.iduser = u.iduser "
-                    + "WHERE idreservation = ?;";
-            PreparedStatement sql = (PreparedStatement) connect.prepareStatement(query);
-            result = sql.executeQuery();
+            if (!connect.isClosed()) {
+                String query = "SELECT r.idreservation, r.res_timestamp, r.checkin_date, "
+                        + "r.checkout_date, r.status, r.total_guest, r.total_price, r.notes, r.url_bukti_pembayaran, "
+                        + "v.idvilla, v.name, "
+                        + "u.iduser, u.fullname, u.display_name, u.phone_number, u.email, u.no_ktp "
+                        + "FROM reservations r "
+                        + "INNER JOIN villas v ON r.idvilla = v.idvilla "
+                        + "INNER JOIN users u ON r.iduser = u.iduser "
+                        + "WHERE idreservation = ?;";
+                PreparedStatement sql = (PreparedStatement) connect.prepareStatement(query);
+                result = sql.executeQuery();
 
-            if (result.next()) {
-                String ket = "[1]hasilTrackOrder,[2]idreservation,[3]res_timestamp,"
-                        + "[4]chcekin_date,[5]checkout_date,[6]status,[7]total_guest,[8]total_price,"
-                        + "[9]notes,[10]url_bukti_pembayaran,[11]idvilla,[12]villa_name,"
-                        + "[13]iduser,[14]fullname,[15]display_name[15],phone_number,[16]email,[17]no_ktp;;";
+                if (result.next()) {
+                    String ket = "[1]hasilTrackOrder,[2]idreservation,[3]res_timestamp,"
+                            + "[4]chcekin_date,[5]checkout_date,[6]status,[7]total_guest,[8]total_price,"
+                            + "[9]notes,[10]url_bukti_pembayaran,[11]idvilla,[12]villa_name,"
+                            + "[13]iduser,[14]fullname,[15]display_name[15],phone_number,[16]email,[17]no_ktp;;";
 
-                String hasil = String.valueOf(result.getInt("idreservation")) + ";;"
-                        + String.valueOf(result.getTimestamp("res_timestamp")) + ";;"
-                        + result.getDate("checkin_date").toString() + ";;"
-                        + result.getDate("checkout_date").toString() + ";;"
-                        + result.getString("status") + ";;"
-                        + String.valueOf(result.getInt("total_guest")) + ";;"
-                        + String.valueOf(result.getInt("total_price")) + ";;"
-                        + result.getString("notes") + ";;"
-                        + result.getString("url_bukti_pembayaran") + ";;"
-                        + String.valueOf(result.getInt("idvilla")) + ";;"
-                        + result.getString("name") + ";;"
-                        + String.valueOf(result.getInt("iduser")) + ";;"
-                        + result.getString("fullname") + ";;"
-                        + result.getString("display_name") + ";;"
-                        + result.getString("phone_number") + ";;"
-                        + result.getString("email") + ";;"
-                        + result.getString("no_ktp");
-                return ket + "true;;" + hasil;
+                    String hasil = String.valueOf(result.getInt("idreservation")) + ";;"
+                            + String.valueOf(result.getTimestamp("res_timestamp")) + ";;"
+                            + result.getDate("checkin_date").toString() + ";;"
+                            + result.getDate("checkout_date").toString() + ";;"
+                            + result.getString("status") + ";;"
+                            + String.valueOf(result.getInt("total_guest")) + ";;"
+                            + String.valueOf(result.getInt("total_price")) + ";;"
+                            + result.getString("notes") + ";;"
+                            + result.getString("url_bukti_pembayaran") + ";;"
+                            + String.valueOf(result.getInt("idvilla")) + ";;"
+                            + result.getString("name") + ";;"
+                            + String.valueOf(result.getInt("iduser")) + ";;"
+                            + result.getString("fullname") + ";;"
+                            + result.getString("display_name") + ";;"
+                            + result.getString("phone_number") + ";;"
+                            + result.getString("email") + ";;"
+                            + result.getString("no_ktp");
+                    return ket + "true;;" + hasil;
+                } else {
+                    String ket = "[1]hasilTrackOrder;;";
+                    return ket + "false";
+                }
             } else {
-                String ket = "[1]hasilTrackOrder;;";
-                return ket + "false";
+                System.out.println("Tidak terkoneksi database");
             }
         } catch (SQLException ex) {
             Logger.getLogger(Reservations.class.getName()).log(Level.SEVERE, null, ex);
@@ -467,59 +480,63 @@ public class Reservations extends DbConnection {
 
     public ArrayList<String> DisplayReservationAll(String kriteria, String dicari) {
         try {
-            String query = "";
-            ArrayList<String> listOfReservation = new ArrayList<>();
-            if (kriteria.equals("") || dicari.equals("")) {
-                query = "SELECT r.idreservation, r.res_timestamp, r.checkin_date, "
-                        + "r.checkout_date, r.status, r.total_guest, r.total_price, r.notes, r.url_bukti_pembayaran, "
-                        + "v.idvilla, v.name, "
-                        + "u.iduser, u.fullname, u.display_name, u.phone_number, u.email, u.no_ktp "
-                        + "FROM reservations r "
-                        + "INNER JOIN villas v ON r.idvilla = v.idvilla "
-                        + "INNER JOIN users u ON r.iduser = u.iduser "
-                        + "WHERE checkout_date >= CURDATE();";
+            if (!connect.isClosed()) {
+                String query = "";
+                ArrayList<String> listOfReservation = new ArrayList<>();
+                if (kriteria.equals("") || dicari.equals("")) {
+                    query = "SELECT r.idreservation, r.res_timestamp, r.checkin_date, "
+                            + "r.checkout_date, r.status, r.total_guest, r.total_price, r.notes, r.url_bukti_pembayaran, "
+                            + "v.idvilla, v.name, "
+                            + "u.iduser, u.fullname, u.display_name, u.phone_number, u.email, u.no_ktp "
+                            + "FROM reservations r "
+                            + "INNER JOIN villas v ON r.idvilla = v.idvilla "
+                            + "INNER JOIN users u ON r.iduser = u.iduser "
+                            + "WHERE checkout_date >= CURDATE();";
+                } else {
+                    query = "SELECT r.idreservation, r.res_timestamp, r.checkin_date, "
+                            + "r.checkout_date, r.status, r.total_guest, r.total_price, r.notes, r.url_bukti_pembayaran, "
+                            + "v.idvilla, v.name, "
+                            + "u.iduser, u.fullname, u.display_name, u.phone_number, u.email, u.no_ktp "
+                            + "FROM reservations r "
+                            + "INNER JOIN villas v ON r.idvilla = v.idvilla "
+                            + "INNER JOIN users u ON r.iduser = u.iduser "
+                            + "WHERE " + kriteria + " = " + dicari + " AND checkout_date >= CURDATE();";
+                }
+
+                PreparedStatement sql = (PreparedStatement) connect.prepareStatement(query);
+                sql.setString(1, kriteria);
+                sql.setString(2, dicari);
+                result = sql.executeQuery();
+
+                while (result.next()) {
+                    String ket = "[1]hasilTrackOrder,[2]idreservation,[3]res_timestamp,"
+                            + "[4]chcekin_date,[5]checkout_date,[6]status,[7]total_guest,[8]total_price,"
+                            + "[9]notes,[10]url_bukti_pembayaran,[11]idvilla,[12]villa_name,"
+                            + "[13]iduser,[14]fullname,[15]display_name[15],phone_number,[16]email,[17]no_ktp;;";
+
+                    String hasil = String.valueOf(result.getInt("idreservation")) + ";;"
+                            + String.valueOf(result.getTimestamp("res_timestamp")) + ";;"
+                            + result.getDate("checkin_date").toString() + ";;"
+                            + result.getDate("checkout_date").toString() + ";;"
+                            + result.getString("status") + ";;"
+                            + String.valueOf(result.getInt("total_guest")) + ";;"
+                            + String.valueOf(result.getInt("total_price")) + ";;"
+                            + result.getString("notes") + ";;"
+                            + result.getString("url_bukti_pembayaran") + ";;"
+                            + String.valueOf(result.getInt("idvilla")) + ";;"
+                            + result.getString("name") + ";;"
+                            + String.valueOf(result.getInt("iduser")) + ";;"
+                            + result.getString("fullname") + ";;"
+                            + result.getString("display_name") + ";;"
+                            + result.getString("phone_number") + ";;"
+                            + result.getString("email") + ";;"
+                            + result.getString("no_ktp");
+                    listOfReservation.add(ket + "true;;" + hasil);
+                }
+                return listOfReservation;
             } else {
-                query = "SELECT r.idreservation, r.res_timestamp, r.checkin_date, "
-                        + "r.checkout_date, r.status, r.total_guest, r.total_price, r.notes, r.url_bukti_pembayaran, "
-                        + "v.idvilla, v.name, "
-                        + "u.iduser, u.fullname, u.display_name, u.phone_number, u.email, u.no_ktp "
-                        + "FROM reservations r "
-                        + "INNER JOIN villas v ON r.idvilla = v.idvilla "
-                        + "INNER JOIN users u ON r.iduser = u.iduser "
-                        + "WHERE " + kriteria + " = " + dicari + " AND checkout_date >= CURDATE();";
+                System.out.println("Tidak terkoneksi database");
             }
-
-            PreparedStatement sql = (PreparedStatement) connect.prepareStatement(query);
-            sql.setString(1, kriteria);
-            sql.setString(2, dicari);
-            result = sql.executeQuery();
-
-            while (result.next()) {
-                String ket = "[1]hasilTrackOrder,[2]idreservation,[3]res_timestamp,"
-                        + "[4]chcekin_date,[5]checkout_date,[6]status,[7]total_guest,[8]total_price,"
-                        + "[9]notes,[10]url_bukti_pembayaran,[11]idvilla,[12]villa_name,"
-                        + "[13]iduser,[14]fullname,[15]display_name[15],phone_number,[16]email,[17]no_ktp;;";
-
-                String hasil = String.valueOf(result.getInt("idreservation")) + ";;"
-                        + String.valueOf(result.getTimestamp("res_timestamp")) + ";;"
-                        + result.getDate("checkin_date").toString() + ";;"
-                        + result.getDate("checkout_date").toString() + ";;"
-                        + result.getString("status") + ";;"
-                        + String.valueOf(result.getInt("total_guest")) + ";;"
-                        + String.valueOf(result.getInt("total_price")) + ";;"
-                        + result.getString("notes") + ";;"
-                        + result.getString("url_bukti_pembayaran") + ";;"
-                        + String.valueOf(result.getInt("idvilla")) + ";;"
-                        + result.getString("name") + ";;"
-                        + String.valueOf(result.getInt("iduser")) + ";;"
-                        + result.getString("fullname") + ";;"
-                        + result.getString("display_name") + ";;"
-                        + result.getString("phone_number") + ";;"
-                        + result.getString("email") + ";;"
-                        + result.getString("no_ktp");
-                listOfReservation.add(ket + "true;;" + hasil);
-            }
-            return listOfReservation;
         } catch (SQLException ex) {
             Logger.getLogger(Reservations.class.getName()).log(Level.SEVERE, null, ex);
         }
