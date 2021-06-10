@@ -207,11 +207,13 @@ public class Reservations extends DbConnection {
                 int affectedResult = sql.executeUpdate();
 
                 if (affectedResult > 0) {
-//                    String ket = "[1]hasilInsertReservation,[2]idreservation;;";
-//                    ResultSet generatedKeys = sql.getGeneratedKeys();
-//                    idreservation = generatedKeys.getInt(1);
-//                    return ket + "true;;" + idreservation;
-                    return "true";
+                    String ket = "[1]hasilInsertReservation,[2]idreservation;;";
+                    ResultSet generatedKeys = sql.getGeneratedKeys();
+                    if (generatedKeys.next()) {
+                        idreservation = generatedKeys.getInt(1);
+                    }
+                    return ket + "true;;" + idreservation;
+                   
                 } else {
                     String ket = "[1]hasilInsertReservation;;";
                     return ket + "false";
@@ -394,9 +396,9 @@ public class Reservations extends DbConnection {
                 result = sql.executeQuery();
 
                 if (result.next()) {
-                    return ket + "false";//karena ditemukan yg bentrok
+                    return ket + "true";//karena ditemukan yg bentrok
                 } else {
-                    return ket + "true";
+                    return ket + "false";
                 }
             } else {
                 System.out.println("Tidak terkoneksi database");
