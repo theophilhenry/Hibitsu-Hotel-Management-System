@@ -87,13 +87,14 @@ public class HandleSocket extends Thread{
                    
                     
                     String status = parent.loginClient(loginEmail, loginPassword);
-                    String[] arr = status.split(";;");
-                    status = arr[1];
+                    
+                    //status = arr[1];
                     
                     if(status.contains("true"))
                     {
-                         displayName = arr[4];
-                         email = loginEmail;
+                        String[] arr = status.split(";;");
+                        displayName = arr[4];
+                        email = loginEmail;
                     }
                     
                    
