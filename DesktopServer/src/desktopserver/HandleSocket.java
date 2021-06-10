@@ -65,15 +65,18 @@ public class HandleSocket extends Thread{
                             + "3. Konsultasi Chat dengan Admin\n");
                     */
                     
+                    
+                    
                     SendChat("Halo, apa yang bisa dibantu?");
 
                     
-                    String selectedComboBox =  parent.comboBoxClient.getSelectedItem().toString();
+                   /* String selectedComboBox =  parent.comboBoxClient.getSelectedItem().toString();
                     String thisClient = email ;
                     if(selectedComboBox.contains(thisClient))
                     {
                         parent.ShowChat(tmp);
                     }
+*/
                                
                     parent.clientsArr.add(this);
                     parent.AddComboBoxClient(displayName, email);

@@ -73,6 +73,11 @@ public class FormDashboard extends javax.swing.JFrame implements Runnable {
         comboBoxClient.removeItem(name + " (" + email + ")");
     }
     
+    public void SimpanChat(String emailSend, String emailReceiv, String msg)
+    {
+        
+    }
+    
     public String LoginUser(String email,String password)
     {
         String status = "Your username or password is incorrect";
@@ -564,13 +569,13 @@ public class FormDashboard extends javax.swing.JFrame implements Runnable {
         return port.loginClient(email, password);
     }
 
-    private static String insertChat(java.lang.String emailSender, java.lang.String emailReceiver, java.lang.String messages) {
+    public static String insertChat(java.lang.String emailSender, java.lang.String emailReceiver, java.lang.String messages) {
         com.ubaya.disprog.WebServiceServer_Service service = new com.ubaya.disprog.WebServiceServer_Service();
         com.ubaya.disprog.WebServiceServer port = service.getWebServiceServerPort();
         return port.insertChat(emailSender, emailReceiver, messages);
     }
 
-    private static java.util.List<java.lang.String> displayChat(java.lang.String emailSender, java.lang.String emailReceiver) {
+    public static java.util.List<java.lang.String> displayChat(java.lang.String emailSender, java.lang.String emailReceiver) {
         com.ubaya.disprog.WebServiceServer_Service service = new com.ubaya.disprog.WebServiceServer_Service();
         com.ubaya.disprog.WebServiceServer port = service.getWebServiceServerPort();
         return port.displayChat(emailSender, emailReceiver);

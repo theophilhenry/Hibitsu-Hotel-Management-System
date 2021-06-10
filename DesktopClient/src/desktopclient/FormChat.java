@@ -69,7 +69,7 @@ public class FormChat extends javax.swing.JFrame implements Runnable {
         try {
             
             String message = input.readLine();
-            textArea.append("Admin : " + message + "\n");
+            textArea.append(" Admin : " + message + "\n");
            
 //            if(chatWithBot != true)
 //            {
@@ -89,7 +89,7 @@ public class FormChat extends javax.swing.JFrame implements Runnable {
     {
         try {
             output.writeBytes(email + ";;" + msg + "\n");
-            textArea.append("Me : " + msg + "\n");
+            textArea.append(" Me : " + msg + "\n");
         } catch (IOException ex) {
             Logger.getLogger(FormChat.class.getName()).log(Level.SEVERE, null, ex);
         }
