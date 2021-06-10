@@ -151,7 +151,7 @@ public class Reservations extends DbConnection {
     public Integer CalculateTotalPrice(Date checkIn, Date checkout, Integer idvilla) {
         try {
             // calculate different days
-            int diffInDays = (int) (checkout.getTime() - checkIn.getTime() / (1000 * 60 * 60 * 24)
+            int diffInDays = (int) ((checkout.getTime() - checkIn.getTime()) / (1000 * 60 * 60 * 24)
                     % 365);
 
             // calculate price
@@ -161,8 +161,9 @@ public class Reservations extends DbConnection {
 
             //set paramater
             sql.setInt(1, idvilla);
-            int affectedResult = sql.executeUpdate();
-            if (affectedResult > 0) {
+            result = sql.executeQuery();
+
+            if (result.next()) {
                 return result.getInt("price") * diffInDays;
             } else {
                 return null;
@@ -210,7 +211,7 @@ public class Reservations extends DbConnection {
 //                    ResultSet generatedKeys = sql.getGeneratedKeys();
 //                    idreservation = generatedKeys.getInt(1);
 //                    return ket + "true;;" + idreservation;
-                        return "true";
+                    return "true";
                 } else {
                     String ket = "[1]hasilInsertReservation;;";
                     return ket + "false";
