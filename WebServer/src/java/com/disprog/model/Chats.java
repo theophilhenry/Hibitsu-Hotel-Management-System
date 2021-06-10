@@ -20,7 +20,6 @@ public class Chats extends DbConnection {
 
     //<editor-fold defaultstate="collapsed" desc="Data Member">
     private int idchat;
-    private String idconversation;
     private Timestamp cht_timestamp;
     private String messages;
     private int idsender;
@@ -32,10 +31,9 @@ public class Chats extends DbConnection {
         getConnection();
     }
 
-    public Chats(int idchat, String idconversation, String messages, int idsender, int idreceiver) {
+    public Chats(int idchat, String messages, int idsender, int idreceiver) {
         getConnection();
         this.idchat = idchat;
-        this.idconversation = idconversation;
         this.messages = messages;
         this.idsender = idsender;
         this.idreceiver = idreceiver;
@@ -50,14 +48,6 @@ public class Chats extends DbConnection {
 
     public void setIdchat(int idchat) {
         this.idchat = idchat;
-    }
-
-    public String getIdconversation() {
-        return idconversation;
-    }
-
-    public void setIdconversation(String idconversation) {
-        this.idconversation = idconversation;
     }
 
     public Timestamp getCht_timestamp() {
@@ -94,25 +84,22 @@ public class Chats extends DbConnection {
     //</editor-fold>
 
     //<editor-fold defaultstate="collapsed" desc="Methods">
-    public String InsertChat(Integer idsender, Integer idreceiver, String messages) {
+    public String InsertChat(String email_sender, String email_receiver, String messages) {
         try {
+            String query="";
             if (!connect.isClosed()) {
-                String idconversation = "";
-                if (idsender > idreceiver) {
-                    idconversation = idsender + "_" + idreceiver;
-                } else {
-                    idconversation = idreceiver + "_" + idsender;
-                }
-                String query = "INSERT INTO chats (idsender, idreceiver, idconversation, message) values (?, ?, ?, ?)";
+
+                query = "INSERT INTO chats (idsender, idreceiver, message) "
+                        + "values ((SELECT iduser FROM users WHERE email =?),"
+                        + "(SELECT iduser FROM users WHERE email =?), ?)";
 
                 // set preparedStatement
                 PreparedStatement sql = (PreparedStatement) connect.prepareStatement(query);
-
+                
                 //set paramater
-                sql.setInt(1, idsender);
-                sql.setInt(2, idreceiver);
-                sql.setString(3, idconversation);
-                sql.setString(4, messages);
+                sql.setString(1, email_sender);
+                sql.setString(2, email_receiver);
+                sql.setString(3, messages);
                 result = sql.executeQuery();
 
                 //nanti mau diatur lagi return nya seperti 
@@ -131,24 +118,26 @@ public class Chats extends DbConnection {
         return null;
     }
 
-    public String DisplayChat(Integer idsender, Integer idreceiver) {
-        getConnection();
+    public ArrayList<String> DisplayChat(String email_sender, String email_receiver) {
         ArrayList<String> listOfChat = new ArrayList<>();
         String message = "";
         try {
             if (!connect.isClosed()) {
                 // set query
-                String query = "SELECT * FROM chats WHERE (idsender=? and idreceiver=?) "
-                        + "or (idsender=? and idreceiver=?) ORDER BY cht_timestamp;";
-
+                String query = "SELECT * FROM chats "
+                        + "WHERE (idsender =(SELECT idusers FROM users where email=?) "
+                        + "and idreceiver =(SELECT idusers FROM users where email=?)) "
+                        + "or (idsender=(SELECT idusers FROM users where email=?) "
+                        + "and idreceiver=(SELECT idusers FROM users where email=?)) "
+                        + "ORDER BY cht_timestamp;";
                 // set preparedStatement
                 PreparedStatement sql = (PreparedStatement) connect.prepareStatement(query);
 
                 //set paramater
-                sql.setInt(1, idsender);
-                sql.setInt(2, idreceiver);
-                sql.setInt(3, idsender);
-                sql.setInt(4, idreceiver);
+                sql.setString(1, email_sender);
+                sql.setString(2, email_receiver);
+                sql.setString(3, email_receiver);
+                sql.setString(4, email_sender);
 
                 result = sql.executeQuery();
                 String ket = "[1]hasilInsertChats,[2]idsender,[3]messages;;";
@@ -158,14 +147,14 @@ public class Chats extends DbConnection {
                     listOfChat.add(ket+hasil);
                 }
                 connect.close();
-                return message;
+                return listOfChat;
             } else {
                 System.out.println("Tidak terkoneksi database");
             }
         } catch (SQLException ex) {
             System.out.println("Error Insert Chat: " + ex);
         }
-        return message;
+        return listOfChat;
     }
 
     public String DisplayContacts(Integer iduser) {

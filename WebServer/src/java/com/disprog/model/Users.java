@@ -6,9 +6,6 @@
 package com.disprog.model;
 
 import com.mysql.jdbc.PreparedStatement;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.sql.SQLException;
 
 /**
@@ -46,6 +43,7 @@ public class Users extends DbConnection {
     }
 
     //</editor-fold>
+    
     //<editor-fold defaultstate="collapsed" desc="Properties">
     public int getIduser() {
         return iduser;

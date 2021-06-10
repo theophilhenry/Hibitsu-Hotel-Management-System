@@ -11,8 +11,7 @@ import java.sql.Date;
 import javax.jws.WebService;
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
-import java.io.FileInputStream;
-import com.mysql.jdbc.Blob;
+import java.util.ArrayList;
 
 /**
  *
@@ -82,6 +81,7 @@ public class WebServiceServer extends DbConnection {
         }
         return null;
     }
+
     //[BOOKNOW - 3]
     @WebMethod(operationName = "TrackOrder2")
     public String TrackOrder2(@WebParam(name = "idreservation") Integer idreservation) {
@@ -150,17 +150,18 @@ public class WebServiceServer extends DbConnection {
 
     //[DASHBOARD]
     @WebMethod(operationName = "DisplayReservationAll")
-    public String DisplayReservation(@WebParam(name = "kriteria") String kriteria,
+    public ArrayList<String> DisplayReservationAll(@WebParam(name = "kriteria") String kriteria,
             @WebParam(name = "dicari") String dicari) {
+        ArrayList<String> listOfDisplayReservationAll = new ArrayList<String>();
+        listOfDisplayReservationAll = model_Reservation.DisplayReservationAll(kriteria, dicari);
         //belum di code
-        return null;
+        return listOfDisplayReservationAll;
     }
-    
-    //[TRACKORDER]
-    @WebMethod(operationName = "TrackOrderWeb")
-    public String TrackOrderWeb(@WebParam(name = "idreservation") Integer idreservation) {
 
-        //belum di code
+    //[TRACKORDER]
+    @WebMethod(operationName = "TrackOrderApp")
+    public String TrackOrderApp(@WebParam(name = "idreservation") Integer idreservation) {
+        String result = model_Reservation.TrackOrder(idreservation);
         return null;
     }
 
@@ -181,24 +182,25 @@ public class WebServiceServer extends DbConnection {
             @WebParam(name = "notes") String notes,
             @WebParam(name = "iduser") Integer iduser,
             @WebParam(name = "idvilla") Integer idvilla) {
-        String result = model_Reservation.UpdateReservation(email,checkin,checkout, total_guest, notes, iduser);
-        return null;
+        String result = model_Reservation.UpdateReservation(email, checkin, checkout, total_guest, notes, iduser);
+        return result;
     }
 
     //[ORDERDETAILS]
     @WebMethod(operationName = "DisplayPayment")
     public String DisplayPayment(@WebParam(name = "idreservation") Integer idreservation) {
-        return null;
+        String result = model_Reservation.DisplayPayment(idreservation);
+        return result;
     }
 
     //[CHATS]
     @WebMethod(operationName = "InsertChat")
     public String InsertChat(
-            @WebParam(name = "messages") String messages,
-            @WebParam(name = "idsender") Integer idsender,
-            @WebParam(name = "idreceiver") Integer idreceiver) {
+            @WebParam(name = "email_sender") String email_sender,
+            @WebParam(name = "email_receiver") String email_receiver,
+            @WebParam(name = "messages") String messages) {
         try {
-            String result = model_Chat.InsertChat(idsender, idreceiver, messages);
+            String result = model_Chat.InsertChat(email_sender, email_receiver, messages);
             return result;
         } catch (Exception ex) {
             System.out.println("Error Insert Chat: " + ex);
@@ -208,10 +210,13 @@ public class WebServiceServer extends DbConnection {
 
     //[CHATS]
     @WebMethod(operationName = "DisplayChat")
-    public String DisplayChat(
-            @WebParam(name = "iduser") Integer iduser) {
+    public ArrayList<String> DisplayChat(
+            @WebParam(name = "email_sender") String email_sender,
+            @WebParam(name = "messages") String messages) {
         try {
-
+            ArrayList<String> result = new ArrayList<>();
+            result = model_Chat.DisplayChat(email_sender, messages);
+            return result;
         } catch (Exception ex) {
             System.out.println("Error Display Chat: " + ex);
         }
