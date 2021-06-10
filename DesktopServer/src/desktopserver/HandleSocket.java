@@ -70,7 +70,13 @@ public class HandleSocket extends Thread{
                     String status = parent.LoginUser(loginEmail, loginPassword);
                     String[] arr = status.split(";;");
                     status = arr[1];
-                    displayName = arr[2];
+                    
+                    if(status.contains("true"))
+                    {
+                         displayName = arr[2];
+                    }
+                    
+                   
                     output.writeBytes(status+"\n");
                     
                     
@@ -80,9 +86,9 @@ public class HandleSocket extends Thread{
                 {
                     String selectedComboBox =  parent.comboBoxClient.getSelectedItem().toString();
                     
-                    String thisClient = (parent.comboBoxClient.getItemCount()+1) + "." + displayName + " (" + email + ")";
+                    String thisClient = email ;
                     
-                    if(selectedComboBox.equals(thisClient))
+                    if(selectedComboBox.contains(thisClient))
                     {
                         parent.ShowChat(tmp);
                     }

@@ -47,7 +47,7 @@ public class FormChat extends javax.swing.JFrame implements Runnable {
             input = new BufferedReader(new InputStreamReader(client.getInputStream()));
             output = new DataOutputStream(client.getOutputStream());
             
-            output.writeBytes("JOIN\n");
+            output.writeBytes("JOIN \n");
             
             if(t == null)
             {
@@ -76,7 +76,7 @@ public class FormChat extends javax.swing.JFrame implements Runnable {
     private void SendChat(String msg)
     {
         try {
-            output.writeBytes(msg + "\n");
+            output.writeBytes(email + ";;" + msg + "\n");
             textArea.append("Me : " + msg + "\n");
         } catch (IOException ex) {
             Logger.getLogger(FormChat.class.getName()).log(Level.SEVERE, null, ex);
@@ -262,7 +262,7 @@ public class FormChat extends javax.swing.JFrame implements Runnable {
 
     private void btnSendActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSendActionPerformed
         String msg = txtChat.getText();
-        SendChat(email + ";;" + msg);
+        SendChat(msg);
         
     }//GEN-LAST:event_btnSendActionPerformed
 
@@ -321,6 +321,9 @@ public class FormChat extends javax.swing.JFrame implements Runnable {
 
     @Override
     public void run() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        while(true)
+        {
+            ShowChat();
+        }
     }
 }
