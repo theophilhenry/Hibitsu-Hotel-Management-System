@@ -172,17 +172,14 @@ public class Reservations extends DbConnection {
         return null;
     }
 
-    public String InsertReservation(String checkIn, String checkOut, Integer total_guest, String notes, Integer iduser, Integer idvilla) {
+    public String InsertReservation(Date checkIn, Date checkOut, Integer total_guest, String notes, Integer iduser, Integer idvilla) {
         getConnection();
         String message = "";
         try {
             if (!connect.isClosed()) {
-                //convert str date to Date
-                Date checkInDate = (Date) new SimpleDateFormat("dd/MM/yyyy").parse(checkIn);
-                Date checkOutDate = (Date) new SimpleDateFormat("dd/MM/yyyy").parse(checkOut);
 
                 //get totalPrice
-                Integer totalPrice = this.CalculateTotalPrice(checkInDate, checkOutDate, idvilla);
+                Integer totalPrice = this.CalculateTotalPrice(checkIn, checkOut, idvilla);
 
                 String check = this.CheckAvailability(idvilla, checkIn, checkOut);
                 if (check.equals("false")) {
@@ -197,8 +194,8 @@ public class Reservations extends DbConnection {
                 PreparedStatement sql = (PreparedStatement) connect.prepareStatement(query);
 
                 //set paramater
-                sql.setDate(1, checkInDate);
-                sql.setDate(2, checkOutDate);
+                sql.setDate(1, checkIn);
+                sql.setDate(2, checkOut);
                 sql.setInt(3, total_guest);
                 sql.setString(4, notes);
                 sql.setInt(5, totalPrice);
@@ -224,17 +221,14 @@ public class Reservations extends DbConnection {
         return message;
     }
 
-    public String UpdateReservation(String email, String checkIn, String checkOut, Integer total_guest, String notes, Integer idvilla) {
+    public String UpdateReservation(String email, Date checkIn, Date checkOut, Integer total_guest, String notes, Integer idvilla) {
 
         String message = "";
         try {
             if (!connect.isClosed()) {
-                //convert str date to Date
-                Date checkInDate = (Date) new SimpleDateFormat("dd/MM/yyyy").parse(checkIn);
-                Date checkOutDate = (Date) new SimpleDateFormat("dd/MM/yyyy").parse(checkOut);
                 
                 //get totalPrice
-                Integer totalPrice = this.CalculateTotalPrice(checkInDate, checkOutDate, idvilla);
+                Integer totalPrice = this.CalculateTotalPrice(checkIn, checkOut, idvilla);
 
                 String check = this.CheckAvailability(idvilla, checkIn, checkOut);
                 if (check.equals("false")) {
@@ -252,8 +246,8 @@ public class Reservations extends DbConnection {
                 PreparedStatement sql = (PreparedStatement) connect.prepareStatement(query);
 
                 //set paramater
-                sql.setDate(1, checkInDate);
-                sql.setDate(2, checkOutDate);
+                sql.setDate(1, checkIn);
+                sql.setDate(2, checkOut);
                 sql.setInt(3, total_guest);
                 sql.setString(4, notes);
                 sql.setInt(5, totalPrice);
@@ -366,17 +360,15 @@ public class Reservations extends DbConnection {
         return message;
     }
 
-    public String CheckAvailability(Integer idvilla, String checkIn, String checkOut) {
+    public String CheckAvailability(Integer idvilla, Date checkIn, Date checkOut) {
         String message = "";
         try {
             if (!connect.isClosed()) {
                 String ket = "[1]hasilUploadPayment;;";
                 //check tanggal dulu
-                 //convert str date to Date
-                Date checkInDate = (Date) new SimpleDateFormat("dd/MM/yyyy").parse(checkIn);
-                Date checkOutDate = (Date) new SimpleDateFormat("dd/MM/yyyy").parse(checkOut);
+              
                 
-                if (checkInDate.after(checkOutDate)) {
+                if (checkIn.after(checkOut)) {
                     return ket + "Pleaase input checkout date greater than checkin date";
                 }
                 // set query
@@ -390,12 +382,12 @@ public class Reservations extends DbConnection {
 
                 //set paramater
                 sql.setInt(1, idvilla);
-                sql.setDate(2, checkInDate);
-                sql.setDate(3, checkInDate);
-                sql.setDate(4, checkOutDate);
-                sql.setDate(5, checkOutDate);
-                sql.setDate(6, checkInDate);
-                sql.setDate(7, checkOutDate);
+                sql.setDate(2, checkIn);
+                sql.setDate(3, checkIn);
+                sql.setDate(4, checkOut);
+                sql.setDate(5, checkOut);
+                sql.setDate(6, checkIn);
+                sql.setDate(7, checkOut);
 
                 result = sql.executeQuery();
 

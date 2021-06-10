@@ -55,10 +55,12 @@ public class WebServiceServer extends DbConnection {
     //[BOOKNOW - 2], [APP - DASHBOARD]
     @WebMethod(operationName = "CheckAvailability")
     public String CheckAvailability(@WebParam(name = "idvilla") Integer idvilla,
-            @WebParam(name = "checkin") String checkin,
-            @WebParam(name = "checkout") String checkout) {
+            @WebParam(name = "checkin") String checkIn,
+            @WebParam(name = "checkout") String checkOut) {
         try {
-            String result = model_Reservation.CheckAvailability(idvilla, checkin, checkout);
+            Date checkInDate = (Date) new SimpleDateFormat("dd/MM/yyyy").parse(checkIn);
+            Date checkOutDate = (Date) new SimpleDateFormat("dd/MM/yyyy").parse(checkOut);
+            String result = model_Reservation.CheckAvailability(idvilla, checkInDate, checkOutDate);
             return result;
         } catch (Exception ex) {
             System.out.println("Error CheckAvailability: " + ex);
@@ -68,14 +70,16 @@ public class WebServiceServer extends DbConnection {
 
     //[BOOKNOW - 2], [APP - DASHBOARD]
     @WebMethod(operationName = "InsertReservation")
-    public String InsertReservation(@WebParam(name = "checkin_date") String checkin,
-            @WebParam(name = "checkout_date") String checkout,
+    public String InsertReservation(@WebParam(name = "checkin_date") String checkIn,
+            @WebParam(name = "checkout_date") String checkOut,
             @WebParam(name = "total_guest") Integer total_guest,
             @WebParam(name = "notes") String notes,
             @WebParam(name = "iduser") Integer iduser,
             @WebParam(name = "idvilla") Integer idvilla) {
         try {
-            String result = model_Reservation.InsertReservation(checkin, checkout, total_guest, notes, iduser, idvilla);
+            Date checkInDate = (Date) new SimpleDateFormat("dd/MM/yyyy").parse(checkIn);
+            Date checkOutDate = (Date) new SimpleDateFormat("dd/MM/yyyy").parse(checkOut);
+            String result = model_Reservation.InsertReservation(checkInDate, checkOutDate, total_guest, notes, iduser, idvilla);
             return result;
         } catch (Exception ex) {
             System.out.println("Error CheckAvailability: " + ex);
@@ -177,14 +181,21 @@ public class WebServiceServer extends DbConnection {
     //[ORDERDETAILS]
     @WebMethod(operationName = "UpdateReservation")
     public String UpdateReservation(@WebParam(name = "email") String email,
-            @WebParam(name = "checkin_date") String checkin,
-            @WebParam(name = "checkout_date") String checkout,
+            @WebParam(name = "checkin_date") String checkIn,
+            @WebParam(name = "checkout_date") String checkOut,
             @WebParam(name = "total_guest") Integer total_guest,
             @WebParam(name = "notes") String notes,
             @WebParam(name = "iduser") Integer iduser,
             @WebParam(name = "idvilla") Integer idvilla) {
-        String result = model_Reservation.UpdateReservation(email, checkin, checkout, total_guest, notes, iduser);
-        return result;
+        try {
+            Date checkInDate = (Date) new SimpleDateFormat("dd/MM/yyyy").parse(checkIn);
+            Date checkOutDate = (Date) new SimpleDateFormat("dd/MM/yyyy").parse(checkOut);
+            String result = model_Reservation.UpdateReservation(email, checkInDate, checkOutDate, total_guest, notes, iduser);
+            return result;
+        } catch (Exception ex) {
+            System.out.println("Error Insert Chat: " + ex);
+        }
+        return null;
     }
 
     //[ORDERDETAILS]
