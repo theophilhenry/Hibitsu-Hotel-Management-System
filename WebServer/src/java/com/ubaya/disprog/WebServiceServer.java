@@ -58,8 +58,8 @@ public class WebServiceServer extends DbConnection {
             @WebParam(name = "checkin") String checkIn,
             @WebParam(name = "checkout") String checkOut) {
         try {
-            Date checkInDate = (Date) new SimpleDateFormat("dd/MM/yyyy").parse(checkIn);
-            Date checkOutDate = (Date) new SimpleDateFormat("dd/MM/yyyy").parse(checkOut);
+            Date checkInDate = Date.valueOf(checkIn);
+            Date checkOutDate = Date.valueOf(checkOut);
             String result = model_Reservation.CheckAvailability(idvilla, checkInDate, checkOutDate);
             return result;
         } catch (Exception ex) {
