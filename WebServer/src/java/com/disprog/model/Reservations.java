@@ -7,6 +7,7 @@ package com.disprog.model;
 
 import java.sql.Date;
 import com.mysql.jdbc.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.text.ParseException;
@@ -207,7 +208,8 @@ public class Reservations extends DbConnection {
 
                 if (affectedResult > 0) {
                     String ket = "[1]hasilInsertReservation,[2]idreservation;;";
-                    int idreservation = result.getInt(1);
+                    ResultSet generatedKeys = sql.getGeneratedKeys();
+                    idreservation = generatedKeys.getInt(1);
                     return ket + "true;;" + idreservation;
                 } else {
                     String ket = "[1]hasilInsertReservation;;";
