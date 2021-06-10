@@ -8,6 +8,7 @@ package com.disprog.model;
 import com.mysql.jdbc.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -95,30 +96,34 @@ public class Chats extends DbConnection {
     //<editor-fold defaultstate="collapsed" desc="Methods">
     public String InsertChat(Integer idsender, Integer idreceiver, String messages) {
         try {
-            getConnection();
-            String idconversation = "";
-            if (idsender > idreceiver) {
-                idconversation = idsender + "_" + idreceiver;
+            if (!connect.isClosed()) {
+                String idconversation = "";
+                if (idsender > idreceiver) {
+                    idconversation = idsender + "_" + idreceiver;
+                } else {
+                    idconversation = idreceiver + "_" + idsender;
+                }
+                String query = "INSERT INTO chats (idsender, idreceiver, idconversation, message) values (?, ?, ?, ?)";
+
+                // set preparedStatement
+                PreparedStatement sql = (PreparedStatement) connect.prepareStatement(query);
+
+                //set paramater
+                sql.setInt(1, idsender);
+                sql.setInt(2, idreceiver);
+                sql.setString(3, idconversation);
+                sql.setString(4, messages);
+                result = sql.executeQuery();
+
+                //nanti mau diatur lagi return nya seperti 
+                String ket = "[1]hasilInsertChats;;";
+                if (result.next()) {
+                    return ket + "true";
+                } else {
+                    return ket + "false";
+                }
             } else {
-                idconversation = idreceiver + "_" + idsender;
-            }
-            String query = "INSERT INTO chats (idsender, idreceiver, idconversation, message) values (?, ?, ?, ?)";
-
-            // set preparedStatement
-            PreparedStatement sql = (PreparedStatement) connect.prepareStatement(query);
-
-            //set paramater
-            sql.setInt(1, idsender);
-            sql.setInt(2, idreceiver);
-            sql.setString(3, idconversation);
-            sql.setString(4, messages);
-            result = sql.executeQuery();
-
-            //nanti mau diatur lagi return nya seperti apa
-            if (result.next()) {
-                return "true";
-            } else {
-                return "false";
+                System.out.println("Tidak terkoneksi database");
             }
         } catch (SQLException ex) {
             Logger.getLogger(Chats.class.getName()).log(Level.SEVERE, null, ex);
@@ -128,27 +133,35 @@ public class Chats extends DbConnection {
 
     public String DisplayChat(Integer idsender, Integer idreceiver) {
         getConnection();
+        ArrayList<String> listOfChat = new ArrayList<>();
         String message = "";
         try {
-            // set query
-            String query = "SELECT * FROM chats WHERE (idsender=? and idreceiver=?) "
-                    + "or (idsender=? and idreceiver=?) ORDER BY cht_timestamp;";
+            if (!connect.isClosed()) {
+                // set query
+                String query = "SELECT * FROM chats WHERE (idsender=? and idreceiver=?) "
+                        + "or (idsender=? and idreceiver=?) ORDER BY cht_timestamp;";
 
-            // set preparedStatement
-            PreparedStatement sql = (PreparedStatement) connect.prepareStatement(query);
+                // set preparedStatement
+                PreparedStatement sql = (PreparedStatement) connect.prepareStatement(query);
 
-            //set paramater
-            sql.setInt(1, idsender);
-            sql.setInt(2, idreceiver);
-            sql.setInt(3, idsender);
-            sql.setInt(4, idreceiver);
+                //set paramater
+                sql.setInt(1, idsender);
+                sql.setInt(2, idreceiver);
+                sql.setInt(3, idsender);
+                sql.setInt(4, idreceiver);
 
-            result = sql.executeQuery();
-            while (result.next()) {
-                //code di sini untuk get nya
+                result = sql.executeQuery();
+                String ket = "[1]hasilInsertChats,[2]idsender,[3]messages;;";
+                while (result.next()) {
+                    String hasil = String.valueOf(result.getInt("idsender"))+
+                                    result.getString("messages");
+                    listOfChat.add(ket+hasil);
+                }
+                connect.close();
+                return message;
+            } else {
+                System.out.println("Tidak terkoneksi database");
             }
-            connect.close();
-            return message;
         } catch (SQLException ex) {
             System.out.println("Error Insert Chat: " + ex);
         }

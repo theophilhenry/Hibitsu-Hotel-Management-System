@@ -100,9 +100,9 @@ public class WebServiceServer extends DbConnection {
 
     //[TRACKORDER]
     @WebMethod(operationName = "UploadPayment")
-    public String UploadPayment(@WebParam(name = "bukti_pembayaran") FileInputStream bukti_pembayaran,
+    public String UploadPayment(@WebParam(name = "url_bukti_pembayaran") String url_bukti_pembayaran,
             @WebParam(name = "idreservation") Integer idreservation) {
-        String result = model_Reservation.UploadPayment(bukti_pembayaran, idreservation);
+        String result = model_Reservation.UploadPayment(url_bukti_pembayaran, idreservation);
         return result;
     }
 
@@ -127,9 +127,9 @@ public class WebServiceServer extends DbConnection {
             @WebParam(name = "phoneNumber") String phoneNumber,
             @WebParam(name = "email") String email,
             @WebParam(name = "password") String password,
-            @WebParam(name = "ktp") String ktp) {
+            @WebParam(name = "no_ktp") String no_ktp) {
 
-        String result = model_User.Registration(fullname, display_name, phoneNumber, email, password, ktp);
+        String result = model_User.Registration(fullname, display_name, phoneNumber, email, password, no_ktp);
         return result;
     }
 
@@ -174,13 +174,14 @@ public class WebServiceServer extends DbConnection {
 
     //[ORDERDETAILS]
     @WebMethod(operationName = "UpdateReservation")
-    public String UpdateReservation(@WebParam(name = "checkin_date") Date checkin,
+    public String UpdateReservation(@WebParam(name = "email") String email,
+            @WebParam(name = "checkin_date") Date checkin,
             @WebParam(name = "checkout_date") Date checkout,
             @WebParam(name = "total_guest") Integer total_guest,
             @WebParam(name = "notes") String notes,
             @WebParam(name = "iduser") Integer iduser,
             @WebParam(name = "idvilla") Integer idvilla) {
-        //code dibawah ini
+        String result = model_Reservation.UpdateReservation(email,checkin,checkout, total_guest, notes, iduser);
         return null;
     }
 

@@ -11,12 +11,7 @@ BookNow 3:
 - TrackOrder2(idreservation)
 TrackOrder:
 - TrackOrder1(idreservation) [SAMA] 
-- UploadPayment(idreservation, BLOB upload)
-
-
-Tambahan:
-TrackOrder1
-TrackOrder2
+- UploadPayment(idreservation,url_bukti_pembayaran)
 
 Login Client
 - LoginClient(email, password)
@@ -31,6 +26,7 @@ DASHBOARD
 - CheckAvaibility(idvilla, checkin, checkout) [SAMA SEPERTI WEB]
 - InsertReservation(checkin,checkout,total_guest, notes, iduser,idvilla) return idreservation [SAMA SEPERTI WEB]
 !- DisplayReservationAll(kriteria,dicari) [yg ditampilin hanya tanggal checkout diatas sekarang]
+!- BacaData(String kriteria, String dicari) 
 
 ORDER DETAILS
 - ChangeStatus(idreservation, status)
@@ -38,3 +34,6 @@ ORDER DETAILS
 !- DisplayPayment(idreservation)
 !- UpdateReservation(idreservation,dst(tanpa bukti))
 
+Chats 
+- public String InsertChat(Integer idsender, Integer idreceiver, String messages)
+- public ArrayList<String> DisplayChat(Integer idsender, Integer idreceiver)

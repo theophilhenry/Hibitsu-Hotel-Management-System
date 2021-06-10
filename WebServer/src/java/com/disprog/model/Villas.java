@@ -6,8 +6,6 @@
 package com.disprog.model;
 
 import com.mysql.jdbc.PreparedStatement;
-import java.sql.Blob;
-
 /**
  *
  * @author ohanna
@@ -22,7 +20,7 @@ public class Villas extends DbConnection {
     private int total_bathroom;
     private String unit_size;
     private String fasilities;
-    private String photo;
+    private String url_photo;
     private String description;
     //</editor-fold>
 
@@ -31,7 +29,7 @@ public class Villas extends DbConnection {
         getConnection();
     }
 
-    public Villas(int idvilla, String name, String address, int total_bedroom, int total_bathroom, String unit_size, String fasilities, String photo, String description) {
+    public Villas(int idvilla, String name, String address, int total_bedroom, int total_bathroom, String unit_size, String fasilities, String url_photo, String description) {
         getConnection();
         this.idvilla = idvilla;
         this.name = name;
@@ -40,7 +38,7 @@ public class Villas extends DbConnection {
         this.total_bathroom = total_bathroom;
         this.unit_size = unit_size;
         this.fasilities = fasilities;
-        this.photo = photo;
+        this.url_photo = url_photo;
         this.description = description;
     }
     //</editor-fold>
@@ -102,12 +100,12 @@ public class Villas extends DbConnection {
         this.fasilities = fasilities;
     }
 
-    public String getPhoto() {
-        return photo;
+    public String getUrl_photo() {
+        return url_photo;
     }
 
-    public void setPhoto(String photo) {
-        this.photo = photo;
+    public void setUrl_photo(String url_photo) {
+        this.url_photo = url_photo;
     }
 
     public String getDescription() {
@@ -124,7 +122,7 @@ public class Villas extends DbConnection {
         try {
             if (!connect.isClosed()) {
                 //set query
-                String query = "SELECT `idvilla`,`name`,`description`,`photo` FROM `villas`";
+                String query = "SELECT `idvilla`,`name`,`description`,`url_photo` FROM `villas`";
 
                 //set preparedStatement
                 PreparedStatement sql = (PreparedStatement) connect.prepareStatement(query);
@@ -132,16 +130,11 @@ public class Villas extends DbConnection {
 
                 //nanti mau diatur lagi return nya seperti apa
                 while (result.next()) {
-//                    Blob blob = result.getBlob("photo");
-//                    byte[] bdata = blob.getBytes(1, (int) blob.length());
-//                    String s = new String(bdata);
-
-                    String ket = "[1]idvilla,[2]name,[3]description,[4]photo;;";
+                    String ket = "[1]idvilla,[2]name,[3]description,[4]url_photo;;";
                     String hasil = String.valueOf(result.getInt("idvilla")) + ";;"
                             + result.getString("name") + ";;"
                             + result.getString("description") + ";;"
-                            + String.valueOf(result.getBlob("photo"))
-                            + "||";
+                            + result.getString("url_photo") + "||";
                     return ket + hasil;
                 }
 
@@ -170,7 +163,7 @@ public class Villas extends DbConnection {
                 if (result.next()) {
                     String ket = "[1]hasilDisplayVillaId,[2]idvilla,[3]name,"
                             + "[4]address,[5]total_bedroom,[5]total_bathroom,"
-                            + "[6]facilities,[7]unit_size,[8]photo,[9]price,[10]description;;";
+                            + "[6]facilities,[7]unit_size,[8]url_photo,[9]price,[10]description;;";
                     String hasil = String.valueOf(result.getInt("idvilla")) + ";;"
                             + result.getString("name") + ";;"
                             + result.getString("address") + ";;"
@@ -178,7 +171,7 @@ public class Villas extends DbConnection {
                             + String.valueOf(result.getInt("total_bathroom")) + ";;"
                             + result.getString("facilities") + ";;"
                             + result.getString("unit_size") + ";;"
-                            + String.valueOf(result.getBlob("photo")) + ";;"
+                            + result.getString("url_photo") + ";;"
                             + String.valueOf(result.getInt("price")) + ";;"
                             + result.getString("description") + ";;";
 

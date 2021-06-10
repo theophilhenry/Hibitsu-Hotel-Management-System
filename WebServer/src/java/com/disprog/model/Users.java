@@ -25,7 +25,7 @@ public class Users extends DbConnection {
     private String email;
     private String password;
     private String role;
-    private String ktp;
+    private String no_ktp;
     //</editor-fold>
 
     //<editor-fold defaultstate="collapsed" desc="Constructors">
@@ -33,7 +33,7 @@ public class Users extends DbConnection {
         getConnection();
     }
 
-    public Users(int iduser, String fullname, String display_name, String phoneNumber, String email, String password, String role, String ktp) {
+    public Users(int iduser, String fullname, String display_name, String phoneNumber, String email, String password, String role, String no_ktp) {
         getConnection();
         this.iduser = iduser;
         this.fullname = fullname;
@@ -42,7 +42,7 @@ public class Users extends DbConnection {
         this.email = email;
         this.password = password;
         this.role = role;
-        this.ktp = ktp;
+        this.no_ktp = no_ktp;
     }
 
     //</editor-fold>
@@ -103,12 +103,12 @@ public class Users extends DbConnection {
         this.role = role;
     }
 
-    public String getKtp() {
-        return ktp;
+    public String getNo_ktp() {
+        return no_ktp;
     }
 
-    public void setKtp(String ktp) {
-        this.ktp = ktp;
+    public void setNo_ktp(String no_ktp) {
+        this.no_ktp = no_ktp;
     }
     //</editor-fold>
 
@@ -183,15 +183,11 @@ public class Users extends DbConnection {
         return null;
     }
 
-    public String Registration(String fullname, String display_name, String phoneNumber, String email, String password, String ktp) {
+    public String Registration(String fullname, String display_name, String phoneNumber, String email, String password, String no_ktp) {
         try {
             // set query
-            String query = "INSERT INTO users(`fullname`,`display_name`,`phoneNumber`,`email`,`password`,`ktp`) "
+            String query = "INSERT INTO users(`fullname`,`display_name`,`phoneNumber`,`email`,`password`,`no_ktp`) "
                     + "VALUES(?,?,?,?,?,?)";
-
-            // read file
-            File file = new File(ktp);
-            FileInputStream inputFile = new FileInputStream(file);
 
             // set preparedStatement
             PreparedStatement sql = (PreparedStatement) connect.prepareStatement(query);
@@ -202,12 +198,9 @@ public class Users extends DbConnection {
             sql.setString(3, phoneNumber);
             sql.setString(4, email);
             sql.setString(5, password);
-            sql.setBinaryStream(6, inputFile);
-
-            // store the resume file in database (to test if we can read the data)
-            System.out.println("Reading file " + file.getAbsolutePath());
-
+            sql.setString(6, no_ktp);
             result = sql.executeQuery();
+            
             String ket = "[1]hasilRegis;;";
             if (result.next()) {
                 return ket + "true";
@@ -215,7 +208,7 @@ public class Users extends DbConnection {
                 return ket + "false";
             }
 
-        } catch (SQLException | FileNotFoundException ex) {
+        } catch (SQLException ex) {
 
             System.out.println("Error Registration: " + ex);
         }
