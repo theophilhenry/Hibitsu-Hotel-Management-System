@@ -184,7 +184,7 @@ public class Reservations extends DbConnection {
                 Integer totalPrice = this.CalculateTotalPrice(checkIn, checkOut, idvilla);
 
                 String check = this.CheckAvailability(idvilla, checkIn, checkOut);
-                if (check.equals("true")) {
+                if (check.contains("false")) {
                     String ket = "[1]hasilInsertReservation;;";
                     return ket + "false";
                 }
@@ -194,7 +194,7 @@ public class Reservations extends DbConnection {
                         + "VALUES(?,?,?,?,?,?,?)";
 
                 // set preparedStatement
-                PreparedStatement sql = (PreparedStatement) connect.prepareStatement(query,Statement.RETURN_GENERATED_KEYS);
+                PreparedStatement sql = (PreparedStatement) connect.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
 
                 //set paramater
                 sql.setDate(1, checkIn);
@@ -214,7 +214,7 @@ public class Reservations extends DbConnection {
                         idreservation = generatedKeys.getInt(1);
                     }
                     return ket + "true;;" + idreservation;
-                   
+
                 } else {
                     String ket = "[1]hasilInsertReservation;;";
                     return ket + "false";
@@ -238,8 +238,9 @@ public class Reservations extends DbConnection {
                 Integer totalPrice = this.CalculateTotalPrice(checkIn, checkOut, idvilla);
 
                 String check = this.CheckAvailability(idvilla, checkIn, checkOut);
-                if (check.equals("false")) {
-                    return "false";
+                if (check.contains("false")) {
+                    String ket = "[1]hasilUpdateReservation;;";
+                    return ket+"false";
                 }
 
                 // set query
@@ -264,8 +265,11 @@ public class Reservations extends DbConnection {
                 int affectedResult = sql.executeUpdate();
 
                 if (affectedResult > 0) {
-                    String ket = "[1]hasilInsertReservation,[2]idreservation;;";
-                    int idreservation = result.getInt(1);
+                    String ket = "[1]hasilUpdateReservation,[2]idreservation;;";
+                    ResultSet generatedKeys = sql.getGeneratedKeys();
+                    if (generatedKeys.next()) {
+                        idreservation = generatedKeys.getInt(1);
+                    }
                     return ket + "true;;" + idreservation;
                 } else {
                     String ket = "[1]hasilInsertReservation;;";
@@ -297,7 +301,6 @@ public class Reservations extends DbConnection {
                 int affectedResult = sql.executeUpdate();
 
                 if (affectedResult > 0) {
-
                     return ket + "true";
                 } else {
                     return ket + "false";
@@ -377,29 +380,33 @@ public class Reservations extends DbConnection {
                     return ket + "Pleaase input checkout date greater than checkin date";
                 }
                 // set query
-                String query = "SELECT * FROM reservations WHERE idvilla = ? &&"
-                        + "((checkin_date <= ? AND checkout_date >= ?) || "
-                        + "(checkin_date <= ? AND checkout_date >= ?)|| "
-                        + "(checkin_date >= ? AND checkout_date <= ?))";
+//                String query = "SELECT * FROM reservations WHERE idvilla = ? &&"
+//                        + "((checkin_date <= ? AND checkout_date >= ?) || "
+//                        + "(checkin_date <= ? AND checkout_date >= ?)|| "
+//                        + "(checkin_date >= ? AND checkout_date <= ?))";
 
+                String query = "SELECT * FROM reservations WHERE idvilla = ? &&"
+                        + "checkin <= ? AND checkout >= ?";
                 // set preparedStatement
                 PreparedStatement sql = (PreparedStatement) connect.prepareStatement(query);
 
-                //set paramater
-                sql.setInt(1, idvilla);
                 sql.setDate(2, checkIn);
-                sql.setDate(3, checkIn);
-                sql.setDate(4, checkOut);
-                sql.setDate(5, checkOut);
-                sql.setDate(6, checkIn);
-                sql.setDate(7, checkOut);
+                sql.setDate(1, checkOut);
 
+                //set paramater
+//                sql.setInt(1, idvilla);
+//                sql.setDate(2, checkIn);
+//                sql.setDate(3, checkIn);
+//                sql.setDate(4, checkOut);
+//                sql.setDate(5, checkOut);
+//                sql.setDate(6, checkIn);
+//                sql.setDate(7, checkOut);
                 result = sql.executeQuery();
 
                 if (result.next()) {
-                    return ket + "true";//karena ditemukan yg bentrok
+                    return ket + "false";//karena ditemukan yg bentrok
                 } else {
-                    return ket + "false";
+                    return ket + "true";
                 }
             } else {
                 System.out.println("Tidak terkoneksi database");
@@ -512,7 +519,7 @@ public class Reservations extends DbConnection {
                         + result.getString("no_ktp");
                 listOfReservation.add(ket + "true;;" + hasil);
             }
-
+            return listOfReservation;
         } catch (SQLException ex) {
             Logger.getLogger(Reservations.class.getName()).log(Level.SEVERE, null, ex);
         }
