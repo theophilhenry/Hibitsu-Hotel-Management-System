@@ -53,8 +53,8 @@ public class FormDashboard extends javax.swing.JFrame implements Runnable {
     {
         String[] msgSplit = msg.split(";;");
         String content = msgSplit[1];
-        
-        textArea.append(msg + "\n");
+        String clientName = comboBoxClient.getSelectedItem().toString();
+        textArea.append(clientName + " : " + content + "\n");
         
     }
     
@@ -73,25 +73,29 @@ public class FormDashboard extends javax.swing.JFrame implements Runnable {
         
         if(email.equals("1"))
         {
-            textArea.append("--- LOGIN : 1 ---\n" );
+            
             status = "[1]keteranganTrue/false,[2]nama;;true;;jasti";
         }
         
-        if(email.equals("2"))
+        else if(email.equals("2"))
         {
-            textArea.append("--- LOGIN : 2 ---\n" );
+           
             status = "[1]keteranganTrue/false,[2]nama;;true;;theo";
         }
-        if(email.equals("3"))
+        else if(email.equals("3"))
         {
-            textArea.append("--- LOGIN : 3 ---\n" );
+            
             status = "[1]keteranganTrue/false,[2]nama;;true;;toto";
+        }
+        else
+        {
+            status = "[1]keteranganTrue/false,[2]nama;;Your username or password is incorrect";
         }
         
         return(status);
     }
     
-    public void SendChatToOne(String msg, Socket yangDikirim)
+    public void SendChatToOne(String msg)
     {
         for(HandleSocket client : clientsArr)
         {
@@ -437,6 +441,8 @@ public class FormDashboard extends javax.swing.JFrame implements Runnable {
 
     private void buttonSendActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonSendActionPerformed
         String msg = textChat.getText();
+        SendChatToOne(msg);
+        textArea.append("Admin : " + msg + "\n");
         
     }//GEN-LAST:event_buttonSendActionPerformed
 
