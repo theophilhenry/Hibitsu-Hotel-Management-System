@@ -34,7 +34,7 @@ public class FormChat extends javax.swing.JFrame implements Runnable {
         this.getContentPane().setBackground(Color.WHITE);
     }
     
-    public FormChat(Socket inClient, String _email, String _displayName )
+    public FormChat(Socket inClient /*String _email, String _displayName*/ )
     {
         try {
             initComponents();
@@ -42,8 +42,8 @@ public class FormChat extends javax.swing.JFrame implements Runnable {
             this.getContentPane().setBackground(Color.WHITE);
             
             client = inClient;
-            email = _email;
-            displayName = _displayName;
+            //email = _email;
+            //displayName = _displayName;
             input = new BufferedReader(new InputStreamReader(client.getInputStream()));
             output = new DataOutputStream(client.getOutputStream());
             
@@ -77,6 +77,7 @@ public class FormChat extends javax.swing.JFrame implements Runnable {
     {
         try {
             output.writeBytes(msg + "\n");
+            textArea.append("Me : " + msg + "\n");
         } catch (IOException ex) {
             Logger.getLogger(FormChat.class.getName()).log(Level.SEVERE, null, ex);
         }

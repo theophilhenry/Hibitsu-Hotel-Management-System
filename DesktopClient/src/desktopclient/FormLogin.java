@@ -142,11 +142,11 @@ public class FormLogin extends javax.swing.JFrame {
             
             output.writeBytes("LOGIN;;" + email + ";;" + password + "\n");
             String status = input.readLine();
-            if(status.contains("true;;"))
+            if(status.contains("true"))
             {
                 String[] arr = status.split(";;");
                 
-                FormChat fc = new FormChat(client,email,arr[1]);
+                FormChat fc = new FormChat(client/*,email,arr[1]*/);
                 fc.setVisible(true);
                 this.dispose();
             }

@@ -69,8 +69,8 @@ public class HandleSocket extends Thread{
                     
                     String status = parent.LoginUser(loginEmail, loginPassword);
                     String[] arr = status.split(";;");
-                    
-                    displayName = arr[1];
+                    status = arr[1];
+                    displayName = arr[2];
                     output.writeBytes(status+"\n");
                     
                     

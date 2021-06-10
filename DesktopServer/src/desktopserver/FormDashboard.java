@@ -74,29 +74,29 @@ public class FormDashboard extends javax.swing.JFrame implements Runnable {
         if(email.equals("1"))
         {
             textArea.append("--- LOGIN : 1 ---\n" );
-            status = "true;;Jasti";
+            status = "[1]keteranganTrue/false,[2]nama;;true;;jasti";
         }
         
         if(email.equals("2"))
         {
             textArea.append("--- LOGIN : 2 ---\n" );
-            status = "true;;Theo";
+            status = "[1]keteranganTrue/false,[2]nama;;true;;theo";
         }
         if(email.equals("3"))
         {
             textArea.append("--- LOGIN : 3 ---\n" );
-            status = "true;;Toto";
+            status = "[1]keteranganTrue/false,[2]nama;;true;;toto";
         }
         
         return(status);
     }
     
-    public void BroadCast(String msg, Socket yangDikirim)
+    public void SendChatToOne(String msg, Socket yangDikirim)
     {
         for(HandleSocket client : clientsArr)
         {
             
-            if(client.email.equals("THEO@GMAIL"))
+            if(comboBoxClient.getSelectedItem().toString().contains(client.email))
             {
                 client.SendChat(msg);
             }
