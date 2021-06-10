@@ -175,7 +175,6 @@ public class Reservations extends DbConnection {
 
     public String InsertReservation(Date checkIn, Date checkOut, Integer total_guest, String notes, Integer iduser, Integer idvilla) {
         getConnection();
-        String message = "";
         try {
             if (!connect.isClosed()) {
 
@@ -207,10 +206,11 @@ public class Reservations extends DbConnection {
                 int affectedResult = sql.executeUpdate();
 
                 if (affectedResult > 0) {
-                    String ket = "[1]hasilInsertReservation,[2]idreservation;;";
-                    ResultSet generatedKeys = sql.getGeneratedKeys();
-                    idreservation = generatedKeys.getInt(1);
-                    return ket + "true;;" + idreservation;
+//                    String ket = "[1]hasilInsertReservation,[2]idreservation;;";
+//                    ResultSet generatedKeys = sql.getGeneratedKeys();
+//                    idreservation = generatedKeys.getInt(1);
+//                    return ket + "true;;" + idreservation;
+                        return "true";
                 } else {
                     String ket = "[1]hasilInsertReservation;;";
                     return ket + "false";
@@ -221,7 +221,7 @@ public class Reservations extends DbConnection {
         } catch (Exception ex) {
             System.out.println("Error InsertReservation: " + ex);
         }
-        return message;
+        return null;
     }
 
     public String UpdateReservation(String email, Date checkIn, Date checkOut, Integer total_guest, String notes, Integer idvilla) {
