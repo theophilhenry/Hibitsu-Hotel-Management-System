@@ -140,19 +140,19 @@ public class FormDashboard extends javax.swing.JFrame implements Runnable {
         panelBooking = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        txtEmail = new javax.swing.JTextField();
+        textEmail = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
-        txtNotes = new javax.swing.JTextField();
-        btnBook = new javax.swing.JButton();
-        btnCheck = new javax.swing.JButton();
+        textNotes = new javax.swing.JTextField();
+        buttonBook = new javax.swing.JButton();
+        buttonCheck = new javax.swing.JButton();
         comboBoxVillaType = new javax.swing.JComboBox<>();
         dateCheckOut = new com.toedter.calendar.JDateChooser();
         dateCheckIn = new com.toedter.calendar.JDateChooser();
-        txtTotalGuest = new com.toedter.components.JSpinField();
+        textTotalGuest = new com.toedter.components.JSpinField();
         comboBoxClient = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -282,7 +282,7 @@ public class FormDashboard extends javax.swing.JFrame implements Runnable {
         jLabel3.setFont(new java.awt.Font("Rubik", 0, 14)); // NOI18N
         jLabel3.setText("Email");
 
-        txtEmail.setFont(new java.awt.Font("Rubik", 0, 14)); // NOI18N
+        textEmail.setFont(new java.awt.Font("Rubik", 0, 14)); // NOI18N
 
         jLabel4.setFont(new java.awt.Font("Rubik", 0, 14)); // NOI18N
         jLabel4.setText("Villa Type");
@@ -299,17 +299,27 @@ public class FormDashboard extends javax.swing.JFrame implements Runnable {
         jLabel8.setFont(new java.awt.Font("Rubik", 0, 14)); // NOI18N
         jLabel8.setText("Notes");
 
-        txtNotes.setFont(new java.awt.Font("Rubik", 0, 14)); // NOI18N
+        textNotes.setFont(new java.awt.Font("Rubik", 0, 14)); // NOI18N
 
-        btnBook.setBackground(new java.awt.Color(8, 191, 91));
-        btnBook.setFont(new java.awt.Font("Rubik", 1, 14)); // NOI18N
-        btnBook.setForeground(new java.awt.Color(255, 255, 255));
-        btnBook.setText("BOOK");
+        buttonBook.setBackground(new java.awt.Color(8, 191, 91));
+        buttonBook.setFont(new java.awt.Font("Rubik", 1, 14)); // NOI18N
+        buttonBook.setForeground(new java.awt.Color(255, 255, 255));
+        buttonBook.setText("BOOK");
+        buttonBook.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonBookActionPerformed(evt);
+            }
+        });
 
-        btnCheck.setBackground(new java.awt.Color(8, 191, 91));
-        btnCheck.setFont(new java.awt.Font("Rubik", 1, 14)); // NOI18N
-        btnCheck.setForeground(new java.awt.Color(255, 255, 255));
-        btnCheck.setText("CHECK");
+        buttonCheck.setBackground(new java.awt.Color(8, 191, 91));
+        buttonCheck.setFont(new java.awt.Font("Rubik", 1, 14)); // NOI18N
+        buttonCheck.setForeground(new java.awt.Color(255, 255, 255));
+        buttonCheck.setText("CHECK");
+        buttonCheck.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonCheckActionPerformed(evt);
+            }
+        });
 
         comboBoxVillaType.setFont(new java.awt.Font("Rubik", 0, 14)); // NOI18N
         comboBoxVillaType.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
@@ -318,8 +328,8 @@ public class FormDashboard extends javax.swing.JFrame implements Runnable {
 
         dateCheckIn.setBackground(java.awt.Color.white);
 
-        txtTotalGuest.setBackground(java.awt.Color.white);
-        txtTotalGuest.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        textTotalGuest.setBackground(java.awt.Color.white);
+        textTotalGuest.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
 
         javax.swing.GroupLayout panelBookingLayout = new javax.swing.GroupLayout(panelBooking);
         panelBooking.setLayout(panelBookingLayout);
@@ -337,11 +347,11 @@ public class FormDashboard extends javax.swing.JFrame implements Runnable {
                             .addGroup(panelBookingLayout.createSequentialGroup()
                                 .addComponent(jLabel8)
                                 .addGap(18, 18, 18)
-                                .addComponent(txtNotes, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(textNotes, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(panelBookingLayout.createSequentialGroup()
                                 .addComponent(jLabel7)
                                 .addGap(18, 18, 18)
-                                .addComponent(txtTotalGuest, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(textTotalGuest, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(panelBookingLayout.createSequentialGroup()
                                 .addComponent(jLabel6)
                                 .addGap(18, 18, 18)
@@ -357,11 +367,11 @@ public class FormDashboard extends javax.swing.JFrame implements Runnable {
                             .addGroup(panelBookingLayout.createSequentialGroup()
                                 .addComponent(jLabel3)
                                 .addGap(18, 18, 18)
-                                .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addComponent(textEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelBookingLayout.createSequentialGroup()
-                        .addComponent(btnCheck, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(buttonCheck, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnBook, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(buttonBook, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(49, 49, 49))
         );
         panelBookingLayout.setVerticalGroup(
@@ -372,7 +382,7 @@ public class FormDashboard extends javax.swing.JFrame implements Runnable {
                 .addGap(18, 18, 18)
                 .addGroup(panelBookingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(textEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(panelBookingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
@@ -394,15 +404,15 @@ public class FormDashboard extends javax.swing.JFrame implements Runnable {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(panelBookingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel7)
-                    .addComponent(txtTotalGuest, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(textTotalGuest, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(panelBookingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel8)
-                    .addComponent(txtNotes, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(textNotes, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(panelBookingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnBook)
-                    .addComponent(btnCheck))
+                    .addComponent(buttonBook)
+                    .addComponent(buttonCheck))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -461,6 +471,14 @@ public class FormDashboard extends javax.swing.JFrame implements Runnable {
         textArea.setText("");
     }//GEN-LAST:event_comboBoxClientItemStateChanged
 
+    private void buttonCheckActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonCheckActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_buttonCheckActionPerformed
+
+    private void buttonBookActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonBookActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_buttonBookActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -498,9 +516,9 @@ public class FormDashboard extends javax.swing.JFrame implements Runnable {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnBook;
-    private javax.swing.JButton btnCheck;
     private javax.swing.JButton btnSearch;
+    private javax.swing.JButton buttonBook;
+    private javax.swing.JButton buttonCheck;
     private javax.swing.JButton buttonSend;
     public javax.swing.JComboBox<String> comboBoxClient;
     private javax.swing.JComboBox<String> comboBoxSelect;
@@ -524,10 +542,10 @@ public class FormDashboard extends javax.swing.JFrame implements Runnable {
     private javax.swing.JTable tblOrder;
     private javax.swing.JTextArea textArea;
     private javax.swing.JTextField textChat;
-    private javax.swing.JTextField txtEmail;
-    private javax.swing.JTextField txtNotes;
+    private javax.swing.JTextField textEmail;
+    private javax.swing.JTextField textNotes;
+    private com.toedter.components.JSpinField textTotalGuest;
     private javax.swing.JTextField txtSearch;
-    private com.toedter.components.JSpinField txtTotalGuest;
     // End of variables declaration//GEN-END:variables
 
     @Override
