@@ -58,31 +58,45 @@ public class FormDashboard extends javax.swing.JFrame implements Runnable {
         
     }
     
+    public void AddComboBoxClient(String nameEmail)
+    {
+        comboBoxClient.addItem(nameEmail);
+    }
+    
     public String LoginUser(String email,String password)
     {
         String status = "Your username or password is incorrect";
-       
+        //Ambil nama panggilan dari webservice 
+        
         if(email.equals("1"))
         {
             textChat.append("--- LOGIN : 1 ---\n" );
-            status = "true;;";
+            status = "true;;Jasti";
         }
         
         if(email.equals("2"))
         {
             textChat.append("--- LOGIN : 2 ---\n" );
-            status = "true;;";
+            status = "true;;Theo";
         }
         if(email.equals("3"))
         {
             textChat.append("--- LOGIN : 3 ---\n" );
-            status = "true;;";
+            status = "true;;Toto";
         }
         
         return(status);
     }
     
-     public void BroadCast(String msg)
+    public void BroadCast(String msg)
+    {
+        for(HandleSocket client : clientsArr)
+        {
+            client.SendChat(msg);
+        }
+    }
+    
+    public void BroadCastBot(String msg)
     {
         for(HandleSocket client : clientsArr)
         {
@@ -128,6 +142,7 @@ public class FormDashboard extends javax.swing.JFrame implements Runnable {
         dateCheckOut = new com.toedter.calendar.JDateChooser();
         dateCheckIn = new com.toedter.calendar.JDateChooser();
         txtTotalGuest = new com.toedter.components.JSpinField();
+        comboBoxClient = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -384,8 +399,11 @@ public class FormDashboard extends javax.swing.JFrame implements Runnable {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(panelTable, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel1)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(comboBoxClient, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel1))
                             .addComponent(panelChat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addComponent(panelBooking, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -395,7 +413,9 @@ public class FormDashboard extends javax.swing.JFrame implements Runnable {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap(16, Short.MAX_VALUE)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(comboBoxClient, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(panelBooking, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -449,6 +469,7 @@ public class FormDashboard extends javax.swing.JFrame implements Runnable {
     private javax.swing.JButton btnCheck;
     private javax.swing.JButton btnSearch;
     private javax.swing.JButton btnSend;
+    public javax.swing.JComboBox<String> comboBoxClient;
     private javax.swing.JComboBox<String> comboBoxSelect;
     private javax.swing.JComboBox<String> comboBoxVillaType;
     private com.toedter.calendar.JDateChooser dateCheckIn;

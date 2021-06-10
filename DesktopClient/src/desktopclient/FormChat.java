@@ -8,18 +8,23 @@ package desktopclient;
 import java.awt.Color;
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
  * @author ohanna
  */
-public class FormChat extends javax.swing.JFrame {
+public class FormChat extends javax.swing.JFrame implements Runnable {
     Socket client;
-    ServerSocket ss;
+    String email,displayName;
     BufferedReader input;
     DataOutputStream output;
+    Thread t;
     /**
      * Creates new form FormChat
      */
@@ -29,12 +34,55 @@ public class FormChat extends javax.swing.JFrame {
         this.getContentPane().setBackground(Color.WHITE);
     }
     
-    public FormChat(Socket inClinet, String email )
+    public FormChat(Socket inClient, String _email, String _displayName )
     {
-         initComponents();
-        //coloring jform
-        this.getContentPane().setBackground(Color.WHITE);
+        try {
+            initComponents();
+            //coloring jform
+            this.getContentPane().setBackground(Color.WHITE);
+            
+            client = inClient;
+            email = _email;
+            displayName = _displayName;
+            input = new BufferedReader(new InputStreamReader(client.getInputStream()));
+            output = new DataOutputStream(client.getOutputStream());
+            
+            output.writeBytes("JOIN\n");
+            
+            if(t == null)
+            {
+                t = new Thread(this,"client");
+                t.start();
+            }
+            
+            
+        } catch (IOException ex) {
+            Logger.getLogger(FormChat.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        
     }
+    
+    private void ShowChat()
+    {
+        try {
+            String message = input.readLine();
+            textArea.append("Admin : " + message + "\n");
+        } catch (IOException ex) {
+            Logger.getLogger(FormChat.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    private void SendChat(String msg)
+    {
+        try {
+            output.writeBytes(msg + "\n");
+        } catch (IOException ex) {
+            Logger.getLogger(FormChat.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -56,7 +104,7 @@ public class FormChat extends javax.swing.JFrame {
         jLabel8 = new javax.swing.JLabel();
         panelChat = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        textArea = new javax.swing.JTextArea();
         txtChat = new javax.swing.JTextField();
         btnSend = new javax.swing.JButton();
 
@@ -136,12 +184,11 @@ public class FormChat extends javax.swing.JFrame {
 
         panelChat.setBackground(new java.awt.Color(255, 255, 255));
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jTextArea1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
-        jScrollPane1.setViewportView(jTextArea1);
+        textArea.setColumns(20);
+        textArea.setRows(5);
+        textArea.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+        jScrollPane1.setViewportView(textArea);
 
-        txtChat.setBackground(new java.awt.Color(255, 255, 255));
         txtChat.setFont(new java.awt.Font("Rubik", 0, 14)); // NOI18N
         txtChat.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
         txtChat.setMinimumSize(new java.awt.Dimension(2, 34));
@@ -213,7 +260,8 @@ public class FormChat extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnSendActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSendActionPerformed
-        String sendChat = txtChat.getText();
+        String msg = txtChat.getText();
+        SendChat(email + ";;" + msg);
         
     }//GEN-LAST:event_btnSendActionPerformed
 
@@ -265,8 +313,13 @@ public class FormChat extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextArea jTextArea1;
     private javax.swing.JPanel panelChat;
+    private javax.swing.JTextArea textArea;
     private javax.swing.JTextField txtChat;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void run() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

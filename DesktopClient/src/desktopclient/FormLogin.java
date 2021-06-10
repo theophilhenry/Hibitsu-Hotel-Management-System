@@ -144,7 +144,9 @@ public class FormLogin extends javax.swing.JFrame {
             String status = input.readLine();
             if(status.contains("true;;"))
             {
-                FormChat fc = new FormChat(client,email);
+                String[] arr = status.split(";;");
+                
+                FormChat fc = new FormChat(client,email,arr[1]);
                 fc.setVisible(true);
                 this.dispose();
             }

@@ -22,6 +22,7 @@ public class HandleSocket extends Thread{
     Socket client;
     DataOutputStream output;
     BufferedReader input;
+    String email,displayName;
     
     public HandleSocket(FormDashboard _parent, Socket _client)
     {
@@ -54,22 +55,21 @@ public class HandleSocket extends Thread{
                 String tmp = input.readLine();
                 if(tmp.contains("JOIN"))
                 {
-                    SendChat("Hai This is BotChat");
+                    SendChat("Hai " + displayName + "("+email + ") \n What can i help you?");
                     parent.clientsArr.add(this);
-                    String[] arr = tmp.split(" : ");
-                    String name = arr[0];
-                    
-                    
-                    parent.BroadCastNewJoin(name, this);
+                                      
                 }
                 else if(tmp.contains("LOGIN"))
                 {
                     String[] login = tmp.split(";;");
                     String loginEmail = login[1];
                     String loginPassword = login[2];
+                    email = loginEmail;
                     
                     String status = parent.LoginUser(loginEmail, loginPassword);
+                    String[] arr = status.split(";;");
                     
+                    displayName = arr[1];
                     output.writeBytes(status+"\n");
                     
                     
