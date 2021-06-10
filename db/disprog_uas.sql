@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 10, 2021 at 02:05 PM
+-- Generation Time: Jun 10, 2021 at 05:10 PM
 -- Server version: 10.4.13-MariaDB
 -- PHP Version: 7.4.8
 
@@ -20,6 +20,66 @@ SET time_zone = "+00:00";
 --
 -- Database: `disprog_uas`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `chats`
+--
+
+CREATE TABLE `chats` (
+  `idchat` int(11) NOT NULL,
+  `cht_timestamp` timestamp NOT NULL DEFAULT current_timestamp(),
+  `messges` varchar(255) NOT NULL,
+  `idsender` int(11) NOT NULL,
+  `idreceiver` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `reservations`
+--
+
+CREATE TABLE `reservations` (
+  `idreservation` int(11) NOT NULL,
+  `res_timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `checkin_date` datetime NOT NULL,
+  `cheout_date` datetime NOT NULL,
+  `status` enum('PENDING','APPROVED','DECLINED','CANCELED') NOT NULL DEFAULT 'PENDING',
+  `total_guest` int(11) NOT NULL,
+  `notes` varchar(255) NOT NULL,
+  `total_price` mediumint(9) NOT NULL,
+  `url_bukti_pembayaran` varchar(255) DEFAULT NULL,
+  `iduser` int(11) NOT NULL,
+  `idvilla` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `users`
+--
+
+CREATE TABLE `users` (
+  `iduser` int(11) NOT NULL,
+  `fullname` varchar(45) NOT NULL,
+  `display_name` varchar(8) NOT NULL,
+  `phone_number` varchar(45) NOT NULL,
+  `email` varchar(45) NOT NULL,
+  `password` varchar(45) NOT NULL,
+  `role` enum('ADMIN','CLIENT') NOT NULL DEFAULT 'CLIENT',
+  `no_ktp` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `users`
+--
+
+INSERT INTO `users` (`iduser`, `fullname`, `display_name`, `phone_number`, `email`, `password`, `role`, `no_ktp`) VALUES
+(1, 'Jasti Ohanna', 'jasti', '08123456789', 'jasti@gmail.com', 'jasti', 'CLIENT', '3315060711900001'),
+(2, 'Theophil Henry Soegianto', 'theo', '08123456789', 'theo@gmail.com', 'theo', 'CLIENT', '3315143107800001'),
+(3, 'Christopher Tri Anugrah', 'toto', '08123456789', 'toto@gmail.com', 'toto', 'ADMIN', '3315142512700001');
 
 -- --------------------------------------------------------
 
@@ -54,6 +114,28 @@ INSERT INTO `villas` (`idvilla`, `name`, `address`, `total_bedroom`, `total_bath
 --
 
 --
+-- Indexes for table `chats`
+--
+ALTER TABLE `chats`
+  ADD PRIMARY KEY (`idchat`),
+  ADD KEY `fk_chats_users1_idx` (`idsender`),
+  ADD KEY `fk_chats_users2_idx` (`idreceiver`);
+
+--
+-- Indexes for table `reservations`
+--
+ALTER TABLE `reservations`
+  ADD PRIMARY KEY (`idreservation`),
+  ADD KEY `fk_reservations_users_idx` (`iduser`),
+  ADD KEY `fk_reservations_villas1_idx` (`idvilla`);
+
+--
+-- Indexes for table `users`
+--
+ALTER TABLE `users`
+  ADD PRIMARY KEY (`iduser`);
+
+--
 -- Indexes for table `villas`
 --
 ALTER TABLE `villas`
@@ -64,10 +146,40 @@ ALTER TABLE `villas`
 --
 
 --
+-- AUTO_INCREMENT for table `reservations`
+--
+ALTER TABLE `reservations`
+  MODIFY `idreservation` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `users`
+--
+ALTER TABLE `users`
+  MODIFY `iduser` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
 -- AUTO_INCREMENT for table `villas`
 --
 ALTER TABLE `villas`
   MODIFY `idvilla` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `chats`
+--
+ALTER TABLE `chats`
+  ADD CONSTRAINT `fk_chats_users1` FOREIGN KEY (`idsender`) REFERENCES `users` (`iduser`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_chats_users2` FOREIGN KEY (`idreceiver`) REFERENCES `users` (`iduser`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Constraints for table `reservations`
+--
+ALTER TABLE `reservations`
+  ADD CONSTRAINT `fk_reservations_users` FOREIGN KEY (`iduser`) REFERENCES `users` (`iduser`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_reservations_villas1` FOREIGN KEY (`idvilla`) REFERENCES `villas` (`idvilla`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
