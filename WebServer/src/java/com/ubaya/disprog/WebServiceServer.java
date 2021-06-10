@@ -87,20 +87,20 @@ public class WebServiceServer extends DbConnection {
         return null;
     }
 
-    //[BOOKNOW - 3]
+    //[BOOKNOW - 3] BELUM JADI
     @WebMethod(operationName = "TrackOrder2")
     public String TrackOrder2(@WebParam(name = "idreservation") Integer idreservation) {
-
+        String result = model_Reservation.TrackOrder(idreservation);
+        return result;
         //belum di code
-        return null;
     }
 
-    //[TRACKORDER]
+    //[TRACKORDER] BELUM JADI
     @WebMethod(operationName = "TrackOrder1")
     public String TrackOrder1(@WebParam(name = "idreservation") Integer idreservation) {
-
+        String result = model_Reservation.TrackOrder(idreservation);
+        return result;
         //belum di code
-        return null;
     }
 
     //[TRACKORDER]
@@ -167,7 +167,7 @@ public class WebServiceServer extends DbConnection {
     @WebMethod(operationName = "TrackOrderApp")
     public String TrackOrderApp(@WebParam(name = "idreservation") Integer idreservation) {
         String result = model_Reservation.TrackOrder(idreservation);
-        return null;
+        return result;
     }
 
     //[ORDERDETAILS]
