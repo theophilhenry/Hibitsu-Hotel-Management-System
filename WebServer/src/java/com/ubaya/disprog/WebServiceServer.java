@@ -77,8 +77,8 @@ public class WebServiceServer extends DbConnection {
             @WebParam(name = "iduser") Integer iduser,
             @WebParam(name = "idvilla") Integer idvilla) {
         try {
-            Date checkInDate = (Date) new SimpleDateFormat("dd/MM/yyyy").parse(checkIn);
-            Date checkOutDate = (Date) new SimpleDateFormat("dd/MM/yyyy").parse(checkOut);
+            Date checkInDate = (Date) new SimpleDateFormat("yyyy-MM-dd").parse(checkIn);
+            Date checkOutDate = (Date) new SimpleDateFormat("yyyy-MM-dd").parse(checkOut);
             String result = model_Reservation.InsertReservation(checkInDate, checkOutDate, total_guest, notes, iduser, idvilla);
             return result;
         } catch (Exception ex) {
@@ -188,8 +188,8 @@ public class WebServiceServer extends DbConnection {
             @WebParam(name = "iduser") Integer iduser,
             @WebParam(name = "idvilla") Integer idvilla) {
         try {
-            Date checkInDate = (Date) new SimpleDateFormat("dd/MM/yyyy").parse(checkIn);
-            Date checkOutDate = (Date) new SimpleDateFormat("dd/MM/yyyy").parse(checkOut);
+            Date checkInDate = (Date) new SimpleDateFormat("yyyy-MM-dd").parse(checkIn);
+            Date checkOutDate = (Date) new SimpleDateFormat("yyyy-MM-dd").parse(checkOut);
             String result = model_Reservation.UpdateReservation(email, checkInDate, checkOutDate, total_guest, notes, iduser);
             return result;
         } catch (Exception ex) {

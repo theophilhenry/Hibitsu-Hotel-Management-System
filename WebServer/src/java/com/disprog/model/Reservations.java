@@ -183,7 +183,8 @@ public class Reservations extends DbConnection {
 
                 String check = this.CheckAvailability(idvilla, checkIn, checkOut);
                 if (check.equals("false")) {
-                    return "false";
+                    String ket = "[1]hasilInsertReservation;;";
+                    return ket+"false";
                 }
                 // set query
                 String query = "INSERT INTO reservations(`checkin_date`,`checkout_date`,"
@@ -226,7 +227,7 @@ public class Reservations extends DbConnection {
         String message = "";
         try {
             if (!connect.isClosed()) {
-                
+
                 //get totalPrice
                 Integer totalPrice = this.CalculateTotalPrice(checkIn, checkOut, idvilla);
 
@@ -366,8 +367,7 @@ public class Reservations extends DbConnection {
             if (!connect.isClosed()) {
                 String ket = "[1]hasilUploadPayment;;";
                 //check tanggal dulu
-              
-                
+
                 if (checkIn.after(checkOut)) {
                     return ket + "Pleaase input checkout date greater than checkin date";
                 }
@@ -442,7 +442,7 @@ public class Reservations extends DbConnection {
                         + result.getString("phone_number") + ";;"
                         + result.getString("email") + ";;"
                         + result.getString("no_ktp");
-                return ket + "true;;"+hasil;
+                return ket + "true;;" + hasil;
             } else {
                 String ket = "[1]hasilTrackOrder;;";
                 return ket + "false";
