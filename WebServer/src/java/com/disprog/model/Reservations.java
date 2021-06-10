@@ -9,6 +9,7 @@ import java.sql.Date;
 import com.mysql.jdbc.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -183,7 +184,7 @@ public class Reservations extends DbConnection {
                 Integer totalPrice = this.CalculateTotalPrice(checkIn, checkOut, idvilla);
 
                 String check = this.CheckAvailability(idvilla, checkIn, checkOut);
-                if (check.equals("false")) {
+                if (check.equals("true")) {
                     String ket = "[1]hasilInsertReservation;;";
                     return ket + "false";
                 }
@@ -193,7 +194,7 @@ public class Reservations extends DbConnection {
                         + "VALUES(?,?,?,?,?,?,?)";
 
                 // set preparedStatement
-                PreparedStatement sql = (PreparedStatement) connect.prepareStatement(query);
+                PreparedStatement sql = (PreparedStatement) connect.prepareStatement(query,Statement.RETURN_GENERATED_KEYS);
 
                 //set paramater
                 sql.setDate(1, checkIn);
