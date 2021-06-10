@@ -97,6 +97,12 @@
                 <div class="grid-container grid-container-more-left grid-container-reverse">
                     <div class="grid-left book-property" style="align-items: center;">
                         <div style="width: 300px;">
+                            
+                            
+                            
+                            <!-- FORM BOOKING -->
+                            
+                            
                             <form method="POST" action="book2-handler.jsp">
                                 <p class="rubik-bold color-green">BOOK PROPERTY</p>
                                 <div class="form-floating mb-3" style="width: 100%;">
@@ -119,6 +125,9 @@
                                 <button class="btn btn-success rubik-bold color-white background-green mb-3" type="submit"
                                         style="width: 100%;">Book</button>
                             </form>
+                            
+                            
+                            
                         </div>
                     </div>
                     <div class="grid-right book-check" style="align-items: center; height: fit-content">

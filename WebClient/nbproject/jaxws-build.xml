@@ -42,5 +42,21 @@
         <delete dir="${build.generated.sources.dir}/jax-ws/com/ubaya/disprog"/>
         <delete dir="${build.generated.dir}/jax-wsCache/HibitsuService"/>
     </target>
-    <target name="wsimport-client-generate" depends="wsimport-client-HibitsuService"/>
+    <target name="wsimport-client-WebServiceServer" depends="wsimport-init">
+        <mkdir dir="${build.generated.dir}/jax-wsCache/WebServiceServer"/>
+        <wsimport sourcedestdir="${build.generated.dir}/jax-wsCache/WebServiceServer" destdir="${build.generated.dir}/jax-wsCache/WebServiceServer" wsdl="${basedir}/${conf-dir}xml-resources/web-service-references/WebServiceServer/wsdl/localhost_8080/WebServer/WebServiceServer.wsdl" catalog="catalog.xml" encoding="${source.encoding}" extension="true" verbose="true" fork="false" wsdlLocation="http://localhost:8080/WebServer/WebServiceServer?wsdl" xnocompile="true" xendorsed="true">
+            <depends file="${basedir}/${conf-dir}xml-resources/web-service-references/WebServiceServer/wsdl/localhost_8080/WebServer/WebServiceServer.wsdl"/>
+            <produces dir="${build.generated.dir}/jax-wsCache/WebServiceServer"/>
+        </wsimport>
+        <copy todir="${build.generated.sources.dir}/jax-ws">
+            <fileset dir="${build.generated.dir}/jax-wsCache/WebServiceServer">
+                <include name="**/*.java"/>
+            </fileset>
+        </copy>
+    </target>
+    <target name="wsimport-client-clean-WebServiceServer" depends="-init-project">
+        <delete dir="${build.generated.sources.dir}/jax-ws/com/ubaya/disprog"/>
+        <delete dir="${build.generated.dir}/jax-wsCache/WebServiceServer"/>
+    </target>
+    <target name="wsimport-client-generate" depends="wsimport-client-HibitsuService, wsimport-client-WebServiceServer"/>
 </project>
