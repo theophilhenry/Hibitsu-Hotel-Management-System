@@ -140,6 +140,19 @@ public class WebServiceServer extends DbConnection {
 
     //---------------------------------APP--------------------------------------
     //[LOGIN ADMIN]
+    @WebMethod(operationName = "DisplayAllClient")
+    public ArrayList<String> DisplayAllClient() {
+        try {
+            ArrayList<String> listOfClient = new ArrayList<>();
+            listOfClient = model_User.DisplayAllClient();
+            return listOfClient;
+        } catch (Exception ex) {
+            System.out.println("Error DisplayAllClient: " + ex);
+        }
+        return null;
+    }
+
+    //[LOGIN ADMIN]
     @WebMethod(operationName = "LoginAdmin")
     public String LoginAdmin(
             @WebParam(name = "email") String email,
@@ -157,25 +170,39 @@ public class WebServiceServer extends DbConnection {
     @WebMethod(operationName = "DisplayReservationAll")
     public ArrayList<String> DisplayReservationAll(@WebParam(name = "kriteria") String kriteria,
             @WebParam(name = "dicari") String dicari) {
-        ArrayList<String> listOfDisplayReservationAll = new ArrayList<String>();
-        listOfDisplayReservationAll = model_Reservation.DisplayReservationAll(kriteria, dicari);
-        //belum di code
-        return listOfDisplayReservationAll;
+        try {
+            ArrayList<String> listOfDisplayReservationAll = new ArrayList<String>();
+            listOfDisplayReservationAll = model_Reservation.DisplayReservationAll(kriteria, dicari);
+            return listOfDisplayReservationAll;
+        } catch (Exception ex) {
+            System.out.println("Error Display Reservation All: " + ex);
+        }
+        return null;
     }
 
     //[TRACKORDER]
     @WebMethod(operationName = "TrackOrderApp")
     public String TrackOrderApp(@WebParam(name = "idreservation") Integer idreservation) {
-        String result = model_Reservation.TrackOrder(idreservation);
-        return result;
+        try {
+            String result = model_Reservation.TrackOrder(idreservation);
+            return result;
+        } catch (Exception ex) {
+            System.out.println("Error Login Admin: " + ex);
+        }
+        return null;
     }
 
     //[ORDERDETAILS]
     @WebMethod(operationName = "ChangeStatus")
     public String ChangeStatus(@WebParam(name = "status") String status,
             @WebParam(name = "idreservation") Integer idreservation) {
-        String result = model_Reservation.ChangeStatus(status, idreservation);
-        return result;
+        try {
+            String result = model_Reservation.ChangeStatus(status, idreservation);
+            return result;
+        } catch (Exception ex) {
+            System.out.println("Error Login Admin: " + ex);
+        }
+        return null;
     }
 
     //[ORDERDETAILS]
@@ -201,8 +228,13 @@ public class WebServiceServer extends DbConnection {
     //[ORDERDETAILS]
     @WebMethod(operationName = "DisplayPayment")
     public String DisplayPayment(@WebParam(name = "idreservation") Integer idreservation) {
-        String result = model_Reservation.DisplayPayment(idreservation);
-        return result;
+        try {
+            String result = model_Reservation.DisplayPayment(idreservation);
+            return result;
+        } catch (Exception ex) {
+            System.out.println("Error Login Admin: " + ex);
+        }
+        return null;
     }
 
     //[CHATS]

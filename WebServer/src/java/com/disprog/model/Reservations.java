@@ -398,18 +398,18 @@ public class Reservations extends DbConnection {
 //                        + "checkin <= ? AND checkout >= ?";
                 // set preparedStatement
                 PreparedStatement sql = (PreparedStatement) connect.prepareStatement(query);
-
-                sql.setDate(2, checkIn);
-                sql.setDate(1, checkOut);
+//
+//                sql.setDate(2, checkIn);
+//                sql.setDate(1, checkOut);
 
                 //set paramater
-//                sql.setInt(1, idvilla);
-//                sql.setDate(2, checkIn);
-//                sql.setDate(3, checkIn);
-//                sql.setDate(4, checkOut);
-//                sql.setDate(5, checkOut);
-//                sql.setDate(6, checkIn);
-//                sql.setDate(7, checkOut);
+                sql.setInt(1, idvilla);
+                sql.setDate(2, checkIn);
+                sql.setDate(3, checkIn);
+                sql.setDate(4, checkOut);
+                sql.setDate(5, checkOut);
+                sql.setDate(6, checkIn);
+                sql.setDate(7, checkOut);
                 result = sql.executeQuery();
 
                 if (result.next()) {
@@ -512,7 +512,7 @@ public class Reservations extends DbConnection {
                     String ket = "[1]hasilTrackOrder,[2]idreservation,[3]res_timestamp,"
                             + "[4]chcekin_date,[5]checkout_date,[6]status,[7]total_guest,[8]total_price,"
                             + "[9]notes,[10]url_bukti_pembayaran,[11]idvilla,[12]villa_name,"
-                            + "[13]iduser,[14]fullname,[15]display_name[15],phone_number,[16]email,[17]no_ktp;;";
+                            + "[13]iduser,[14]fullname,[15]display_name[16],phone_number,[17]email,[17]no_ktp;;";
 
                     String hasil = String.valueOf(result.getInt("idreservation")) + ";;"
                             + String.valueOf(result.getTimestamp("res_timestamp")) + ";;"

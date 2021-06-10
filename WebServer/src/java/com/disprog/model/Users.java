@@ -7,6 +7,7 @@ package com.disprog.model;
 
 import com.mysql.jdbc.PreparedStatement;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 /**
  *
@@ -43,7 +44,6 @@ public class Users extends DbConnection {
     }
 
     //</editor-fold>
-    
     //<editor-fold defaultstate="collapsed" desc="Properties">
     public int getIduser() {
         return iduser;
@@ -183,27 +183,31 @@ public class Users extends DbConnection {
 
     public String Registration(String fullname, String display_name, String phoneNumber, String email, String password, String no_ktp) {
         try {
-            // set query
-            String query = "INSERT INTO users(`fullname`,`display_name`,`phoneNumber`,`email`,`password`,`no_ktp`) "
-                    + "VALUES(?,?,?,?,?,?)";
+            if (!connect.isClosed()) {
+                // set query
+                String query = "INSERT INTO users(`fullname`,`display_name`,`phoneNumber`,`email`,`password`,`no_ktp`) "
+                        + "VALUES(?,?,?,?,?,?)";
 
-            // set preparedStatement
-            PreparedStatement sql = (PreparedStatement) connect.prepareStatement(query);
+                // set preparedStatement
+                PreparedStatement sql = (PreparedStatement) connect.prepareStatement(query);
 
-            //set paramater
-            sql.setString(1, fullname);
-            sql.setString(2, display_name);
-            sql.setString(3, phoneNumber);
-            sql.setString(4, email);
-            sql.setString(5, password);
-            sql.setString(6, no_ktp);
-            result = sql.executeQuery();
-            
-            String ket = "[1]hasilRegis;;";
-            if (result.next()) {
-                return ket + "true";
+                //set paramater
+                sql.setString(1, fullname);
+                sql.setString(2, display_name);
+                sql.setString(3, phoneNumber);
+                sql.setString(4, email);
+                sql.setString(5, password);
+                sql.setString(6, no_ktp);
+                String ket = "[1]hasilRegis;;";
+                int affectedResult = sql.executeUpdate();
+
+                if (affectedResult > 0) {
+                    return ket + "true";
+                } else {
+                    return ket + "false";
+                }
             } else {
-                return ket + "false";
+                System.out.println("Tidak terkoneksi database");
             }
 
         } catch (SQLException ex) {
@@ -213,5 +217,36 @@ public class Users extends DbConnection {
         return null;
     }
 
+    public ArrayList<String> DisplayAllClient() {
+        try {
+            if (!connect.isClosed()) {
+                ArrayList<String> listOfClient = new ArrayList<>();
+                //set query
+                String query = "SELECT * "
+                        + "FROM `users` WHERE `role`='CLIENT'";
+                //set preparedStatement
+                PreparedStatement sql = (PreparedStatement) connect.prepareStatement(query);
+                result = sql.executeQuery();
+
+                //nanti mau diatur lagi return nya seperti apa
+                String ket = "[1]hasilDisplayClient,[2]fullname,[3]display_name,[4]phone_number,[5]email,[6]no_ktp;;";
+                while (result.next()) {
+                    String hasil = String.valueOf(result.getInt("iduser"))+";;"
+                            +result.getString("fullname")+";;"
+                            +result.getString("display_name")+";;"
+                            +result.getString("phone_number")+";;"
+                            +result.getString("email")+";;"
+                            +result.getString("no_ktp")+";;";
+                    listOfClient.add(ket+hasil);
+                }
+                return listOfClient;
+            } else {
+                System.out.println("Tidak terkoneksi database");
+            }
+        } catch (Exception ex) {
+            System.out.println("Error Login" + ex);
+        }
+        return null;
+    }
     //</editor-fold>
 }
