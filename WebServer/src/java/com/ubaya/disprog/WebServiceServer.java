@@ -256,10 +256,10 @@ public class WebServiceServer extends DbConnection {
     @WebMethod(operationName = "DisplayChat")
     public ArrayList<String> DisplayChat(
             @WebParam(name = "email_sender") String email_sender,
-            @WebParam(name = "messages") String messages) {
+            @WebParam(name = "email_receiver") String email_receiver) {
         try {
             ArrayList<String> result = new ArrayList<>();
-            result = model_Chat.DisplayChat(email_sender, messages);
+            result = model_Chat.DisplayChat(email_sender, email_receiver);
             return result;
         } catch (Exception ex) {
             System.out.println("Error Display Chat: " + ex);
