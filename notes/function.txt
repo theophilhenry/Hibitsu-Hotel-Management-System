@@ -22,9 +22,15 @@ Register
 Login Admin
 - LoginAdmin(email, password)
 
+return ([1]keteranganTrue/false,[2]nama;;hasilSTATUS;;hasilDISPLAY_NAME)
+
+
+
 DASHBOARD
 - CheckAvaibility(idvilla, checkin, checkout) [SAMA SEPERTI WEB]
 - InsertReservation(checkin,checkout,total_guest, notes, iduser,idvilla) return idreservation [SAMA SEPERTI WEB]
+						       iduser ganti emailUser
+
 !- DisplayReservationAll(kriteria,dicari) [yg ditampilin hanya tanggal checkout diatas sekarang]
 !- BacaData(String kriteria, String dicari) 
 
@@ -34,6 +40,11 @@ ORDER DETAILS
 !- DisplayPayment(idreservation)
 !- UpdateReservation(idreservation,dst(tanpa bukti))
 
+
+
 Chats 
-- public String InsertChat(Integer idsender, Integer idreceiver, String messages)
+- public String InsertChat(Integer idsender, Integer idreceiver, String messages) 
+			   Pakek Email       Pakek Email
+
 - public ArrayList<String> DisplayChat(Integer idsender, Integer idreceiver)
+					Pakek Email       Pakek Email

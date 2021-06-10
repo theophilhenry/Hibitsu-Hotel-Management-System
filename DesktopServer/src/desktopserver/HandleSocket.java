@@ -57,6 +57,7 @@ public class HandleSocket extends Thread{
                 {
                     SendChat("Hai " + displayName + "("+email + ") \n What can i help you?");
                     parent.clientsArr.add(this);
+                    parent.AddComboBoxClient(displayName, email);
                                       
                 }
                 else if(tmp.contains("LOGIN"))
@@ -77,7 +78,16 @@ public class HandleSocket extends Thread{
                 }
                 else
                 {
-                    parent.ShowChat(tmp);
+                    String selectedComboBox =  parent.comboBoxClient.getSelectedItem().toString();
+                    
+                    String thisClient = (parent.comboBoxClient.getItemCount()+1) + "." + displayName + " (" + email + ")";
+                    
+                    if(selectedComboBox.equals(thisClient))
+                    {
+                        parent.ShowChat(tmp);
+                    }
+                    
+                    
                 }
                 
             } catch (IOException ex) {

@@ -54,13 +54,16 @@ public class FormDashboard extends javax.swing.JFrame implements Runnable {
         String[] msgSplit = msg.split(";;");
         String content = msgSplit[1];
         
-        textChat.append(msg + "\n");
+        textArea.append(msg + "\n");
         
     }
     
-    public void AddComboBoxClient(String nameEmail)
+    public void AddComboBoxClient(String name, String email)
     {
-        comboBoxClient.addItem(nameEmail);
+        Integer count = comboBoxClient.getItemCount();
+        count +=1;
+        
+        comboBoxClient.addItem( count + "." +name + " (" + email + ")");
     }
     
     public String LoginUser(String email,String password)
@@ -70,39 +73,38 @@ public class FormDashboard extends javax.swing.JFrame implements Runnable {
         
         if(email.equals("1"))
         {
-            textChat.append("--- LOGIN : 1 ---\n" );
+            textArea.append("--- LOGIN : 1 ---\n" );
             status = "true;;Jasti";
         }
         
         if(email.equals("2"))
         {
-            textChat.append("--- LOGIN : 2 ---\n" );
+            textArea.append("--- LOGIN : 2 ---\n" );
             status = "true;;Theo";
         }
         if(email.equals("3"))
         {
-            textChat.append("--- LOGIN : 3 ---\n" );
+            textArea.append("--- LOGIN : 3 ---\n" );
             status = "true;;Toto";
         }
         
         return(status);
     }
     
-    public void BroadCast(String msg)
+    public void BroadCast(String msg, Socket yangDikirim)
     {
         for(HandleSocket client : clientsArr)
         {
-            client.SendChat(msg);
+            
+            if(client.email.equals("THEO@GMAIL"))
+            {
+                client.SendChat(msg);
+            }
+            
+            
         }
     }
     
-    public void BroadCastBot(String msg)
-    {
-        for(HandleSocket client : clientsArr)
-        {
-            client.SendChat(msg);
-        }
-    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -115,10 +117,10 @@ public class FormDashboard extends javax.swing.JFrame implements Runnable {
 
         jLabel1 = new javax.swing.JLabel();
         panelChat = new javax.swing.JPanel();
-        txtChat = new javax.swing.JTextField();
-        btnSend = new javax.swing.JButton();
+        textChat = new javax.swing.JTextField();
+        buttonSend = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        textChat = new javax.swing.JTextArea();
+        textArea = new javax.swing.JTextArea();
         panelTable = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
         txtSearch = new javax.swing.JTextField();
@@ -153,16 +155,21 @@ public class FormDashboard extends javax.swing.JFrame implements Runnable {
         panelChat.setBackground(new java.awt.Color(255, 255, 255));
         panelChat.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
 
-        txtChat.setFont(new java.awt.Font("Rubik", 0, 14)); // NOI18N
+        textChat.setFont(new java.awt.Font("Rubik", 0, 14)); // NOI18N
 
-        btnSend.setBackground(new java.awt.Color(8, 191, 91));
-        btnSend.setFont(new java.awt.Font("Rubik", 1, 14)); // NOI18N
-        btnSend.setForeground(new java.awt.Color(255, 255, 255));
-        btnSend.setText("CHAT");
+        buttonSend.setBackground(new java.awt.Color(8, 191, 91));
+        buttonSend.setFont(new java.awt.Font("Rubik", 1, 14)); // NOI18N
+        buttonSend.setForeground(new java.awt.Color(255, 255, 255));
+        buttonSend.setText("CHAT");
+        buttonSend.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonSendActionPerformed(evt);
+            }
+        });
 
-        textChat.setColumns(20);
-        textChat.setRows(5);
-        jScrollPane1.setViewportView(textChat);
+        textArea.setColumns(20);
+        textArea.setRows(5);
+        jScrollPane1.setViewportView(textArea);
 
         javax.swing.GroupLayout panelChatLayout = new javax.swing.GroupLayout(panelChat);
         panelChat.setLayout(panelChatLayout);
@@ -172,9 +179,9 @@ public class FormDashboard extends javax.swing.JFrame implements Runnable {
                 .addContainerGap()
                 .addGroup(panelChatLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panelChatLayout.createSequentialGroup()
-                        .addComponent(txtChat)
+                        .addComponent(textChat)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnSend, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(buttonSend, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 494, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -185,8 +192,8 @@ public class FormDashboard extends javax.swing.JFrame implements Runnable {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 385, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(panelChatLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtChat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnSend))
+                    .addComponent(textChat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(buttonSend))
                 .addContainerGap(16, Short.MAX_VALUE))
         );
 
@@ -428,6 +435,11 @@ public class FormDashboard extends javax.swing.JFrame implements Runnable {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void buttonSendActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonSendActionPerformed
+        String msg = textChat.getText();
+        
+    }//GEN-LAST:event_buttonSendActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -468,7 +480,7 @@ public class FormDashboard extends javax.swing.JFrame implements Runnable {
     private javax.swing.JButton btnBook;
     private javax.swing.JButton btnCheck;
     private javax.swing.JButton btnSearch;
-    private javax.swing.JButton btnSend;
+    private javax.swing.JButton buttonSend;
     public javax.swing.JComboBox<String> comboBoxClient;
     private javax.swing.JComboBox<String> comboBoxSelect;
     private javax.swing.JComboBox<String> comboBoxVillaType;
@@ -489,8 +501,8 @@ public class FormDashboard extends javax.swing.JFrame implements Runnable {
     private javax.swing.JPanel panelChat;
     private javax.swing.JPanel panelTable;
     private javax.swing.JTable tblOrder;
-    private javax.swing.JTextArea textChat;
-    private javax.swing.JTextField txtChat;
+    private javax.swing.JTextArea textArea;
+    private javax.swing.JTextField textChat;
     private javax.swing.JTextField txtEmail;
     private javax.swing.JTextField txtNotes;
     private javax.swing.JTextField txtSearch;
