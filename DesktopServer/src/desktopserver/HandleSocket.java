@@ -23,6 +23,7 @@ public class HandleSocket extends Thread{
     DataOutputStream output;
     BufferedReader input;
     String email,displayName;
+    Boolean chatWithBot;
     
     public HandleSocket(FormDashboard _parent, Socket _client)
     {
@@ -55,7 +56,16 @@ public class HandleSocket extends Thread{
                 String tmp = input.readLine();
                 if(tmp.contains("JOIN"))
                 {
-                    SendChat("Hai " + displayName + "("+email + ") \n What can i help you?");
+                    chatWithBot = true;
+                    SendChat("Selamat datang di hibitsu Bpk/Ibu " + displayName + "("+email + ") \n "
+                            + "Apabila anda ingin konsultasi secara langsung dengan Admin, anda dapat menekan tombol audio/video call di atas,\n" 
+                            + "Apabila anda ingin berbincang-bincang dengan saya(bot), anda dapat melakukannya dengan memilih salah satu angka dari opsi di bawah :\n" 
+                            + "1. Reservasi\n" 
+                            + "2. Check Booking / Track Order\n"
+                            + "3. Konsultasi Chat dengan Admin\n");
+                    
+                    
+
                     
                     String selectedComboBox =  parent.comboBoxClient.getSelectedItem().toString();
                     String thisClient = email ;
@@ -63,8 +73,7 @@ public class HandleSocket extends Thread{
                     {
                         parent.ShowChat(tmp);
                     }
-                    
-                    
+                               
                     parent.clientsArr.add(this);
                     parent.AddComboBoxClient(displayName, email);
                                       

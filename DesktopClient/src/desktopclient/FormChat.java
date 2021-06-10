@@ -25,6 +25,7 @@ public class FormChat extends javax.swing.JFrame implements Runnable {
     BufferedReader input;
     DataOutputStream output;
     Thread t;
+    Boolean chatWithBot;
     /**
      * Creates new form FormChat
      */
@@ -46,7 +47,7 @@ public class FormChat extends javax.swing.JFrame implements Runnable {
             //displayName = _displayName;
             input = new BufferedReader(new InputStreamReader(client.getInputStream()));
             output = new DataOutputStream(client.getOutputStream());
-            
+            chatWithBot = true;
             output.writeBytes("JOIN \n");
             
             if(t == null)
@@ -67,7 +68,16 @@ public class FormChat extends javax.swing.JFrame implements Runnable {
     {
         try {
             String message = input.readLine();
-            textArea.append("Admin : " + message + "\n");
+            
+            if(chatWithBot != true)
+            {
+                textArea.append("Admin : " + message + "\n");
+            }
+            else
+            {
+                textArea.append("ChatBot : " + message + "\n");
+            }
+            
         } catch (IOException ex) {
             Logger.getLogger(FormChat.class.getName()).log(Level.SEVERE, null, ex);
         }
