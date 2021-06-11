@@ -144,7 +144,7 @@ public class Chats extends DbConnection {
                 String ket = "[1]hasilInsertChats,[2]idsender,[3]messages;;";
                 while (result.next()) {
                     String hasil = String.valueOf(result.getInt("idsender"))
-                            + result.getString("messages");
+                            + ";;" +  result.getString("messages");
                     listOfChat.add(ket + hasil);
                 }
                 connect.close();
