@@ -26,7 +26,7 @@ public class FormDashboard extends javax.swing.JFrame implements Runnable {
     public ArrayList<HandleSocket> clientsArr = new ArrayList<HandleSocket>();
     Thread t;
     HandleSocket hs;
-    String emailAdmin,idAdmin;
+    public String emailAdmin,idAdmin;
     
     /**
      * Creates new form FormDashboard
@@ -77,7 +77,7 @@ public class FormDashboard extends javax.swing.JFrame implements Runnable {
     
     public void SimpanChat(String emailSend, String emailReceiv, String msg)
     {
-        
+        System.out.println(insertChat(emailSend ,emailReceiv,msg ));
     }
     
     public String LoginUser(String email,String password)
@@ -464,6 +464,13 @@ public class FormDashboard extends javax.swing.JFrame implements Runnable {
         String msg = textChat.getText();
         SendChatToOne(msg);
         textArea.append("Admin : " + msg + "\n");
+        
+        String info = comboBoxClient.getSelectedItem().toString();
+        String[] arr = info.split("(");
+        String emailDest = arr[1].substring(0,arr[1].length()-1);
+        
+        SimpanChat(emailAdmin, emailDest, msg);
+        
         
     }//GEN-LAST:event_buttonSendActionPerformed
 

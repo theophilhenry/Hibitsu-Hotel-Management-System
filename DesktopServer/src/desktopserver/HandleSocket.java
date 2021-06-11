@@ -65,11 +65,10 @@ public class HandleSocket extends Thread{
                             + "2. Check Booking / Track Order\n"
                             + "3. Konsultasi Chat dengan Admin\n");
                     */
-                    
-                    
-                    
-                    SendChat("Halo, apa yang bisa dibantu?");
-
+                    String msgWelcome = "Halo, apa yang bisa dibantu?";
+                                       
+                    SendChat(msgWelcome);
+                    parent.SimpanChat( parent.emailAdmin, email, msgWelcome);
                     
                    /* String selectedComboBox =  parent.comboBoxClient.getSelectedItem().toString();
                     String thisClient = email ;
@@ -123,6 +122,8 @@ public class HandleSocket extends Thread{
                         parent.ShowChat(tmp);
                     }
                     
+                    String[] arr = tmp.split(";;");
+                    parent.SimpanChat(email, parent.emailAdmin, arr[1]);
                     
                 }
                 
