@@ -413,7 +413,7 @@ public class Reservations extends DbConnection {
                 result = sql.executeQuery();
 
                 if (result.next()) {
-                    return ket + "";//karena ditemukan yg bentrok
+                    return ket + "false";//karena ditemukan yg bentrok
                 } else {
                     return ket + "true";
                 }
