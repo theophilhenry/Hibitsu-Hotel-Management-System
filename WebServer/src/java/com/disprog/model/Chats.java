@@ -126,10 +126,10 @@ public class Chats extends DbConnection {
             if (!connect.isClosed()) {
                 // set query
                 String query = "SELECT * FROM chats "
-                        + "WHERE (idsender =(SELECT idusers FROM users where email=?) "
-                        + "and idreceiver =(SELECT idusers FROM users where email=?)) "
-                        + "or (idsender=(SELECT idusers FROM users where email=?) "
-                        + "and idreceiver=(SELECT idusers FROM users where email=?)) "
+                        + "WHERE (idsender =(SELECT iduser FROM users where email=?) "
+                        + "and idreceiver =(SELECT iduser FROM users where email=?)) "
+                        + "or (idsender=(SELECT iduser FROM users where email=?) "
+                        + "and idreceiver=(SELECT iduser FROM users where email=?)) "
                         + "ORDER BY cht_timestamp;";
                 // set preparedStatement
                 PreparedStatement sql = (PreparedStatement) connect.prepareStatement(query);

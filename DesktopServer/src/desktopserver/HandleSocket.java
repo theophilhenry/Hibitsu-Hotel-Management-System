@@ -22,8 +22,9 @@ public class HandleSocket extends Thread{
     Socket client;
     DataOutputStream output;
     BufferedReader input;
-    String email,displayName;
+    String email,displayName,idUser;
     Boolean chatWithBot;
+    
     
     public HandleSocket(FormDashboard _parent, Socket _client)
     {
@@ -98,6 +99,7 @@ public class HandleSocket extends Thread{
                         String[] arr = status.split(";;");
                         displayName = arr[4];
                         email = loginEmail;
+                        idUser = arr[2];
                     }
                     
                    

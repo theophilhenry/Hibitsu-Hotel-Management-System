@@ -26,6 +26,7 @@ public class FormDashboard extends javax.swing.JFrame implements Runnable {
     public ArrayList<HandleSocket> clientsArr = new ArrayList<HandleSocket>();
     Thread t;
     HandleSocket hs;
+    String emailAdmin,idAdmin;
     
     /**
      * Creates new form FormDashboard
@@ -35,7 +36,8 @@ public class FormDashboard extends javax.swing.JFrame implements Runnable {
             initComponents();
             
             this.ss = new ServerSocket(12345);
-            
+            emailAdmin = "toto@gmail.com";
+            idAdmin = "3";
             if(t==null)
             {
                 t = new Thread(this,"Server");
