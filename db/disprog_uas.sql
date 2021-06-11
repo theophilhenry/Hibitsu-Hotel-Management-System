@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 10, 2021 at 05:10 PM
+-- Generation Time: Jun 11, 2021 at 12:34 PM
 -- Server version: 10.4.13-MariaDB
 -- PHP Version: 7.4.8
 
@@ -45,11 +45,11 @@ CREATE TABLE `reservations` (
   `idreservation` int(11) NOT NULL,
   `res_timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `checkin_date` datetime NOT NULL,
-  `cheout_date` datetime NOT NULL,
+  `chekout_date` datetime NOT NULL,
   `status` enum('PENDING','APPROVED','DECLINED','CANCELED') NOT NULL DEFAULT 'PENDING',
   `total_guest` int(11) NOT NULL,
   `notes` varchar(255) NOT NULL,
-  `total_price` mediumint(9) NOT NULL,
+  `total_price` bigint(20) NOT NULL,
   `url_bukti_pembayaran` varchar(255) DEFAULT NULL,
   `iduser` int(11) NOT NULL,
   `idvilla` int(11) NOT NULL
@@ -149,7 +149,7 @@ ALTER TABLE `villas`
 -- AUTO_INCREMENT for table `reservations`
 --
 ALTER TABLE `reservations`
-  MODIFY `idreservation` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idreservation` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `users`
