@@ -5,6 +5,9 @@
  */
 package desktopserver;
 
+import java.awt.Color;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author TOTO
@@ -16,6 +19,7 @@ public class FormLoginAdmin extends javax.swing.JFrame {
      */
     public FormLoginAdmin() {
         initComponents();
+         this.getContentPane().setBackground(Color.WHITE);
     }
 
     /**
@@ -110,6 +114,21 @@ public class FormLoginAdmin extends javax.swing.JFrame {
        
         String email = textEmail.getText();
         String psw = textPassword.getText();
+        
+        String[] hasil = loginAdmin(email, psw).split(";;");
+        
+        if(hasil[1].equals("true"))
+        {
+            FormDashboard fd = new FormDashboard();
+            fd.setVisible(true);
+            this.dispose();
+            
+        }
+        else
+        {
+            JOptionPane.showMessageDialog(null, "Your Email or Password is wrong.");
+        }
+        
            
            
        
@@ -158,4 +177,10 @@ public class FormLoginAdmin extends javax.swing.JFrame {
     private javax.swing.JTextField textEmail;
     private javax.swing.JTextField textPassword;
     // End of variables declaration//GEN-END:variables
+
+    private static String loginAdmin(java.lang.String email, java.lang.String password) {
+        com.ubaya.disprog.WebServiceServer_Service service = new com.ubaya.disprog.WebServiceServer_Service();
+        com.ubaya.disprog.WebServiceServer port = service.getWebServiceServerPort();
+        return port.loginAdmin(email, password);
+    }
 }

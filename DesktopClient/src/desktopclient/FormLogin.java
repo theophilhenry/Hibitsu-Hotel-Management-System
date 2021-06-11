@@ -153,7 +153,7 @@ public class FormLogin extends javax.swing.JFrame {
             }
             else
             {
-                JOptionPane.showMessageDialog(null, status);
+                JOptionPane.showMessageDialog(null, "Your Email or Password is wrong.");
             }
         } catch (IOException ex) {
             Logger.getLogger(FormLogin.class.getName()).log(Level.SEVERE, null, ex);
