@@ -87,8 +87,9 @@ public class Chats extends DbConnection {
     public String InsertChat(String email_sender, String email_receiver, String messages) {
         try {
             String query = "";
+           
             if (!connect.isClosed()) {
-
+                
                 query = "INSERT INTO chats (idsender, idreceiver, message) "
                         + "values ((SELECT iduser FROM users WHERE email =?),"
                         + "(SELECT iduser FROM users WHERE email =?), ?)";
@@ -119,9 +120,11 @@ public class Chats extends DbConnection {
         return null;
     }
 
-    public ArrayList<String> DisplayChat(String email_sender, String email_receiver) {
-        ArrayList<String> listOfChat = new ArrayList<>();
+    public String DisplayChat(String email_sender, String email_receiver) {
+        //ArrayList<String> listOfChat = new ArrayList<>();
         String message = "";
+        String grandHasil = "";
+        System.out.println("Masuk DisplayChat 126");
         try {
             if (!connect.isClosed()) {
                 // set query
@@ -141,21 +144,21 @@ public class Chats extends DbConnection {
                 sql.setString(4, email_sender);
 
                 result = sql.executeQuery();
-                String ket = "[1]hasilInsertChats,[2]idsender,[3]messages;;";
+                String ket = "[1]hasilInsertChats[2]idsender[3]message;;";
                 while (result.next()) {
                     String hasil = String.valueOf(result.getInt("idsender"))
-                            + ";;" +  result.getString("messages");
-                    listOfChat.add(ket + hasil);
+                            + ";;" +  result.getString("message") + "##";
+                    grandHasil += ket + hasil;
                 }
-                connect.close();
-                return listOfChat;
+               // connect.close();
+                return grandHasil;
             } else {
                 System.out.println("Tidak terkoneksi database");
             }
         } catch (SQLException ex) {
             System.out.println("Error Insert Chat: " + ex);
         }
-        return listOfChat;
+        return null;
     }
 
     public String DisplayContacts(Integer iduser) {

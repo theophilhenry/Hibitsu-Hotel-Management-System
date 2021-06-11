@@ -65,18 +65,30 @@ public class HandleSocket extends Thread{
                             + "2. Check Booking / Track Order\n"
                             + "3. Konsultasi Chat dengan Admin\n");
                     */
-                    String msgWelcome = "Halo, apa yang bisa dibantu?";
-                                       
-                    SendChat(msgWelcome);
-                    parent.SimpanChat( parent.emailAdmin, email, msgWelcome);
                     
-                   /* String selectedComboBox =  parent.comboBoxClient.getSelectedItem().toString();
+                   
+                    
+                    String msgWelcome = "Halo, apa yang bisa dibantu?";
+                    String historyChat = parent.TampilChat(email, parent.emailAdmin,"client");
+                    
+                   /*  if(parent.firstClient == false)
+                    {
+                        parent.firstClient = true;
+                        parent.textArea.setText("");
+                        parent.textArea.append(parent.TampilChat(email, parent.emailAdmin, "admin"));
+                        
+                    }*/
+                     
+                    SendChat(historyChat + msgWelcome);
+                    parent.SimpanChat(parent.emailAdmin,email, msgWelcome);
+                    
+                    String selectedComboBox =  parent.comboBoxClient.getSelectedItem().toString();
                     String thisClient = email ;
                     if(selectedComboBox.contains(thisClient))
                     {
                         parent.ShowChat(tmp);
                     }
-*/
+
                                
                     parent.clientsArr.add(this);
                     parent.AddComboBoxClient(displayName, email);
@@ -93,14 +105,14 @@ public class HandleSocket extends Thread{
                     
                     //status = arr[1];
                     
-                    if(status.contains("true"))
+                    /*if(status.contains("true"))
                     {
                         String[] arr = status.split(";;");
                         displayName = arr[4];
                         email = loginEmail;
                         idUser = arr[2];
                     }
-                    
+                    */
                    
                     output.writeBytes(status+"\n");
                     

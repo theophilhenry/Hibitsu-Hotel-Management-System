@@ -127,7 +127,7 @@ public class Villas extends DbConnection {
                 //set preparedStatement
                 PreparedStatement sql = (PreparedStatement) connect.prepareStatement(query);
                 result = sql.executeQuery();
-
+                String grandResult = "";
                 //nanti mau diatur lagi return nya seperti apa
                 while (result.next()) {
                     String ket = "[1]idvilla,[2]name,[3]description,[4]url_photo;;";
@@ -135,9 +135,9 @@ public class Villas extends DbConnection {
                             + result.getString("name") + ";;"
                             + result.getString("description") + ";;"
                             + result.getString("url_photo") + "||";
-                    return ket + hasil;
+                    grandResult += ket + hasil;
                 }
-
+                return grandResult;
             } else {
                 System.out.println("Tidak terkoneksi database");
             }

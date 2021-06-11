@@ -254,13 +254,18 @@ public class WebServiceServer extends DbConnection {
 
     //[CHATS]
     @WebMethod(operationName = "DisplayChat")
-    public ArrayList<String> DisplayChat(
+    public String DisplayChat(
             @WebParam(name = "email_sender") String email_sender,
             @WebParam(name = "email_receiver") String email_receiver) {
         try {
-            ArrayList<String> result = new ArrayList<>();
-            result = model_Chat.DisplayChat(email_sender, email_receiver);
-            return result;
+            
+            String hasil = "";
+            hasil = model_Chat.DisplayChat(email_sender, email_receiver);
+            
+            
+           
+            
+            return hasil;
         } catch (Exception ex) {
             System.out.println("Error Display Chat: " + ex);
         }

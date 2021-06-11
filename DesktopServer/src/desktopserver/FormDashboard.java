@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -27,6 +28,7 @@ public class FormDashboard extends javax.swing.JFrame implements Runnable {
     Thread t;
     HandleSocket hs;
     public String emailAdmin,idAdmin;
+    public Boolean firstClient;
     
     /**
      * Creates new form FormDashboard
@@ -38,6 +40,10 @@ public class FormDashboard extends javax.swing.JFrame implements Runnable {
             this.ss = new ServerSocket(12345);
             emailAdmin = "toto@gmail.com";
             idAdmin = "3";
+            firstClient = false;
+            
+            this.IsiComboBoxVilla();
+            
             if(t==null)
             {
                 t = new Thread(this,"Server");
@@ -75,10 +81,7 @@ public class FormDashboard extends javax.swing.JFrame implements Runnable {
         comboBoxClient.removeItem(name + " (" + email + ")");
     }
     
-    public void SimpanChat(String emailSend, String emailReceiv, String msg)
-    {
-        System.out.println(insertChat(emailSend ,emailReceiv,msg ));
-    }
+   
     
     public String LoginUser(String email,String password)
     {
@@ -114,6 +117,81 @@ public class FormDashboard extends javax.swing.JFrame implements Runnable {
         }
     }
     
+    public void SimpanChat(String emailSend, String emailReceiv, String msg)
+    {
+        
+        System.out.println(insertChat(emailSend ,emailReceiv,msg ));
+    }
+     
+    public String TampilChat(String emailSend, String emailReceiv, String untukSiapa)
+    {
+        String result = displayChat(emailSend, emailReceiv);
+        System.out.println("Hasil result \n" + result);
+        
+        String[] arr1 = result.split("##");
+        
+        System.out.println("Arr1 \n");
+        System.out.println(Arrays.toString(arr1));
+        
+        untukSiapa = untukSiapa.toLowerCase();
+        
+        String hasil = "";
+        
+        if(untukSiapa.equals("admin"))
+        {
+            for(Integer i =0; i<arr1.length; i++)
+            {
+                String[] arr2 = arr1[i].split(";;");
+                
+                if(arr2[1].equals("3"))
+                {
+                    
+                    hasil += "Admin : " + arr2[1] + "\n";
+                }
+                else
+                {
+                    hasil += comboBoxClient.getSelectedItem().toString() + " : " + arr2[2] + "\n";
+                }
+            }
+        }
+        else
+        {
+            for(Integer i =0; i<arr1.length; i++)
+            {
+                String[] arr2 = arr1[i].split(";;");
+                
+                System.out.println("\n\n Arr2 : \n");
+                System.out.println(Arrays.toString(arr2));
+                
+                if(arr2[1].equals("3"))
+                {
+                    
+                    hasil += "Admin : " + arr2[2] + "\n";
+                }
+                else
+                {
+                    hasil += "Me : " + arr2[2] + "\n";
+                }
+            }
+        }
+        //hasil += "========================================\n";
+        return hasil;
+        
+       
+    }
+    
+    public void IsiComboBoxVilla()
+    {
+        String result = displayVillaAll();
+        String[] arr = result.split(";;");
+        
+        System.out.println(Arrays.toString(arr));
+        
+        for(String s : arr)
+        {
+            
+        }
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -469,13 +547,20 @@ public class FormDashboard extends javax.swing.JFrame implements Runnable {
         String[] arr = info.split("(");
         String emailDest = arr[1].substring(0,arr[1].length()-1);
         
-        SimpanChat(emailAdmin, emailDest, msg);
-        
+        //SimpanChat(emailAdmin, emailDest, msg);
+        System.out.println(emailDest);
         
     }//GEN-LAST:event_buttonSendActionPerformed
 
     private void comboBoxClientItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_comboBoxClientItemStateChanged
+       String info = comboBoxClient.getSelectedItem().toString();
+        String[] arr = info.split("(");
+        String emailDest = arr[1].substring(0,arr[1].length()-1);
+        
+        String historyChat = TampilChat(emailAdmin, emailDest, "admin");
+        
         textArea.setText("");
+        textArea.append(historyChat);
     }//GEN-LAST:event_comboBoxClientItemStateChanged
 
     private void buttonCheckActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonCheckActionPerformed
@@ -547,7 +632,7 @@ public class FormDashboard extends javax.swing.JFrame implements Runnable {
     private javax.swing.JPanel panelChat;
     private javax.swing.JPanel panelTable;
     private javax.swing.JTable tblOrder;
-    private javax.swing.JTextArea textArea;
+    public javax.swing.JTextArea textArea;
     private javax.swing.JTextField textChat;
     private javax.swing.JTextField textEmail;
     private javax.swing.JTextField textNotes;
@@ -584,7 +669,15 @@ public class FormDashboard extends javax.swing.JFrame implements Runnable {
         return port.insertChat(emailSender, emailReceiver, messages);
     }
 
-    public static java.util.List<java.lang.String> displayChat(java.lang.String emailSender, java.lang.String emailReceiver) {
+    
+
+    private static String displayVillaAll() {
+        com.ubaya.disprog.WebServiceServer_Service service = new com.ubaya.disprog.WebServiceServer_Service();
+        com.ubaya.disprog.WebServiceServer port = service.getWebServiceServerPort();
+        return port.displayVillaAll();
+    }
+
+    private static String displayChat(java.lang.String emailSender, java.lang.String emailReceiver) {
         com.ubaya.disprog.WebServiceServer_Service service = new com.ubaya.disprog.WebServiceServer_Service();
         com.ubaya.disprog.WebServiceServer port = service.getWebServiceServerPort();
         return port.displayChat(emailSender, emailReceiver);
