@@ -55,6 +55,7 @@ public class HandleSocket extends Thread{
         {
             try {
                 String tmp = input.readLine();
+                System.out.println("58 ReadLine : " + tmp);
                 if(tmp.contains("JOIN"))
                 {
                    /* chatWithBot = true;
@@ -66,7 +67,8 @@ public class HandleSocket extends Thread{
                             + "3. Konsultasi Chat dengan Admin\n");
                     */
                     
-                   
+                     parent.clientsArr.add(this);
+                     parent.AddComboBoxClient(displayName, email);
                     
                     String msgWelcome = "Halo, apa yang bisa dibantu?";
                     String historyChat =  parent.TampilChat(email, parent.emailAdmin,"client");
@@ -74,21 +76,11 @@ public class HandleSocket extends Thread{
                     
                     SendChat(historyChat + "\n;;DONE;;");
                     
-                    
-                   /*  if(parent.firstClient == false)
-                    {
-                        parent.firstClient = true;
-                        parent.textArea.setText("");
-                        parent.textArea.append(parent.TampilChat(email, parent.emailAdmin, "admin"));
-                        
-                    }*/
-                     SendChat(msgWelcome);
+                    SendChat(msgWelcome);
                    
                      parent.SimpanChat(parent.emailAdmin,email, msgWelcome);
                     
-                     parent.clientsArr.add(this);
-                     parent.AddComboBoxClient(displayName, email);
-                    
+                                  
                     
                     String selectedComboBox =  parent.comboBoxClient.getSelectedItem().toString();
                     String thisClient = email ;
@@ -97,7 +89,7 @@ public class HandleSocket extends Thread{
                     if(selectedComboBox.contains(thisClient))
                     {
                         System.out.println("95");
-                        parent.ShowChat(msgWelcome);
+                        parent.textArea.append("Admin : " + msgWelcome);
                     }
 
                                
@@ -135,17 +127,23 @@ public class HandleSocket extends Thread{
                 }
                 else
                 {
+                    System.out.println("129");
+                    
                     String selectedComboBox =  parent.comboBoxClient.getSelectedItem().toString();
                     
                     String thisClient = email ;
                     
+                    String[] arr = tmp.split(";;");
+                    parent.SimpanChat(email, parent.emailAdmin, arr[1]);
+                    
+                    System.out.println("Selected Combo Box : " + selectedComboBox + "\n email Client ini : " + thisClient + "\n Hasil : " + selectedComboBox.contains(thisClient));
+                    
                     if(selectedComboBox.contains(thisClient))
                     {
+                        System.out.println("142");
                         parent.ShowChat(tmp);
                     }
                     
-                    String[] arr = tmp.split(";;");
-                    parent.SimpanChat(email, parent.emailAdmin, arr[1]);
                     
                 }
                 
