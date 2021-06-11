@@ -60,6 +60,8 @@ public class FormDashboard extends javax.swing.JFrame implements Runnable {
         }
     }
     
+     
+    
     
     
     public void ShowChat(String msg)
@@ -568,13 +570,15 @@ public class FormDashboard extends javax.swing.JFrame implements Runnable {
         String msg = textChat.getText();
         SendChatToOne(msg);
         textArea.append("Admin : " + msg + "\n");
-        
+        textChat.setText("");
         String info = comboBoxClient.getSelectedItem().toString();
-        String[] arr = info.split("(");
+        String[] arr = info.split("\\(");
         String emailDest = arr[1].substring(0,arr[1].length()-1);
+        System.out.println("Email Dest : " + emailDest);
+        //this.SimpanChat(emailAdmin, emailDest, msg);
+      
         
-        //SimpanChat(emailAdmin, emailDest, msg);
-        System.out.println(emailDest);
+        
         
     }//GEN-LAST:event_buttonSendActionPerformed
 

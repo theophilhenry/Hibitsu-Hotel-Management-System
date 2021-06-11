@@ -116,6 +116,7 @@ public class FormChat extends javax.swing.JFrame implements Runnable {
         try {
             output.writeBytes(email + ";;" + msg + "\n");
             textArea.append(" Me : " + msg + "\n");
+            
         } catch (IOException ex) {
             Logger.getLogger(FormChat.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -306,6 +307,7 @@ public class FormChat extends javax.swing.JFrame implements Runnable {
     private void btnSendActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSendActionPerformed
         String msg = txtChat.getText();
         SendChat(msg);
+        txtChat.setText("");
         
     }//GEN-LAST:event_btnSendActionPerformed
 
