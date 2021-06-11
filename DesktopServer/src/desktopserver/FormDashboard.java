@@ -591,8 +591,9 @@ public class FormDashboard extends javax.swing.JFrame implements Runnable {
             String historyChat = TampilChat(emailAdmin, emailDest, "admin");
 
             textArea.setText("");
-            textArea.append("----------------------Chat Sebelumnya-----------------------\n");
+            
             textArea.append(historyChat + "\n");
+            textArea.append("----------------------Chat Sebelumnya-----------------------\n");
     }//GEN-LAST:event_comboBoxClientItemStateChanged
 
     private void buttonCheckActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonCheckActionPerformed
