@@ -28,7 +28,8 @@ public class FormDashboard extends javax.swing.JFrame implements Runnable {
     Thread t;
     HandleSocket hs;
     public String emailAdmin,idAdmin;
-    public Boolean firstClient;
+    public Boolean adaClient;
+    
     
     /**
      * Creates new form FormDashboard
@@ -40,7 +41,7 @@ public class FormDashboard extends javax.swing.JFrame implements Runnable {
             this.ss = new ServerSocket(12345);
             emailAdmin = "toto@gmail.com";
             idAdmin = "3";
-            //firstClient = false;
+            adaClient = false;
             
             this.IsiComboBoxVilla();
             
@@ -72,6 +73,7 @@ public class FormDashboard extends javax.swing.JFrame implements Runnable {
     {
                 
         comboBoxClient.addItem( name + " (" + email + ")");
+        adaClient = true;
     }
     
     public void RemoveComboBoxClient(String name, String email)
@@ -151,7 +153,7 @@ public class FormDashboard extends javax.swing.JFrame implements Runnable {
                 if(arr2[1].equals("3"))
                 {
                     
-                    hasil += "Admin : " + arr2[1] ;
+                    hasil += "Admin : " + arr2[2] ;
                 }
                 else
                 {
@@ -205,10 +207,8 @@ public class FormDashboard extends javax.swing.JFrame implements Runnable {
         
         System.out.println(Arrays.toString(arr));
         
-        for(String s : arr)
-        {
-            
-        }
+        
+       
     }
 
     /**
@@ -571,14 +571,17 @@ public class FormDashboard extends javax.swing.JFrame implements Runnable {
     }//GEN-LAST:event_buttonSendActionPerformed
 
     private void comboBoxClientItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_comboBoxClientItemStateChanged
-       // String info = comboBoxClient.getSelectedItem().toString();
-       // String[] arr = info.split("(");
-       // String emailDest = arr[1].substring(0,arr[1].length()-1);
         
-      //  String historyChat = TampilChat(emailAdmin, emailDest, "admin");
         
-        textArea.setText("");
-     //   textArea.append(historyChat);
+            String info = comboBoxClient.getSelectedItem().toString();
+           
+            String[] arr = info.split("\\(");
+            String emailDest = arr[1].substring(0,arr[1].length()-1);
+           
+            String historyChat = TampilChat(emailAdmin, emailDest, "admin");
+
+            textArea.setText("");
+            textArea.append(historyChat);
     }//GEN-LAST:event_comboBoxClientItemStateChanged
 
     private void buttonCheckActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonCheckActionPerformed

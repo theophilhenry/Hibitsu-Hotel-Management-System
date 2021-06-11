@@ -179,18 +179,6 @@
 </xs:sequence>
 </xs:complexType>
 
-<xs:complexType name="TrackOrder2">
-<xs:sequence>
-<xs:element name="idreservation" type="xs:int" minOccurs="0"/>
-</xs:sequence>
-</xs:complexType>
-
-<xs:complexType name="TrackOrder2Response">
-<xs:sequence>
-<xs:element name="return" type="xs:string" minOccurs="0"/>
-</xs:sequence>
-</xs:complexType>
-
 <xs:complexType name="CheckAvailability">
 <xs:sequence>
 <xs:element name="idvilla" type="xs:int" minOccurs="0"/>
@@ -205,13 +193,13 @@
 </xs:sequence>
 </xs:complexType>
 
-<xs:complexType name="TrackOrderApp">
+<xs:complexType name="TrackOrder2">
 <xs:sequence>
 <xs:element name="idreservation" type="xs:int" minOccurs="0"/>
 </xs:sequence>
 </xs:complexType>
 
-<xs:complexType name="TrackOrderAppResponse">
+<xs:complexType name="TrackOrder2Response">
 <xs:sequence>
 <xs:element name="return" type="xs:string" minOccurs="0"/>
 </xs:sequence>
@@ -227,6 +215,18 @@
 <xs:complexType name="DisplayReservationAllResponse">
 <xs:sequence>
 <xs:element name="return" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="TrackOrderApp">
+<xs:sequence>
+<xs:element name="idreservation" type="xs:int" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="TrackOrderAppResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:string" minOccurs="0"/>
 </xs:sequence>
 </xs:complexType>
 
@@ -267,18 +267,18 @@
 </xs:sequence>
 </xs:complexType>
 
-<xs:complexType name="Registration">
+<xs:complexType name="InsertReservation">
 <xs:sequence>
-<xs:element name="fullname" type="xs:string" minOccurs="0"/>
-<xs:element name="display_name" type="xs:string" minOccurs="0"/>
-<xs:element name="phoneNumber" type="xs:string" minOccurs="0"/>
-<xs:element name="email" type="xs:string" minOccurs="0"/>
-<xs:element name="password" type="xs:string" minOccurs="0"/>
-<xs:element name="no_ktp" type="xs:string" minOccurs="0"/>
+<xs:element name="checkin_date" type="xs:string" minOccurs="0"/>
+<xs:element name="checkout_date" type="xs:string" minOccurs="0"/>
+<xs:element name="total_guest" type="xs:int" minOccurs="0"/>
+<xs:element name="notes" type="xs:string" minOccurs="0"/>
+<xs:element name="iduser" type="xs:int" minOccurs="0"/>
+<xs:element name="idvilla" type="xs:int" minOccurs="0"/>
 </xs:sequence>
 </xs:complexType>
 
-<xs:complexType name="RegistrationResponse">
+<xs:complexType name="InsertReservationResponse">
 <xs:sequence>
 <xs:element name="return" type="xs:string" minOccurs="0"/>
 </xs:sequence>
@@ -296,18 +296,18 @@
 </xs:sequence>
 </xs:complexType>
 
-<xs:complexType name="InsertReservation">
+<xs:complexType name="Registration">
 <xs:sequence>
-<xs:element name="checkin_date" type="xs:string" minOccurs="0"/>
-<xs:element name="checkout_date" type="xs:string" minOccurs="0"/>
-<xs:element name="total_guest" type="xs:int" minOccurs="0"/>
-<xs:element name="notes" type="xs:string" minOccurs="0"/>
-<xs:element name="iduser" type="xs:int" minOccurs="0"/>
-<xs:element name="idvilla" type="xs:int" minOccurs="0"/>
+<xs:element name="fullname" type="xs:string" minOccurs="0"/>
+<xs:element name="display_name" type="xs:string" minOccurs="0"/>
+<xs:element name="phoneNumber" type="xs:string" minOccurs="0"/>
+<xs:element name="email" type="xs:string" minOccurs="0"/>
+<xs:element name="password" type="xs:string" minOccurs="0"/>
+<xs:element name="no_ktp" type="xs:string" minOccurs="0"/>
 </xs:sequence>
 </xs:complexType>
 
-<xs:complexType name="InsertReservationResponse">
+<xs:complexType name="RegistrationResponse">
 <xs:sequence>
 <xs:element name="return" type="xs:string" minOccurs="0"/>
 </xs:sequence>

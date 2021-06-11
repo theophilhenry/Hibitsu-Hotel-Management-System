@@ -66,7 +66,7 @@ public class HandleSocket extends Thread{
                             + "2. Check Booking / Track Order\n"
                             + "3. Konsultasi Chat dengan Admin\n");
                     */
-                    
+                     
                      parent.clientsArr.add(this);
                      parent.AddComboBoxClient(displayName, email);
                     
@@ -89,7 +89,7 @@ public class HandleSocket extends Thread{
                     if(selectedComboBox.contains(thisClient))
                     {
                         System.out.println("95");
-                        parent.textArea.append("Admin : " + msgWelcome);
+                        parent.textArea.append("Admin : " + msgWelcome + "\n");
                     }
 
                                
