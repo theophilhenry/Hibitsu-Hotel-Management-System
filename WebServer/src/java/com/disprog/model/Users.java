@@ -137,7 +137,7 @@ public class Users extends DbConnection {
 
                     return ket + "true;;" + hasil;
                 } else {
-                    String ket = "[1]hasilLoginClient";
+                    String ket = "[1]hasilLoginClient;;";
                     return ket + "false";
                 }
             } else {

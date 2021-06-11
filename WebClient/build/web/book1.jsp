@@ -33,19 +33,29 @@
                 <a class="navbar-brand rubik-bold color-green" href="#">日々つ HIBITSU</a>
                 <div class="collapse navbar-collapse justify-content-end" id="navbarTogglerDemo02">
                     <ul class="navbar-nav mb-2 mb-lg-0">
-                        <li class="nav-item">
+                        <li class="nav-item me-3">
                             <a class="nav-link rubik-normal" href="index.jsp">Home</a>
                         </li>
-                        <li class="nav-item">
+                        <li class="nav-item me-3">
                             <a class="nav-link active rubik-bold color-green" aria-current="page" href="book1.html">Book
                                 Now</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link rubik-normal" href="track-order.jsp">Track Order</a>
-                        </li>
+                        <% if (session.getAttribute("idUser") == null) { %>
                         <li class="nav-item me-3">
                             <a class="nav-link rubik-normal" href="login.jsp">Login</a>
                         </li>
+                        <% }%>
+                        <% if (session.getAttribute("idUser") != null) { %>
+                        <li class="nav-item me-3">
+                            <a class="nav-link rubik-normal" href="track-order.jsp">Track Order</a>
+                        </li>
+                        <li class="nav-item me-3">
+                            <form method='POST' action='login-handler.jsp'>
+                                <input type='hidden' name='command' value='logout'>
+                                <button type='submit' class="nav-link rubik-normal" style='padding-right: .5rem; padding-left: .5rem; padding: .5rem 1rem; border: none; background: none;' href="login.jsp">Logout</a>
+                            </form>
+                        </li>
+                        <% }%>
                     </ul>
                     <form>
                         <button class="btn btn-success rubik-bold color-white background-green" type="submit">Download
@@ -65,7 +75,10 @@
                 <p class="karla-normal">A beautiful near beach villa, with a wonderful neighboorhood. Be amazed! Be
                     Refreshed!
                     Other activities to do here is surfing, skying, running, jumping and other stuff!</p>
-                <button class="btn btn-success rubik-bold color-white background-green" type="submit">View Details</button>
+                <form method="POST" action="book2.jsp">
+                    <input type='hidden' name='idVilla' value='1'>
+                    <button class="btn btn-success rubik-bold color-white background-green" type="submit">View Details</button>
+                </form>
             </div>
         </div>
 

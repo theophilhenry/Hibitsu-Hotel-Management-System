@@ -1,4 +1,11 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+
+<%
+    if(session.getAttribute("idUser") != null){
+        response.sendRedirect("index.jsp");
+        return;
+    }
+%>
 <!doctype html>
 <html lang="en">
 
@@ -33,14 +40,11 @@
                 <a class="navbar-brand rubik-bold color-green" href="#">日々つ HIBITSU</a>
                 <div class="collapse navbar-collapse justify-content-end" id="navbarTogglerDemo02">
                     <ul class="navbar-nav mb-2 mb-lg-0">
-                        <li class="nav-item">
+                        <li class="nav-item me-3">
                             <a class="nav-link rubik-normal" href="index.jsp">Home</a>
                         </li>
-                        <li class="nav-item">
+                        <li class="nav-item me-3">
                             <a class="nav-link rubik-normal" href="book1.jsp">Book Now</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link rubik-normal" href="track-order.jsp">Track Order</a>
                         </li>
                         <li class="nav-item me-3">
                             <a class="nav-link active rubik-bold color-green" aria-current="page"
@@ -54,17 +58,22 @@
                 </div>
             </div>
         </nav>
-
+        <% if (session.getAttribute("printLogin") != null) { %>
+        <p class='rubik-bold' style='color: red; text-align: center;'><% out.println(String.valueOf(session.getAttribute("printLogin"))); %></p>
+        <% }
+            session.removeAttribute("printLogin");
+        %>
         <div class="login-container">
             <div class="login-details mb-4">
-                <form action="">
-                    <p class="rubik-bold color-green fs-4">LOGIN</p>
+                <form method='POST' action="login-handler.jsp">
+                    <input type='hidden' name='command' value='login'>
+                           <p class="rubik-bold color-green fs-4">LOGIN</p>
                     <div class="form-floating mb-3">
-                        <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com" required>
+                        <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com" name="email" required>
                         <label for="floatingInput">Email address</label>
                     </div>
                     <div class="form-floating mb-3">
-                        <input type="password" class="form-control" id="floatingPassword" placeholder="Password" required>
+                        <input type="password" class="form-control" id="floatingPassword" placeholder="Password" name='password' required>
                         <label for="floatingPassword">Password</label>
                     </div>
                     <button class="btn btn-success rubik-bold color-white background-green mb-3" type="submit"
@@ -74,8 +83,9 @@
             <p class="rubik-normal">Don't have an account? <span class="rubik-bold color-green">Register</span> now below
             </p>
             <div class="login-details mb-4">
-                <form action="">
-                    <p class="rubik-bold color-green fs-4">REGISTER</p>
+                <form method='POST' action="login-handler.jsp">
+                    <input type='hidden' name='command' value='register'>
+                           <p class="rubik-bold color-green fs-4">REGISTER</p>
                     <div class="form-floating mb-3">
                         <input type="email" class="form-control" id="floatingEmail" placeholder="name@example.com" required>
                         <label for="floatingInput">Email address</label>

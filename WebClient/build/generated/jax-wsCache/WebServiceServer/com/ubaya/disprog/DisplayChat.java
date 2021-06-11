@@ -18,7 +18,7 @@ import javax.xml.bind.annotation.XmlType;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
  *       &lt;sequence&gt;
  *         &lt;element name="email_sender" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
- *         &lt;element name="messages" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
+ *         &lt;element name="email_receiver" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
  *       &lt;/sequence&gt;
  *     &lt;/restriction&gt;
  *   &lt;/complexContent&gt;
@@ -30,13 +30,14 @@ import javax.xml.bind.annotation.XmlType;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "DisplayChat", propOrder = {
     "emailSender",
-    "messages"
+    "emailReceiver"
 })
 public class DisplayChat {
 
     @XmlElement(name = "email_sender")
     protected String emailSender;
-    protected String messages;
+    @XmlElement(name = "email_receiver")
+    protected String emailReceiver;
 
     /**
      * Gets the value of the emailSender property.
@@ -63,27 +64,27 @@ public class DisplayChat {
     }
 
     /**
-     * Gets the value of the messages property.
+     * Gets the value of the emailReceiver property.
      * 
      * @return
      *     possible object is
      *     {@link String }
      *     
      */
-    public String getMessages() {
-        return messages;
+    public String getEmailReceiver() {
+        return emailReceiver;
     }
 
     /**
-     * Sets the value of the messages property.
+     * Sets the value of the emailReceiver property.
      * 
      * @param value
      *     allowed object is
      *     {@link String }
      *     
      */
-    public void setMessages(String value) {
-        this.messages = value;
+    public void setEmailReceiver(String value) {
+        this.emailReceiver = value;
     }
 
 }

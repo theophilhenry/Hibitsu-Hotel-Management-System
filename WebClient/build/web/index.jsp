@@ -36,18 +36,28 @@
                 <a class="navbar-brand rubik-bold color-green" href="#">日々つ HIBITSU</a>
                 <div class="collapse navbar-collapse justify-content-end" id="navbarTogglerDemo02">
                     <ul class="navbar-nav mb-2 mb-lg-0">
-                        <li class="nav-item">
+                        <li class="nav-item me-3">
                             <a class="nav-link active rubik-bold color-green" aria-current="page" href="index.jsp">Home</a>
                         </li>
-                        <li class="nav-item">
+                        <li class="nav-item me-3">
                             <a class="nav-link rubik-normal" href="book1.jsp">Book Now</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link rubik-normal" href="track-order.jsp">Track Order</a>
-                        </li>
+                        <% if (session.getAttribute("idUser") == null) { %>
                         <li class="nav-item me-3">
                             <a class="nav-link rubik-normal" href="login.jsp">Login</a>
                         </li>
+                        <% }%>
+                        <% if (session.getAttribute("idUser") != null) { %>
+                        <li class="nav-item me-3">
+                            <a class="nav-link rubik-normal" href="track-order.jsp">Track Order</a>
+                        </li>
+                        <li class="nav-item me-3">
+                            <form method='POST' action='login-handler.jsp'>
+                                <input type='hidden' name='command' value='logout'>
+                                <button type='submit' class="nav-link rubik-normal" style='padding-right: .5rem; padding-left: .5rem; padding: .5rem 1rem; border: none; background: none;' href="login.jsp">Logout</a>
+                            </form>
+                        </li>
+                        <% }%>
                     </ul>
                     <form>
                         <button class="btn btn-success rubik-bold color-white background-green" type="submit">Download
@@ -57,24 +67,30 @@
             </div>
         </nav>
 
+        <% if (session.getAttribute("printLogin") != null) { %>
+        <p class="rubik-bold color-green mt-5" style='text-align: center;'><% out.println(String.valueOf(session.getAttribute("printLogin"))); %></p>
+        <% }
+            session.removeAttribute("printLogin");
+        %>
+
         <div class="grid-container grid-container-reverse box-model box-model1">
             <div class="grid-left">
                 <p class="rubik-bold" style="font-size: 2.2em; line-height: 44px;">Explore Villas<br>On Bali</p>
                 <p class="karla-normal">We provide you wonderful experiences and excellent services especially our beloved
                     customers</p>
-                <button class="btn btn-success rubik-bold color-white background-green" type="submit">Book Now</button>
+                <a href="book1.jsp" class="btn btn-success rubik-bold color-white background-green">Book Now</a>
             </div>
             <div class="grid-right">
                 <div id="carouselExampleFade" class="carousel slide carousel-fade" data-bs-ride="carousel">
                     <div class="carousel-inner">
                         <div class="carousel-item active">
-                            <img src="assets/images/carousel1.png" class="d-block w-100" alt="...">
+                            <img src="assets/images/1.png" class="d-block w-100" alt="...">
                         </div>
                         <div class="carousel-item">
-                            <img src="assets/images/home2.png" class="d-block w-100" alt="...">
+                            <img src="assets/images/2.png" class="d-block w-100" alt="...">
                         </div>
                         <div class="carousel-item">
-                            <img src="assets/images/carousel1.png" class="d-block w-100" alt="...">
+                            <img src="assets/images/3.png" class="d-block w-100" alt="...">
                         </div>
                     </div>
                     <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleFade"
@@ -111,7 +127,9 @@
                     <li>Make reservation anytime and anywhere</li>
                     <li>Track your order status</li>
                 </ul>
-                <button class="btn btn-outline-success rubik-bold color-green border-green" type="submit">Sign Up</button>
+                <% if (session.getAttribute("idUser") == null) { %>
+                <a href="login.jsp" class="btn btn-outline-success rubik-bold color-green border-green">Sign Up</a>
+                <% } %>
             </div>
             <div class="grid-right">
                 <img src="assets/images/home3.png" class="img-home3" alt="">

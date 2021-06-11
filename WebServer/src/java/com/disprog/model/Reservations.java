@@ -329,7 +329,7 @@ public class Reservations extends DbConnection {
 
                 // set preparedStatement
                 PreparedStatement sql = (PreparedStatement) connect.prepareStatement(query);
-
+                sql.setString(1, url_bukti_pembayaran);
                 sql.setInt(2, idreservation);
 
                 int affectedResult = sql.executeUpdate();
@@ -473,6 +473,215 @@ public class Reservations extends DbConnection {
                 System.out.println("Tidak terkoneksi database");
             }
         } catch (SQLException ex) {
+            Logger.getLogger(Reservations.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+
+    public String TrackOrderMainWeb(Integer idreservation) {
+        try {
+            if (!connect.isClosed()) {
+                String query = "SELECT r.idreservation, r.res_timestamp, r.checkin_date, "
+                        + "r.checkout_date, r.status, r.total_guest, r.total_price, r.notes, r.url_bukti_pembayaran, "
+                        + "v.idvilla, v.name, "
+                        + "u.iduser, u.fullname, u.display_name, u.phone_number, u.email, u.no_ktp "
+                        + "FROM reservations r "
+                        + "INNER JOIN villas v ON r.idvilla = v.idvilla "
+                        + "INNER JOIN users u ON r.iduser = u.iduser "
+                        + "WHERE idreservation = ?;";
+                PreparedStatement sql = (PreparedStatement) connect.prepareStatement(query);
+                sql.setInt(1, idreservation);
+                result = sql.executeQuery();
+
+                if (result.next()) {
+//                    String ket = "[1]hasilTrackOrder,[2]idreservation,[3]res_timestamp,"
+//                            + "[4]chcekin_date,[5]checkout_date,[6]status,[7]total_guest,[8]total_price,"
+//                            + "[9]notes,[10]url_bukti_pembayaran,[11]idvilla,[12]villa_name,"
+//                            + "[13]iduser,[14]fullname,[15]display_name[15],phone_number,[16]email,[17]no_ktp;;";
+//
+//                    String hasil = String.valueOf(result.getInt("idreservation")) + ";;"
+//                            + String.valueOf(result.getTimestamp("res_timestamp")) + ";;"
+//                            + result.getDate("checkin_date").toString() + ";;"
+//                            + result.getDate("checkout_date").toString() + ";;"
+//                            + result.getString("status") + ";;"
+//                            + String.valueOf(result.getInt("total_guest")) + ";;"
+//                            + String.valueOf(result.getInt("total_price")) + ";;"
+//                            + result.getString("notes") + ";;"
+//                            + result.getString("url_bukti_pembayaran") + ";;"
+//                            + String.valueOf(result.getInt("idvilla")) + ";;"
+//                            + result.getString("name") + ";;"
+//                            + String.valueOf(result.getInt("iduser")) + ";;"
+//                            + result.getString("fullname") + ";;"
+//                            + result.getString("display_name") + ";;"
+//                            + result.getString("phone_number") + ";;"
+//                            + result.getString("email") + ";;"
+//                            + result.getString("no_ktp");
+
+                    String statusValue = result.getString("status");
+                    String statusClass = "status-" + statusValue.toLowerCase();
+                    
+                    String paymentValue = result.getString("url_bukti_pembayaran");
+                    String statusCheck = "";
+                    
+                    if(paymentValue == null){
+                        statusCheck = ""
+                            + "<div class='mb-3'>"
+                            +"<label for='formFileSm' class='form-label karla-normal' style='text-align: left;'>Payment Slip hasn't uploaded yet. <br>To Upload payment slip, you need to <br>1. Upload your payment slip photo to Google Drive<br>2. Share and get the link<br>3. Set the link to anyone can view<br>4. Copy the link and paste it here.</label>"
+                            + "<form method='POST' action='track-order-handler.jsp'>"
+                            + "<input type='hidden' name='command' value='uploadBuktiPembayaran'>"
+                            + "<input type='hidden' name='idReservation' value='" + idreservation + "'>"
+                            + "<input type='text' name='urlBuktiPembayaran' class='form-control mb-3' id='exampleFormControlInput1' placeholder='https://drive.google.com/file/d/xxx'>"
+                            + "<button class='btn btn-success rubik-bold color-white background-green mb-3' type='submit' style='width: 100%;'>Upload</button>"
+                            + "</form>"
+                            + "</div>";
+                    }
+
+                    String hasilDOM = ""
+                            + "<p>ORDER ID : " + String.valueOf(result.getInt("idreservation")) + "</p>"
+                            + "<div class='track-details mb-4'>"
+                            + "<div class='information'>"
+                            + "<p class='rubik-bold'>YOUR NAME</p>"
+                            + "<p>" + result.getString("fullname") + "</p>"
+                            + "</div>"
+                            + "<div class='information'>"
+                            + "<p class='rubik-bold'>VILLAS</p>"
+                            + "<p>" + result.getString("name") + "</p>"
+                            + "</div>"
+                            + "<div class='information'>"
+                            + "<p class='rubik-bold'>DATE</p>"
+                            + "<p>"
+                            + new SimpleDateFormat("dd MMMM yyyy").format(new SimpleDateFormat("yyyy-MM-dd").parse(result.getDate("checkin_date").toString()))
+                            + " - "
+                            + new SimpleDateFormat("dd MMMM yyyy").format(new SimpleDateFormat("yyyy-MM-dd").parse(result.getDate("checkout_date").toString()))
+                            + "</p>"
+                            + "</div>"
+                            + "<div class='information'>"
+                            + "<p class='rubik-bold'>TOTAL GUEST</p>"
+                            + "<p>" + String.valueOf(result.getInt("total_guest")) + "</p>"
+                            + "</div>"
+                            + "<div class='information'>"
+                            + "<p class='rubik-bold'>DATE OF ORDER</p>"
+                            + "<p>" + String.valueOf(result.getTimestamp("res_timestamp")) + "</p>"
+                            + "</div>"
+                            + "<div class='information'>"
+                            + "<p class='rubik-bold'>TOTAL PRICE</p>"
+                            + "<p>" + String.valueOf(result.getInt("total_price")) + "</p>"
+                            + "</div>"
+                            + "<div class='information'>"
+                            + "<p class='rubik-bold'>NOTES</p>"
+                            + "<p>" + result.getString("notes") + "</p>"
+                            + "</div>"
+                            + "<div class='information'>"
+                            + "<p class='rubik-bold'>STATUS</p>"
+                            + "<p class='rubik-bold " + statusClass + "'>" + statusValue + "</p>"
+                            + statusCheck
+                            + "</div>"
+                            + "</div>";
+                    return hasilDOM;
+                } else {
+//                    String ket = "[1]hasilTrackOrder;;";
+                    return "false";
+                }
+            } else {
+                System.out.println("Tidak terkoneksi database");
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(Reservations.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+
+    public String TrackOrderBook3(Integer idreservation) {
+        try {
+            if (!connect.isClosed()) {
+                String query = "SELECT r.idreservation, r.res_timestamp, r.checkin_date, "
+                        + "r.checkout_date, r.status, r.total_guest, r.total_price, r.notes, r.url_bukti_pembayaran, "
+                        + "v.idvilla, v.name, "
+                        + "u.iduser, u.fullname, u.display_name, u.phone_number, u.email, u.no_ktp "
+                        + "FROM reservations r "
+                        + "INNER JOIN villas v ON r.idvilla = v.idvilla "
+                        + "INNER JOIN users u ON r.iduser = u.iduser "
+                        + "WHERE idreservation = ?;";
+                PreparedStatement sql = (PreparedStatement) connect.prepareStatement(query);
+                sql.setInt(1, idreservation);
+                result = sql.executeQuery();
+
+                if (result.next()) {
+//                    String ket = "[1]hasilTrackOrder,[2]idreservation,[3]res_timestamp,"
+//                            + "[4]chcekin_date,[5]checkout_date,[6]status,[7]total_guest,[8]total_price,"
+//                            + "[9]notes,[10]url_bukti_pembayaran,[11]idvilla,[12]villa_name,"
+//                            + "[13]iduser,[14]fullname,[15]display_name[15],phone_number,[16]email,[17]no_ktp;;";
+//
+//                    String hasil = String.valueOf(result.getInt("idreservation")) + ";;"
+//                            + String.valueOf(result.getTimestamp("res_timestamp")) + ";;"
+//                            + result.getDate("checkin_date").toString() + ";;"
+//                            + result.getDate("checkout_date").toString() + ";;"
+//                            + result.getString("status") + ";;"
+//                            + String.valueOf(result.getInt("total_guest")) + ";;"
+//                            + String.valueOf(result.getInt("total_price")) + ";;"
+//                            + result.getString("notes") + ";;"
+//                            + result.getString("url_bukti_pembayaran") + ";;"
+//                            + String.valueOf(result.getInt("idvilla")) + ";;"
+//                            + result.getString("name") + ";;"
+//                            + String.valueOf(result.getInt("iduser")) + ";;"
+//                            + result.getString("fullname") + ";;"
+//                            + result.getString("display_name") + ";;"
+//                            + result.getString("phone_number") + ";;"
+//                            + result.getString("email") + ";;"
+//                            + result.getString("no_ktp");
+
+                    String statusValue = result.getString("status");
+                    String statusClass = "status-" + statusValue.toLowerCase();
+
+                    String hasilDOM = ""
+                            + "<p>ORDER ID : " + String.valueOf(result.getInt("idreservation")) + "</p>"
+                            + "<div class='client-order-card'>"
+                            + "<div class='information'>"
+                            + "<p class='rubik-bold'>YOUR NAME</p>"
+                            + "<p>" + result.getString("fullname") + "</p>"
+                            + "</div>"
+                            + "<div class='information'>"
+                            + "<p class='rubik-bold'>VILLAS</p>"
+                            + "<p>" + result.getString("name") + "</p>"
+                            + "</div>"
+                            + "<div class='information'>"
+                            + "<p class='rubik-bold'>DATE</p>"
+                            + "<p>"
+                            + new SimpleDateFormat("dd MMMM yyyy").format(new SimpleDateFormat("yyyy-MM-dd").parse(result.getDate("checkin_date").toString()))
+                            + " - "
+                            + new SimpleDateFormat("dd MMMM yyyy").format(new SimpleDateFormat("yyyy-MM-dd").parse(result.getDate("checkout_date").toString()))
+                            + "</p>"
+                            + "</div>"
+                            + "<div class='information'>"
+                            + "<p class='rubik-bold'>TOTAL GUEST</p>"
+                            + "<p>" + String.valueOf(result.getInt("total_guest")) + "</p>"
+                            + "</div>"
+                            + "<div class='information'>"
+                            + "<p class='rubik-bold'>DATE OF ORDER</p>"
+                            + "<p>" + String.valueOf(result.getTimestamp("res_timestamp")) + "</p>"
+                            + "</div>"
+                            + "<div class='information'>"
+                            + "<p class='rubik-bold'>TOTAL PRICE</p>"
+                            + "<p>" + String.valueOf(result.getInt("total_price")) + "</p>"
+                            + "</div>"
+                            + "<div class='information'>"
+                            + "<p class='rubik-bold'>NOTES</p>"
+                            + "<p>" + result.getString("notes") + "</p>"
+                            + "</div>"
+                            + "<div class='information'>"
+                            + "<p class='rubik-bold'>STATUS</p>"
+                            + "<p class='rubik-bold " + statusClass + "'>" + statusValue + "</p>"
+                            + "</div>"
+                            + "</div>";
+                    return hasilDOM;
+                } else {
+//                    String ket = "[1]hasilTrackOrder;;";
+                    return "false";
+                }
+            } else {
+                System.out.println("Tidak terkoneksi database");
+            }
+        } catch (Exception ex) {
             Logger.getLogger(Reservations.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;

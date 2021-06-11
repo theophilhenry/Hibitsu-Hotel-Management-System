@@ -28,6 +28,8 @@ public class ObjectFactory {
     private final static QName _ChangeStatusResponse_QNAME = new QName("http://disprog.ubaya.com/", "ChangeStatusResponse");
     private final static QName _CheckAvailability_QNAME = new QName("http://disprog.ubaya.com/", "CheckAvailability");
     private final static QName _CheckAvailabilityResponse_QNAME = new QName("http://disprog.ubaya.com/", "CheckAvailabilityResponse");
+    private final static QName _DisplayAllClient_QNAME = new QName("http://disprog.ubaya.com/", "DisplayAllClient");
+    private final static QName _DisplayAllClientResponse_QNAME = new QName("http://disprog.ubaya.com/", "DisplayAllClientResponse");
     private final static QName _DisplayChat_QNAME = new QName("http://disprog.ubaya.com/", "DisplayChat");
     private final static QName _DisplayChatResponse_QNAME = new QName("http://disprog.ubaya.com/", "DisplayChatResponse");
     private final static QName _DisplayContacts_QNAME = new QName("http://disprog.ubaya.com/", "DisplayContacts");
@@ -98,6 +100,22 @@ public class ObjectFactory {
      */
     public CheckAvailabilityResponse createCheckAvailabilityResponse() {
         return new CheckAvailabilityResponse();
+    }
+
+    /**
+     * Create an instance of {@link DisplayAllClient }
+     * 
+     */
+    public DisplayAllClient createDisplayAllClient() {
+        return new DisplayAllClient();
+    }
+
+    /**
+     * Create an instance of {@link DisplayAllClientResponse }
+     * 
+     */
+    public DisplayAllClientResponse createDisplayAllClientResponse() {
+        return new DisplayAllClientResponse();
     }
 
     /**
@@ -390,6 +408,24 @@ public class ObjectFactory {
     @XmlElementDecl(namespace = "http://disprog.ubaya.com/", name = "CheckAvailabilityResponse")
     public JAXBElement<CheckAvailabilityResponse> createCheckAvailabilityResponse(CheckAvailabilityResponse value) {
         return new JAXBElement<CheckAvailabilityResponse>(_CheckAvailabilityResponse_QNAME, CheckAvailabilityResponse.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link DisplayAllClient }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://disprog.ubaya.com/", name = "DisplayAllClient")
+    public JAXBElement<DisplayAllClient> createDisplayAllClient(DisplayAllClient value) {
+        return new JAXBElement<DisplayAllClient>(_DisplayAllClient_QNAME, DisplayAllClient.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link DisplayAllClientResponse }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://disprog.ubaya.com/", name = "DisplayAllClientResponse")
+    public JAXBElement<DisplayAllClientResponse> createDisplayAllClientResponse(DisplayAllClientResponse value) {
+        return new JAXBElement<DisplayAllClientResponse>(_DisplayAllClientResponse_QNAME, DisplayAllClientResponse.class, null, value);
     }
 
     /**

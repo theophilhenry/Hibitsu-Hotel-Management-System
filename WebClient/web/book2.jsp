@@ -1,4 +1,9 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+
+<%
+    session.setAttribute("idVilla", "1");
+%>
+
 <!doctype html>
 <html lang="en">
 
@@ -32,19 +37,29 @@
                 <a class="navbar-brand rubik-bold color-green" href="#">日々つ HIBITSU</a>
                 <div class="collapse navbar-collapse justify-content-end" id="navbarTogglerDemo02">
                     <ul class="navbar-nav mb-2 mb-lg-0">
-                        <li class="nav-item">
+                        <li class="nav-item me-3">
                             <a class="nav-link rubik-normal" href="index.jsp">Home</a>
                         </li>
-                        <li class="nav-item">
+                        <li class="nav-item me-3">
                             <a class="nav-link active rubik-bold color-green" aria-current="page" href="book1.jsp">Book
                                 Now</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link rubik-normal" href="track-order.jsp">Track Order</a>
-                        </li>
+                        <% if (session.getAttribute("idUser") == null) { %>
                         <li class="nav-item me-3">
                             <a class="nav-link rubik-normal" href="login.jsp">Login</a>
                         </li>
+                        <% }%>
+                        <% if (session.getAttribute("idUser") != null) { %>
+                        <li class="nav-item me-3">
+                            <a class="nav-link rubik-normal" href="track-order.jsp">Track Order</a>
+                        </li>
+                        <li class="nav-item me-3">
+                            <form method='POST' action='login-handler.jsp'>
+                                <input type='hidden' name='command' value='logout'>
+                                <button type='submit' class="nav-link rubik-normal" style='padding-right: .5rem; padding-left: .5rem; padding: .5rem 1rem; border: none; background: none;' href="login.jsp">Logout</a>
+                            </form>
+                        </li>
+                        <% }%>
                     </ul>
                     <form>
                         <button class="btn btn-success rubik-bold color-white background-green" type="submit">Download
@@ -97,14 +112,15 @@
                 <div class="grid-container grid-container-more-left grid-container-reverse">
                     <div class="grid-left book-property" style="align-items: center;">
                         <div style="width: 300px;">
-                            
-                            
-                            
+
+
+
                             <!-- FORM BOOKING -->
-                            
-                            
+                            <p class="rubik-bold color-green">BOOK PROPERTY</p>
+                            <% if(session.getAttribute("idUser") != null) { %>
                             <form method="POST" action="book2-handler.jsp">
-                                <p class="rubik-bold color-green">BOOK PROPERTY</p>
+                                <input type="hidden" name="command" value="book">
+                                <input type='hidden' name='idVilla' value='<% out.print(String.valueOf(session.getAttribute("idVilla"))); %>'>
                                 <div class="form-floating mb-3" style="width: 100%;">
                                     <input type="date" class="form-control" name="checkIn" required>
                                     <label for="floatingCheckIn">Check in Date</label>
@@ -124,25 +140,52 @@
                                 </div>
                                 <button class="btn btn-success rubik-bold color-white background-green mb-3" type="submit"
                                         style="width: 100%;">Book</button>
+                                <% if (session.getAttribute("bookPrintAvailability") != null) { %>
+                                <p class="rubik-bold color-green">
+                                    <% 
+                                        out.println(session.getAttribute("bookPrintAvailability")); 
+                                        session.removeAttribute("bookPrintAvailability");
+                                    %>
+                                </p>
+                                <% } %>
                             </form>
-                            
-                            
-                            
+                            <% } else { %>
+                            <p class='rubik-bold'>LOGIN TO BOOK THIS PROPERTY</p>
+                            <% } %>
+
+
+
                         </div>
                     </div>
                     <div class="grid-right book-check" style="align-items: center; height: fit-content">
                         <div style="width: 300px;">
-                            <p class="rubik-bold color-green">CHECK FOR AVAILABILITY</p>
-                            <div class="form-floating mb-3" style="width: 100%;">
-                                <input type="date" class="form-control" required>
-                                <label for="floatingCheckIn">Check in Date</label>
-                            </div>
-                            <div class="form-floating mb-3" style="width: 100%;">
-                                <input type="date" class="form-control" required>
-                                <label for="floatingCheckOut">Check out Date</label>
-                            </div>
-                            <button class="btn btn-success rubik-bold color-white background-green mb-3" type="submit"
-                                    style="width: 100%;">Check Availability</button>
+
+
+                            <form method="POST" action="book2-handler.jsp">
+                                <input type="hidden" name="command" value="checkAvailability">
+                                <p class="rubik-bold color-green">CHECK FOR AVAILABILITY</p>
+                                <div class="form-floating mb-3" style="width: 100%;">
+                                    <input type="date" class="form-control" required>
+                                    <label for="floatingCheckIn" name="checkIn">Check in Date</label>
+                                </div>
+                                <div class="form-floating mb-3" style="width: 100%;">
+                                    <input type="date" class="form-control" required>
+                                    <label for="floatingCheckOut" name="checkOut">Check out Date</label>
+                                </div>
+                                <button class="btn btn-success rubik-bold color-white background-green mb-3" type="submit"
+                                        style="width: 100%;">Check Availability</button>
+                                        
+                                <% if (session.getAttribute("printAvailability") != null) { %>
+                                <p class="rubik-bold color-green">
+                                    <% 
+                                        out.print(session.getAttribute("printAvailability")); 
+                                        session.removeAttribute("printAvailability");
+                                    %>
+                                </p>
+                                <% } %>
+                            </form>
+
+
                         </div>
                     </div>
                 </div>

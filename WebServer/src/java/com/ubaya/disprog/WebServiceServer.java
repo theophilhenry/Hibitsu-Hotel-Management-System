@@ -87,23 +87,23 @@ public class WebServiceServer extends DbConnection {
         return null;
     }
 
-    //[BOOKNOW - 3] BELUM JADI
+    //[BOOKNOW - 3] 
     @WebMethod(operationName = "TrackOrder2")
     public String TrackOrder2(@WebParam(name = "idreservation") Integer idreservation) {
-        String result = model_Reservation.TrackOrder(idreservation);
-        return result;
-        //belum di code
-    }
-
-    //[TRACKORDER] BELUM JADI
-    @WebMethod(operationName = "TrackOrder1")
-    public String TrackOrder1(@WebParam(name = "idreservation") Integer idreservation) {
-        String result = model_Reservation.TrackOrder(idreservation);
+        String result = model_Reservation.TrackOrderBook3(idreservation);
         return result;
         //belum di code
     }
 
     //[TRACKORDER]
+    @WebMethod(operationName = "TrackOrder1")
+    public String TrackOrder1(@WebParam(name = "idreservation") Integer idreservation) {
+        String result = model_Reservation.TrackOrderMainWeb(idreservation);
+        return result;
+        //belum di code
+    }
+
+    //[UPLOADPAYMENT]
     @WebMethod(operationName = "UploadPayment")
     public String UploadPayment(@WebParam(name = "url_bukti_pembayaran") String url_bukti_pembayaran,
             @WebParam(name = "idreservation") Integer idreservation) {

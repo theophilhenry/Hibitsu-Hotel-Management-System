@@ -33,18 +33,28 @@
                 <a class="navbar-brand rubik-bold color-green" href="#">日々つ HIBITSU</a>
                 <div class="collapse navbar-collapse justify-content-end" id="navbarTogglerDemo02">
                     <ul class="navbar-nav mb-2 mb-lg-0">
-                        <li class="nav-item">
+                        <li class="nav-item me-3">
                             <a class="nav-link rubik-normal" href="index.jsp">Home</a>
                         </li>
-                        <li class="nav-item">
+                        <li class="nav-item me-3">
                             <a class="nav-link active rubik-bold color-green" aria-current="page" href="book1.jsp">Home</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link rubik-normal" href="track-order.jsp">Track Order</a>
-                        </li>
+                        <% if (session.getAttribute("idUser") == null) { %>
                         <li class="nav-item me-3">
                             <a class="nav-link rubik-normal" href="login.jsp">Login</a>
                         </li>
+                        <% }%>
+                        <% if (session.getAttribute("idUser") != null) { %>
+                        <li class="nav-item me-3">
+                            <a class="nav-link rubik-normal" href="track-order.jsp">Track Order</a>
+                        </li>
+                        <li class="nav-item me-3">
+                            <form method='POST' action='login-handler.jsp'>
+                                <input type='hidden' name='command' value='logout'>
+                                <button type='submit' class="nav-link rubik-normal" style='padding-right: .5rem; padding-left: .5rem; padding: .5rem 1rem; border: none; background: none;' href="login.jsp">Logout</a>
+                            </form>
+                        </li>
+                        <% }%>
                     </ul>
                     <form>
                         <button class="btn btn-success rubik-bold color-white background-green" type="submit">Download
@@ -62,9 +72,32 @@
                         <br>Please Check out your email.
                         <br>You can track your order status in the Track Order menu.
                         <br>If there's a problem, feel free to contact us.</p>
-                    <button class="btn btn-success rubik-bold color-white background-green" type="submit">Great</button>
+                    <a href="index.jsp" class="btn btn-success rubik-bold color-white background-green">Great</a>
                 </div>
                 <div class="grid-right" style="align-items: center;">
+                    <%
+                        if (session.getAttribute("idReservation") == null) {
+                            response.sendRedirect("book2.jsp");
+                            return;
+                        }
+                        
+                        String getIdReservation = String.valueOf(session.getAttribute("idReservation"));
+                        int idReservation = Integer.parseInt(getIdReservation);
+                        
+                        session.removeAttribute("idReservation");
+                        try {
+                            com.ubaya.disprog.WebServiceServer_Service service = new com.ubaya.disprog.WebServiceServer_Service();
+                            com.ubaya.disprog.WebServiceServer port = service.getWebServiceServerPort();
+
+                            java.lang.String result = port.trackOrder2(idReservation);
+                            out.println(result);
+
+                        } catch (Exception ex) {
+                            System.out.println("Error Book3.jsp : " + ex);
+                        }
+                    %>
+                    <!-- Reservation Info -->
+                    <!--
                     <p>ORDER ID : 20200701001</p>
                     <div class="client-order-card">
                         <div class="information">
@@ -112,6 +145,7 @@
                             <p class="rubik-bold status-pending">PENDING</p>
                         </div>
                     </div>
+                    -->
                 </div>
             </div>
         </div>

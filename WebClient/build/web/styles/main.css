@@ -142,6 +142,23 @@ nav {
     transition: background-color 0.2s linear !important;
 }
 
+
+.status-declined {
+    color: red;
+}
+.status-canceled {
+    color: red;
+}
+
+.status-pending {
+    color: #B0A16A;
+;
+}
+
+.status-approved {
+    color: #08BF5B;
+}
+
 @media (max-width: 992px) {
     .grid-container {
         grid-template-areas:

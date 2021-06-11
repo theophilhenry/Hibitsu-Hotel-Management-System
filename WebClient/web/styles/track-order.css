@@ -21,16 +21,3 @@
 .information {
     margin-bottom: 30px;
 }
-
-.status-declined {
-    color: red;
-}
-
-.status-pending {
-    color: #B0A16A;
-;
-}
-
-.status-approved {
-    color: #08BF5B;
-}
