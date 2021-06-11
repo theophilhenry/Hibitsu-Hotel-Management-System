@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 11, 2021 at 12:34 PM
+-- Generation Time: Jun 11, 2021 at 12:44 PM
 -- Server version: 10.4.13-MariaDB
 -- PHP Version: 7.4.8
 
@@ -45,7 +45,7 @@ CREATE TABLE `reservations` (
   `idreservation` int(11) NOT NULL,
   `res_timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `checkin_date` datetime NOT NULL,
-  `chekout_date` datetime NOT NULL,
+  `checkout_date` datetime NOT NULL,
   `status` enum('PENDING','APPROVED','DECLINED','CANCELED') NOT NULL DEFAULT 'PENDING',
   `total_guest` int(11) NOT NULL,
   `notes` varchar(255) NOT NULL,
@@ -54,6 +54,13 @@ CREATE TABLE `reservations` (
   `iduser` int(11) NOT NULL,
   `idvilla` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `reservations`
+--
+
+INSERT INTO `reservations` (`idreservation`, `res_timestamp`, `checkin_date`, `checkout_date`, `status`, `total_guest`, `notes`, `total_price`, `url_bukti_pembayaran`, `iduser`, `idvilla`) VALUES
+(1, '2021-06-11 10:41:27', '2021-06-15 17:40:51', '2021-06-17 17:40:51', 'PENDING', 2, '-', 1000, NULL, 2, 1);
 
 -- --------------------------------------------------------
 
