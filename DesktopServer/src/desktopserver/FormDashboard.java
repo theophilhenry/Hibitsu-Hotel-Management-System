@@ -70,10 +70,8 @@ public class FormDashboard extends javax.swing.JFrame implements Runnable {
     
     public void AddComboBoxClient(String name, String email)
     {
-        Integer count = comboBoxClient.getItemCount();
-        count +=1;
-        
-        comboBoxClient.addItem( /*count + "." +*/name + " (" + email + ")");
+                
+        comboBoxClient.addItem( name + " (" + email + ")");
     }
     
     public void RemoveComboBoxClient(String name, String email)
