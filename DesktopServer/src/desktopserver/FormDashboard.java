@@ -575,7 +575,7 @@ public class FormDashboard extends javax.swing.JFrame implements Runnable {
         String[] arr = info.split("\\(");
         String emailDest = arr[1].substring(0,arr[1].length()-1);
         System.out.println("Email Dest : " + emailDest);
-        //this.SimpanChat(emailAdmin, emailDest, msg);
+        this.SimpanChat(emailAdmin, emailDest, msg);
       
         
         
