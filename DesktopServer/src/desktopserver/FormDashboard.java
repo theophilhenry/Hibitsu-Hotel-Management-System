@@ -15,6 +15,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 
 /**
  *
@@ -203,9 +205,14 @@ public class FormDashboard extends javax.swing.JFrame implements Runnable {
     public void IsiComboBoxVilla()
     {
         String result = displayVillaAll();
-        String[] arr = result.split(";;");
+        String[] arr1 = result.split("\\|\\|");
+        System.out.println(Arrays.toString(arr1));
         
-        System.out.println(Arrays.toString(arr));
+        for(Integer i=0;i<arr1.length; i++)
+        {
+            String[] arr2 = arr1[i].split(";;");
+            comboBoxVillaType.addItem(arr2[1] + ")" + arr2[2] + "\n");
+        }
         
         
        
@@ -418,11 +425,12 @@ public class FormDashboard extends javax.swing.JFrame implements Runnable {
         });
 
         comboBoxVillaType.setFont(new java.awt.Font("Rubik", 0, 14)); // NOI18N
-        comboBoxVillaType.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         dateCheckOut.setBackground(java.awt.Color.white);
+        dateCheckOut.setDateFormatString("yyyy-MM-dd");
 
         dateCheckIn.setBackground(java.awt.Color.white);
+        dateCheckIn.setDateFormatString("yyyy-MM-dd");
 
         textTotalGuest.setBackground(java.awt.Color.white);
         textTotalGuest.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
@@ -577,19 +585,86 @@ public class FormDashboard extends javax.swing.JFrame implements Runnable {
            
             String[] arr = info.split("\\(");
             String emailDest = arr[1].substring(0,arr[1].length()-1);
-           
+            
+            textEmail.setText(emailDest);
+            
             String historyChat = TampilChat(emailAdmin, emailDest, "admin");
 
             textArea.setText("");
-            textArea.append(historyChat);
+            textArea.append("----------------------Chat Sebelumnya-----------------------\n");
+            textArea.append(historyChat + "\n");
     }//GEN-LAST:event_comboBoxClientItemStateChanged
 
     private void buttonCheckActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonCheckActionPerformed
-        // TODO add your handling code here:
+        String checkIn = ((JTextField)dateCheckIn.getDateEditor().getUiComponent()).getText();
+        String checkOut = ((JTextField)dateCheckOut.getDateEditor().getUiComponent()).getText();
+        System.out.println("601");
+        String[] arr = comboBoxVillaType.getSelectedItem().toString().split("\\)");
+        Integer villaId = Integer.parseInt(arr[0]);
+        System.out.println("604");
+        String[] arr2 = checkAvailability(villaId, checkIn, checkOut).split(";;");
+        String status = "";
+        
+        if(arr2[1].equals("true"))
+        {
+            status = "Villa Tersedia untuk Pemesanan";
+        }
+        else if(arr2[1].equals("false"))
+        {
+            status = "Villa Tidak Tersedia";
+        }
+        else
+        {
+            status = arr2[1];
+        }
+        JOptionPane.showMessageDialog(null, status);
+       
     }//GEN-LAST:event_buttonCheckActionPerformed
 
     private void buttonBookActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonBookActionPerformed
-        // TODO add your handling code here:
+        String checkIn = ((JTextField)dateCheckIn.getDateEditor().getUiComponent()).getText();
+        String checkOut = ((JTextField)dateCheckOut.getDateEditor().getUiComponent()).getText();
+        String[] arr = comboBoxVillaType.getSelectedItem().toString().split("\\)");
+        Integer villaId = Integer.parseInt(arr[0]);
+        String emailClient = textEmail.getText();
+        Integer totalGuest = textTotalGuest.getValue();
+        Integer idClient = 0;
+        String clientNote = textNotes.getText();
+        
+        for(HandleSocket clt : clientsArr)
+        {
+            if(clt.email.equals(emailClient))
+            {
+                idClient = Integer.parseInt(clt.idUser);
+            }
+        }
+        
+        String[] arr2 = insertReservation(checkIn, checkOut,totalGuest, clientNote, idClient, villaId).split(";;");
+        String status = "";
+        
+        if(arr2[1].equals("true"))
+        {
+            status = "Villa berhasil dibooking";
+            SendChatToOne(status + "\n Id Nota : " +  arr2[2]);
+        }
+        else if(arr2[1].equals("false"))
+        {
+            status = "Mohon maaf, villa Tidak Tersedia";
+            SendChatToOne(status);
+        }
+        else
+        {
+            status = arr2[1];
+        }
+        
+        JOptionPane.showMessageDialog(null,status + "\nOrder ID : " + arr2[2]);
+        
+        
+        
+        
+        
+        
+                
     }//GEN-LAST:event_buttonBookActionPerformed
 
     /**
@@ -702,5 +777,17 @@ public class FormDashboard extends javax.swing.JFrame implements Runnable {
         com.ubaya.disprog.WebServiceServer_Service service = new com.ubaya.disprog.WebServiceServer_Service();
         com.ubaya.disprog.WebServiceServer port = service.getWebServiceServerPort();
         return port.displayChat(emailSender, emailReceiver);
+    }
+
+    private static String checkAvailability(java.lang.Integer idvilla, java.lang.String checkin, java.lang.String checkout) {
+        com.ubaya.disprog.WebServiceServer_Service service = new com.ubaya.disprog.WebServiceServer_Service();
+        com.ubaya.disprog.WebServiceServer port = service.getWebServiceServerPort();
+        return port.checkAvailability(idvilla, checkin, checkout);
+    }
+
+    private static String insertReservation(java.lang.String checkinDate, java.lang.String checkoutDate, java.lang.Integer totalGuest, java.lang.String notes, java.lang.Integer iduser, java.lang.Integer idvilla) {
+        com.ubaya.disprog.WebServiceServer_Service service = new com.ubaya.disprog.WebServiceServer_Service();
+        com.ubaya.disprog.WebServiceServer port = service.getWebServiceServerPort();
+        return port.insertReservation(checkinDate, checkoutDate, totalGuest, notes, iduser, idvilla);
     }
 }
