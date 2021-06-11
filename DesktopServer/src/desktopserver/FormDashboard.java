@@ -650,7 +650,10 @@ public class FormDashboard extends javax.swing.JFrame implements Runnable {
         if(arr2[1].equals("true"))
         {
             status = "Villa berhasil dibooking";
-            SendChatToOne(status + "\n Id Nota : " +  arr2[2]);
+            SendChatToOne(status + "\n Id Nota adalah  " +  arr2[2]);
+            textArea.append("Admin : " + status + "\nAdmin : Id Nota adalah  " +  arr2[2] + "\n");
+            SimpanChat(emailAdmin, emailClient, status);
+            SimpanChat(emailAdmin, emailClient, "Id Nota adalah  " +  arr2[2]);
         }
         else if(arr2[1].equals("false"))
         {

@@ -27,96 +27,6 @@ public interface WebServiceServer {
 
     /**
      * 
-     * @param idreservation
-     * @return
-     *     returns java.lang.String
-     */
-    @WebMethod(operationName = "TrackOrder1")
-    @WebResult(targetNamespace = "")
-    @RequestWrapper(localName = "TrackOrder1", targetNamespace = "http://disprog.ubaya.com/", className = "com.ubaya.disprog.TrackOrder1")
-    @ResponseWrapper(localName = "TrackOrder1Response", targetNamespace = "http://disprog.ubaya.com/", className = "com.ubaya.disprog.TrackOrder1Response")
-    @Action(input = "http://disprog.ubaya.com/WebServiceServer/TrackOrder1Request", output = "http://disprog.ubaya.com/WebServiceServer/TrackOrder1Response")
-    public String trackOrder1(
-        @WebParam(name = "idreservation", targetNamespace = "")
-        Integer idreservation);
-
-    /**
-     * 
-     * @param urlBuktiPembayaran
-     * @param idreservation
-     * @return
-     *     returns java.lang.String
-     */
-    @WebMethod(operationName = "UploadPayment")
-    @WebResult(targetNamespace = "")
-    @RequestWrapper(localName = "UploadPayment", targetNamespace = "http://disprog.ubaya.com/", className = "com.ubaya.disprog.UploadPayment")
-    @ResponseWrapper(localName = "UploadPaymentResponse", targetNamespace = "http://disprog.ubaya.com/", className = "com.ubaya.disprog.UploadPaymentResponse")
-    @Action(input = "http://disprog.ubaya.com/WebServiceServer/UploadPaymentRequest", output = "http://disprog.ubaya.com/WebServiceServer/UploadPaymentResponse")
-    public String uploadPayment(
-        @WebParam(name = "url_bukti_pembayaran", targetNamespace = "")
-        String urlBuktiPembayaran,
-        @WebParam(name = "idreservation", targetNamespace = "")
-        Integer idreservation);
-
-    /**
-     * 
-     * @param idvilla
-     * @return
-     *     returns java.lang.String
-     */
-    @WebMethod(operationName = "DisplayVillaId")
-    @WebResult(targetNamespace = "")
-    @RequestWrapper(localName = "DisplayVillaId", targetNamespace = "http://disprog.ubaya.com/", className = "com.ubaya.disprog.DisplayVillaId")
-    @ResponseWrapper(localName = "DisplayVillaIdResponse", targetNamespace = "http://disprog.ubaya.com/", className = "com.ubaya.disprog.DisplayVillaIdResponse")
-    @Action(input = "http://disprog.ubaya.com/WebServiceServer/DisplayVillaIdRequest", output = "http://disprog.ubaya.com/WebServiceServer/DisplayVillaIdResponse")
-    public String displayVillaId(
-        @WebParam(name = "idvilla", targetNamespace = "")
-        Integer idvilla);
-
-    /**
-     * 
-     * @return
-     *     returns java.lang.String
-     */
-    @WebMethod(operationName = "DisplayVillaAll")
-    @WebResult(targetNamespace = "")
-    @RequestWrapper(localName = "DisplayVillaAll", targetNamespace = "http://disprog.ubaya.com/", className = "com.ubaya.disprog.DisplayVillaAll")
-    @ResponseWrapper(localName = "DisplayVillaAllResponse", targetNamespace = "http://disprog.ubaya.com/", className = "com.ubaya.disprog.DisplayVillaAllResponse")
-    @Action(input = "http://disprog.ubaya.com/WebServiceServer/DisplayVillaAllRequest", output = "http://disprog.ubaya.com/WebServiceServer/DisplayVillaAllResponse")
-    public String displayVillaAll();
-
-    /**
-     * 
-     * @param idvilla
-     * @param iduser
-     * @param checkoutDate
-     * @param notes
-     * @param totalGuest
-     * @param checkinDate
-     * @return
-     *     returns java.lang.String
-     */
-    @WebMethod(operationName = "InsertReservation")
-    @WebResult(targetNamespace = "")
-    @RequestWrapper(localName = "InsertReservation", targetNamespace = "http://disprog.ubaya.com/", className = "com.ubaya.disprog.InsertReservation")
-    @ResponseWrapper(localName = "InsertReservationResponse", targetNamespace = "http://disprog.ubaya.com/", className = "com.ubaya.disprog.InsertReservationResponse")
-    @Action(input = "http://disprog.ubaya.com/WebServiceServer/InsertReservationRequest", output = "http://disprog.ubaya.com/WebServiceServer/InsertReservationResponse")
-    public String insertReservation(
-        @WebParam(name = "checkin_date", targetNamespace = "")
-        String checkinDate,
-        @WebParam(name = "checkout_date", targetNamespace = "")
-        String checkoutDate,
-        @WebParam(name = "total_guest", targetNamespace = "")
-        Integer totalGuest,
-        @WebParam(name = "notes", targetNamespace = "")
-        String notes,
-        @WebParam(name = "iduser", targetNamespace = "")
-        Integer iduser,
-        @WebParam(name = "idvilla", targetNamespace = "")
-        Integer idvilla);
-
-    /**
-     * 
      * @param idvilla
      * @param checkin
      * @param checkout
@@ -189,99 +99,45 @@ public interface WebServiceServer {
 
     /**
      * 
-     * @param idreservation
-     * @return
-     *     returns java.lang.String
-     */
-    @WebMethod(operationName = "TrackOrder2")
-    @WebResult(targetNamespace = "")
-    @RequestWrapper(localName = "TrackOrder2", targetNamespace = "http://disprog.ubaya.com/", className = "com.ubaya.disprog.TrackOrder2")
-    @ResponseWrapper(localName = "TrackOrder2Response", targetNamespace = "http://disprog.ubaya.com/", className = "com.ubaya.disprog.TrackOrder2Response")
-    @Action(input = "http://disprog.ubaya.com/WebServiceServer/TrackOrder2Request", output = "http://disprog.ubaya.com/WebServiceServer/TrackOrder2Response")
-    public String trackOrder2(
-        @WebParam(name = "idreservation", targetNamespace = "")
-        Integer idreservation);
-
-    /**
-     * 
+     * @param idvilla
      * @param iduser
+     * @param checkoutDate
+     * @param notes
+     * @param totalGuest
+     * @param checkinDate
      * @return
      *     returns java.lang.String
      */
-    @WebMethod(operationName = "DisplayContacts")
+    @WebMethod(operationName = "InsertReservation")
     @WebResult(targetNamespace = "")
-    @RequestWrapper(localName = "DisplayContacts", targetNamespace = "http://disprog.ubaya.com/", className = "com.ubaya.disprog.DisplayContacts")
-    @ResponseWrapper(localName = "DisplayContactsResponse", targetNamespace = "http://disprog.ubaya.com/", className = "com.ubaya.disprog.DisplayContactsResponse")
-    @Action(input = "http://disprog.ubaya.com/WebServiceServer/DisplayContactsRequest", output = "http://disprog.ubaya.com/WebServiceServer/DisplayContactsResponse")
-    public String displayContacts(
+    @RequestWrapper(localName = "InsertReservation", targetNamespace = "http://disprog.ubaya.com/", className = "com.ubaya.disprog.InsertReservation")
+    @ResponseWrapper(localName = "InsertReservationResponse", targetNamespace = "http://disprog.ubaya.com/", className = "com.ubaya.disprog.InsertReservationResponse")
+    @Action(input = "http://disprog.ubaya.com/WebServiceServer/InsertReservationRequest", output = "http://disprog.ubaya.com/WebServiceServer/InsertReservationResponse")
+    public String insertReservation(
+        @WebParam(name = "checkin_date", targetNamespace = "")
+        String checkinDate,
+        @WebParam(name = "checkout_date", targetNamespace = "")
+        String checkoutDate,
+        @WebParam(name = "total_guest", targetNamespace = "")
+        Integer totalGuest,
+        @WebParam(name = "notes", targetNamespace = "")
+        String notes,
         @WebParam(name = "iduser", targetNamespace = "")
-        Integer iduser);
+        Integer iduser,
+        @WebParam(name = "idvilla", targetNamespace = "")
+        Integer idvilla);
 
     /**
      * 
-     * @param idreservation
      * @return
      *     returns java.lang.String
      */
-    @WebMethod(operationName = "TrackOrderApp")
+    @WebMethod(operationName = "DisplayVillaAll")
     @WebResult(targetNamespace = "")
-    @RequestWrapper(localName = "TrackOrderApp", targetNamespace = "http://disprog.ubaya.com/", className = "com.ubaya.disprog.TrackOrderApp")
-    @ResponseWrapper(localName = "TrackOrderAppResponse", targetNamespace = "http://disprog.ubaya.com/", className = "com.ubaya.disprog.TrackOrderAppResponse")
-    @Action(input = "http://disprog.ubaya.com/WebServiceServer/TrackOrderAppRequest", output = "http://disprog.ubaya.com/WebServiceServer/TrackOrderAppResponse")
-    public String trackOrderApp(
-        @WebParam(name = "idreservation", targetNamespace = "")
-        Integer idreservation);
-
-    /**
-     * 
-     * @param password
-     * @param email
-     * @return
-     *     returns java.lang.String
-     */
-    @WebMethod(operationName = "LoginAdmin")
-    @WebResult(targetNamespace = "")
-    @RequestWrapper(localName = "LoginAdmin", targetNamespace = "http://disprog.ubaya.com/", className = "com.ubaya.disprog.LoginAdmin")
-    @ResponseWrapper(localName = "LoginAdminResponse", targetNamespace = "http://disprog.ubaya.com/", className = "com.ubaya.disprog.LoginAdminResponse")
-    @Action(input = "http://disprog.ubaya.com/WebServiceServer/LoginAdminRequest", output = "http://disprog.ubaya.com/WebServiceServer/LoginAdminResponse")
-    public String loginAdmin(
-        @WebParam(name = "email", targetNamespace = "")
-        String email,
-        @WebParam(name = "password", targetNamespace = "")
-        String password);
-
-    /**
-     * 
-     * @param idreservation
-     * @return
-     *     returns java.lang.String
-     */
-    @WebMethod(operationName = "DisplayPayment")
-    @WebResult(targetNamespace = "")
-    @RequestWrapper(localName = "DisplayPayment", targetNamespace = "http://disprog.ubaya.com/", className = "com.ubaya.disprog.DisplayPayment")
-    @ResponseWrapper(localName = "DisplayPaymentResponse", targetNamespace = "http://disprog.ubaya.com/", className = "com.ubaya.disprog.DisplayPaymentResponse")
-    @Action(input = "http://disprog.ubaya.com/WebServiceServer/DisplayPaymentRequest", output = "http://disprog.ubaya.com/WebServiceServer/DisplayPaymentResponse")
-    public String displayPayment(
-        @WebParam(name = "idreservation", targetNamespace = "")
-        Integer idreservation);
-
-    /**
-     * 
-     * @param emailReceiver
-     * @param emailSender
-     * @return
-     *     returns java.lang.String
-     */
-    @WebMethod(operationName = "DisplayChat")
-    @WebResult(targetNamespace = "")
-    @RequestWrapper(localName = "DisplayChat", targetNamespace = "http://disprog.ubaya.com/", className = "com.ubaya.disprog.DisplayChat")
-    @ResponseWrapper(localName = "DisplayChatResponse", targetNamespace = "http://disprog.ubaya.com/", className = "com.ubaya.disprog.DisplayChatResponse")
-    @Action(input = "http://disprog.ubaya.com/WebServiceServer/DisplayChatRequest", output = "http://disprog.ubaya.com/WebServiceServer/DisplayChatResponse")
-    public String displayChat(
-        @WebParam(name = "email_sender", targetNamespace = "")
-        String emailSender,
-        @WebParam(name = "email_receiver", targetNamespace = "")
-        String emailReceiver);
+    @RequestWrapper(localName = "DisplayVillaAll", targetNamespace = "http://disprog.ubaya.com/", className = "com.ubaya.disprog.DisplayVillaAll")
+    @ResponseWrapper(localName = "DisplayVillaAllResponse", targetNamespace = "http://disprog.ubaya.com/", className = "com.ubaya.disprog.DisplayVillaAllResponse")
+    @Action(input = "http://disprog.ubaya.com/WebServiceServer/DisplayVillaAllRequest", output = "http://disprog.ubaya.com/WebServiceServer/DisplayVillaAllResponse")
+    public String displayVillaAll();
 
     /**
      * 
@@ -300,6 +156,39 @@ public interface WebServiceServer {
         String email,
         @WebParam(name = "password", targetNamespace = "")
         String password);
+
+    /**
+     * 
+     * @param idvilla
+     * @return
+     *     returns java.lang.String
+     */
+    @WebMethod(operationName = "DisplayVillaId")
+    @WebResult(targetNamespace = "")
+    @RequestWrapper(localName = "DisplayVillaId", targetNamespace = "http://disprog.ubaya.com/", className = "com.ubaya.disprog.DisplayVillaId")
+    @ResponseWrapper(localName = "DisplayVillaIdResponse", targetNamespace = "http://disprog.ubaya.com/", className = "com.ubaya.disprog.DisplayVillaIdResponse")
+    @Action(input = "http://disprog.ubaya.com/WebServiceServer/DisplayVillaIdRequest", output = "http://disprog.ubaya.com/WebServiceServer/DisplayVillaIdResponse")
+    public String displayVillaId(
+        @WebParam(name = "idvilla", targetNamespace = "")
+        Integer idvilla);
+
+    /**
+     * 
+     * @param emailReceiver
+     * @param emailSender
+     * @return
+     *     returns java.lang.String
+     */
+    @WebMethod(operationName = "DisplayChat")
+    @WebResult(targetNamespace = "")
+    @RequestWrapper(localName = "DisplayChat", targetNamespace = "http://disprog.ubaya.com/", className = "com.ubaya.disprog.DisplayChat")
+    @ResponseWrapper(localName = "DisplayChatResponse", targetNamespace = "http://disprog.ubaya.com/", className = "com.ubaya.disprog.DisplayChatResponse")
+    @Action(input = "http://disprog.ubaya.com/WebServiceServer/DisplayChatRequest", output = "http://disprog.ubaya.com/WebServiceServer/DisplayChatResponse")
+    public String displayChat(
+        @WebParam(name = "email_sender", targetNamespace = "")
+        String emailSender,
+        @WebParam(name = "email_receiver", targetNamespace = "")
+        String emailReceiver);
 
     /**
      * 
@@ -354,15 +243,81 @@ public interface WebServiceServer {
 
     /**
      * 
+     * @param idreservation
      * @return
-     *     returns java.util.List<java.lang.String>
+     *     returns java.lang.String
      */
-    @WebMethod(operationName = "DisplayAllClient")
+    @WebMethod(operationName = "TrackOrderApp")
     @WebResult(targetNamespace = "")
-    @RequestWrapper(localName = "DisplayAllClient", targetNamespace = "http://disprog.ubaya.com/", className = "com.ubaya.disprog.DisplayAllClient")
-    @ResponseWrapper(localName = "DisplayAllClientResponse", targetNamespace = "http://disprog.ubaya.com/", className = "com.ubaya.disprog.DisplayAllClientResponse")
-    @Action(input = "http://disprog.ubaya.com/WebServiceServer/DisplayAllClientRequest", output = "http://disprog.ubaya.com/WebServiceServer/DisplayAllClientResponse")
-    public List<String> displayAllClient();
+    @RequestWrapper(localName = "TrackOrderApp", targetNamespace = "http://disprog.ubaya.com/", className = "com.ubaya.disprog.TrackOrderApp")
+    @ResponseWrapper(localName = "TrackOrderAppResponse", targetNamespace = "http://disprog.ubaya.com/", className = "com.ubaya.disprog.TrackOrderAppResponse")
+    @Action(input = "http://disprog.ubaya.com/WebServiceServer/TrackOrderAppRequest", output = "http://disprog.ubaya.com/WebServiceServer/TrackOrderAppResponse")
+    public String trackOrderApp(
+        @WebParam(name = "idreservation", targetNamespace = "")
+        Integer idreservation);
+
+    /**
+     * 
+     * @param password
+     * @param email
+     * @return
+     *     returns java.lang.String
+     */
+    @WebMethod(operationName = "LoginAdmin")
+    @WebResult(targetNamespace = "")
+    @RequestWrapper(localName = "LoginAdmin", targetNamespace = "http://disprog.ubaya.com/", className = "com.ubaya.disprog.LoginAdmin")
+    @ResponseWrapper(localName = "LoginAdminResponse", targetNamespace = "http://disprog.ubaya.com/", className = "com.ubaya.disprog.LoginAdminResponse")
+    @Action(input = "http://disprog.ubaya.com/WebServiceServer/LoginAdminRequest", output = "http://disprog.ubaya.com/WebServiceServer/LoginAdminResponse")
+    public String loginAdmin(
+        @WebParam(name = "email", targetNamespace = "")
+        String email,
+        @WebParam(name = "password", targetNamespace = "")
+        String password);
+
+    /**
+     * 
+     * @param idreservation
+     * @return
+     *     returns java.lang.String
+     */
+    @WebMethod(operationName = "DisplayPayment")
+    @WebResult(targetNamespace = "")
+    @RequestWrapper(localName = "DisplayPayment", targetNamespace = "http://disprog.ubaya.com/", className = "com.ubaya.disprog.DisplayPayment")
+    @ResponseWrapper(localName = "DisplayPaymentResponse", targetNamespace = "http://disprog.ubaya.com/", className = "com.ubaya.disprog.DisplayPaymentResponse")
+    @Action(input = "http://disprog.ubaya.com/WebServiceServer/DisplayPaymentRequest", output = "http://disprog.ubaya.com/WebServiceServer/DisplayPaymentResponse")
+    public String displayPayment(
+        @WebParam(name = "idreservation", targetNamespace = "")
+        Integer idreservation);
+
+    /**
+     * 
+     * @param iduser
+     * @return
+     *     returns java.lang.String
+     */
+    @WebMethod(operationName = "DisplayContacts")
+    @WebResult(targetNamespace = "")
+    @RequestWrapper(localName = "DisplayContacts", targetNamespace = "http://disprog.ubaya.com/", className = "com.ubaya.disprog.DisplayContacts")
+    @ResponseWrapper(localName = "DisplayContactsResponse", targetNamespace = "http://disprog.ubaya.com/", className = "com.ubaya.disprog.DisplayContactsResponse")
+    @Action(input = "http://disprog.ubaya.com/WebServiceServer/DisplayContactsRequest", output = "http://disprog.ubaya.com/WebServiceServer/DisplayContactsResponse")
+    public String displayContacts(
+        @WebParam(name = "iduser", targetNamespace = "")
+        Integer iduser);
+
+    /**
+     * 
+     * @param idreservation
+     * @return
+     *     returns java.lang.String
+     */
+    @WebMethod(operationName = "TrackOrder1")
+    @WebResult(targetNamespace = "")
+    @RequestWrapper(localName = "TrackOrder1", targetNamespace = "http://disprog.ubaya.com/", className = "com.ubaya.disprog.TrackOrder1")
+    @ResponseWrapper(localName = "TrackOrder1Response", targetNamespace = "http://disprog.ubaya.com/", className = "com.ubaya.disprog.TrackOrder1Response")
+    @Action(input = "http://disprog.ubaya.com/WebServiceServer/TrackOrder1Request", output = "http://disprog.ubaya.com/WebServiceServer/TrackOrder1Response")
+    public String trackOrder1(
+        @WebParam(name = "idreservation", targetNamespace = "")
+        Integer idreservation);
 
     /**
      * 
@@ -379,6 +334,51 @@ public interface WebServiceServer {
     public String changeStatus(
         @WebParam(name = "status", targetNamespace = "")
         String status,
+        @WebParam(name = "idreservation", targetNamespace = "")
+        Integer idreservation);
+
+    /**
+     * 
+     * @return
+     *     returns java.util.List<java.lang.String>
+     */
+    @WebMethod(operationName = "DisplayAllClient")
+    @WebResult(targetNamespace = "")
+    @RequestWrapper(localName = "DisplayAllClient", targetNamespace = "http://disprog.ubaya.com/", className = "com.ubaya.disprog.DisplayAllClient")
+    @ResponseWrapper(localName = "DisplayAllClientResponse", targetNamespace = "http://disprog.ubaya.com/", className = "com.ubaya.disprog.DisplayAllClientResponse")
+    @Action(input = "http://disprog.ubaya.com/WebServiceServer/DisplayAllClientRequest", output = "http://disprog.ubaya.com/WebServiceServer/DisplayAllClientResponse")
+    public List<String> displayAllClient();
+
+    /**
+     * 
+     * @param idreservation
+     * @return
+     *     returns java.lang.String
+     */
+    @WebMethod(operationName = "TrackOrder2")
+    @WebResult(targetNamespace = "")
+    @RequestWrapper(localName = "TrackOrder2", targetNamespace = "http://disprog.ubaya.com/", className = "com.ubaya.disprog.TrackOrder2")
+    @ResponseWrapper(localName = "TrackOrder2Response", targetNamespace = "http://disprog.ubaya.com/", className = "com.ubaya.disprog.TrackOrder2Response")
+    @Action(input = "http://disprog.ubaya.com/WebServiceServer/TrackOrder2Request", output = "http://disprog.ubaya.com/WebServiceServer/TrackOrder2Response")
+    public String trackOrder2(
+        @WebParam(name = "idreservation", targetNamespace = "")
+        Integer idreservation);
+
+    /**
+     * 
+     * @param urlBuktiPembayaran
+     * @param idreservation
+     * @return
+     *     returns java.lang.String
+     */
+    @WebMethod(operationName = "UploadPayment")
+    @WebResult(targetNamespace = "")
+    @RequestWrapper(localName = "UploadPayment", targetNamespace = "http://disprog.ubaya.com/", className = "com.ubaya.disprog.UploadPayment")
+    @ResponseWrapper(localName = "UploadPaymentResponse", targetNamespace = "http://disprog.ubaya.com/", className = "com.ubaya.disprog.UploadPaymentResponse")
+    @Action(input = "http://disprog.ubaya.com/WebServiceServer/UploadPaymentRequest", output = "http://disprog.ubaya.com/WebServiceServer/UploadPaymentResponse")
+    public String uploadPayment(
+        @WebParam(name = "url_bukti_pembayaran", targetNamespace = "")
+        String urlBuktiPembayaran,
         @WebParam(name = "idreservation", targetNamespace = "")
         Integer idreservation);
 
