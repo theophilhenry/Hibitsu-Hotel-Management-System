@@ -69,7 +69,11 @@ public class HandleSocket extends Thread{
                    
                     
                     String msgWelcome = "Halo, apa yang bisa dibantu?";
-                    String historyChat = parent.TampilChat(email, parent.emailAdmin,"client");
+                    String historyChat =  parent.TampilChat(email, parent.emailAdmin,"client");
+                    
+                    
+                    SendChat(historyChat + "\n;;DONE;;");
+                    
                     
                    /*  if(parent.firstClient == false)
                     {
@@ -78,20 +82,26 @@ public class HandleSocket extends Thread{
                         parent.textArea.append(parent.TampilChat(email, parent.emailAdmin, "admin"));
                         
                     }*/
-                     
-                    SendChat(historyChat + msgWelcome);
-                    parent.SimpanChat(parent.emailAdmin,email, msgWelcome);
+                     SendChat(msgWelcome);
+                   
+                     parent.SimpanChat(parent.emailAdmin,email, msgWelcome);
+                    
+                     parent.clientsArr.add(this);
+                     parent.AddComboBoxClient(displayName, email);
+                    
                     
                     String selectedComboBox =  parent.comboBoxClient.getSelectedItem().toString();
                     String thisClient = email ;
+                    
+                    System.out.println("92");
                     if(selectedComboBox.contains(thisClient))
                     {
-                        parent.ShowChat(tmp);
+                        System.out.println("95");
+                        parent.ShowChat(msgWelcome);
                     }
 
                                
-                    parent.clientsArr.add(this);
-                    parent.AddComboBoxClient(displayName, email);
+                   
                                       
                 }
                 else if(tmp.contains("LOGIN"))
@@ -105,14 +115,14 @@ public class HandleSocket extends Thread{
                     
                     //status = arr[1];
                     
-                    /*if(status.contains("true"))
+                    if(status.contains("true"))
                     {
                         String[] arr = status.split(";;");
                         displayName = arr[4];
                         email = loginEmail;
                         idUser = arr[2];
                     }
-                    */
+                    
                    
                     output.writeBytes(status+"\n");
                     

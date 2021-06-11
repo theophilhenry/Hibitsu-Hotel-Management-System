@@ -25,7 +25,8 @@ public class FormChat extends javax.swing.JFrame implements Runnable {
     BufferedReader input;
     DataOutputStream output;
     Thread t;
-    Boolean chatWithBot;
+    Boolean chatWithBot,cekChatHistory;
+    
     /**
      * Creates new form FormChat
      */
@@ -48,6 +49,7 @@ public class FormChat extends javax.swing.JFrame implements Runnable {
             input = new BufferedReader(new InputStreamReader(client.getInputStream()));
             output = new DataOutputStream(client.getOutputStream());
             chatWithBot = true;
+            cekChatHistory = false;
             output.writeBytes("JOIN \n");
             
             if(t == null)
@@ -69,17 +71,41 @@ public class FormChat extends javax.swing.JFrame implements Runnable {
         try {
             
             String message = input.readLine();
-            textArea.append(" Admin : " + message + "\n");
-           
-//            if(chatWithBot != true)
-//            {
-//                
-//            }
-//            else
-//            {
-//                textArea.append("ChatBot : " + message + "\n");
-//            }
             
+            if(cekChatHistory == false)
+            {
+                if(message.equals("false"))
+                {
+                    
+                }
+                else
+                {
+                    if(message.equals(";;DONE;;"))
+                    {
+                        cekChatHistory = true;
+                        textArea.append("----------------------------------------------------------\n");
+                    }
+                    else
+                    {
+                        textArea.append(" " + message + "\n");
+                        
+                    }
+                    
+                    
+                }
+                
+                
+            }
+            else
+            {
+                System.out.println("80");
+                textArea.append(" Admin : " + message + "\n");
+            }
+            
+            
+            
+            
+           
         } catch (IOException ex) {
             Logger.getLogger(FormChat.class.getName()).log(Level.SEVERE, null, ex);
         }
