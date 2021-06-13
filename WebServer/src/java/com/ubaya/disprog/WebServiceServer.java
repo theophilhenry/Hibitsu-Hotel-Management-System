@@ -11,9 +11,6 @@ import java.sql.Date;
 import javax.jws.WebService;
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
-import java.util.ArrayList;
-import java.text.SimpleDateFormat;
-
 /**
  *
  * @author ohanna
@@ -25,7 +22,6 @@ public class WebServiceServer extends DbConnection {
     Villas model_Villa = new Villas();
     Reservations model_Reservation = new Reservations();
     Chats model_Chat = new Chats();
-//    ArrayList<Users> listOfUser = new ArrayList<Users>();
 
     //---------------------------WEB------------------------------
     //[BOOKNOW - 1]
@@ -141,11 +137,10 @@ public class WebServiceServer extends DbConnection {
     //---------------------------------APP--------------------------------------
     //[LOGIN ADMIN]
     @WebMethod(operationName = "DisplayAllClient")
-    public ArrayList<String> DisplayAllClient() {
+    public String DisplayAllClient() {
         try {
-            ArrayList<String> listOfClient = new ArrayList<>();
-            listOfClient = model_User.DisplayAllClient();
-            return listOfClient;
+            String result = model_User.DisplayAllClient();
+            return result;
         } catch (Exception ex) {
             System.out.println("Error DisplayAllClient: " + ex);
         }
@@ -168,12 +163,11 @@ public class WebServiceServer extends DbConnection {
 
     //[DASHBOARD]
     @WebMethod(operationName = "DisplayReservationAll")
-    public ArrayList<String> DisplayReservationAll(@WebParam(name = "kriteria") String kriteria,
+    public String DisplayReservationAll(@WebParam(name = "kriteria") String kriteria,
             @WebParam(name = "dicari") String dicari) {
         try {
-            ArrayList<String> listOfDisplayReservationAll = new ArrayList<String>();
-            listOfDisplayReservationAll = model_Reservation.DisplayReservationAll(kriteria, dicari);
-            return listOfDisplayReservationAll;
+            String result = model_Reservation.DisplayReservationAll(kriteria, dicari);
+            return result;
         } catch (Exception ex) {
             System.out.println("Error Display Reservation All: " + ex);
         }
@@ -257,15 +251,9 @@ public class WebServiceServer extends DbConnection {
     public String DisplayChat(
             @WebParam(name = "email_sender") String email_sender,
             @WebParam(name = "email_receiver") String email_receiver) {
-        try {
-            
-            String hasil = "";
-            hasil = model_Chat.DisplayChat(email_sender, email_receiver);
-            
-            
-           
-            
-            return hasil;
+        try {  
+            String result = model_Chat.DisplayChat(email_sender, email_receiver);
+            return result;
         } catch (Exception ex) {
             System.out.println("Error Display Chat: " + ex);
         }

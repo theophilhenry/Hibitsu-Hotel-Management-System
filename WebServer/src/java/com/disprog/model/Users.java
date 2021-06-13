@@ -7,7 +7,6 @@ package com.disprog.model;
 
 import com.mysql.jdbc.PreparedStatement;
 import java.sql.SQLException;
-import java.util.ArrayList;
 
 /**
  *
@@ -217,10 +216,9 @@ public class Users extends DbConnection {
         return null;
     }
 
-    public ArrayList<String> DisplayAllClient() {
+    public String DisplayAllClient() {
         try {
             if (!connect.isClosed()) {
-                ArrayList<String> listOfClient = new ArrayList<>();
                 //set query
                 String query = "SELECT * "
                         + "FROM `users` WHERE `role`='CLIENT'";
@@ -230,16 +228,16 @@ public class Users extends DbConnection {
 
                 //nanti mau diatur lagi return nya seperti apa
                 String ket = "[1]hasilDisplayClient,[2]fullname,[3]display_name,[4]phone_number,[5]email,[6]no_ktp;;";
+                String hasil="";
                 while (result.next()) {
-                    String hasil = String.valueOf(result.getInt("iduser"))+";;"
+                     hasil = hasil +ket + String.valueOf(result.getInt("iduser"))+";;"
                             +result.getString("fullname")+";;"
                             +result.getString("display_name")+";;"
                             +result.getString("phone_number")+";;"
                             +result.getString("email")+";;"
                             +result.getString("no_ktp")+";;";
-                    listOfClient.add(ket+hasil);
                 }
-                return listOfClient;
+                return hasil;
             } else {
                 System.out.println("Tidak terkoneksi database");
             }

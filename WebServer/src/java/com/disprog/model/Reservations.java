@@ -11,9 +11,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -249,7 +247,7 @@ public class Reservations extends DbConnection {
                 }
 
                 // set query
-                String query = "UPDATE reservation r SET `r.checkin_date`=?,`r.checkout_date`=?,"
+                String query = "UPDATE reservations r SET `r.checkin_date`=?,`r.checkout_date`=?,"
                         + "`r.total_guest`=?,`r.notes`=?,`r.total_price`=?,`r.idvilla`=? "
                         + "FROM reservations r INNER JOIN villas v ON r.idvilla = v.idvilla "
                         + "INNER JOIN users u ON r.idvilla = u.idvilla "
@@ -284,7 +282,7 @@ public class Reservations extends DbConnection {
                 System.out.println("Tidak terkoneksi database");
             }
         } catch (Exception ex) {
-            System.out.println("Error InsertReservation: " + ex);
+            System.out.println("Error UpdateReservation: " + ex);
         }
         return message;
     }
@@ -295,7 +293,7 @@ public class Reservations extends DbConnection {
             if (!connect.isClosed()) {
                 String ket = "[1]hasilChangeStatus;;";
                 // set query
-                String query = "UPDATE reservation SET status =? where idreservation =?";
+                String query = "UPDATE reservations SET status =? where idreservation =?";
 
                 // set preparedStatement
                 PreparedStatement sql = (PreparedStatement) connect.prepareStatement(query);
@@ -353,7 +351,7 @@ public class Reservations extends DbConnection {
         try {
             if (!connect.isClosed()) {
                 // set query
-                String query = "Select url_bukti_pembayaran WHERE idreservation=?";
+                String query = "Select url_bukti_pembayaran FROM reservations WHERE idreservation=?";
 
                 // set preparedStatement
                 PreparedStatement sql = (PreparedStatement) connect.prepareStatement(query);
@@ -386,30 +384,30 @@ public class Reservations extends DbConnection {
                 //check tanggal dulu
 
                 if (checkIn.after(checkOut)) {
-                    return ket + "Pleaase input checkout date greater than checkin date";
+                    return ket + "Please input checkout date greater than checkin date";
                 }
                 // set query
-                String query = "SELECT * FROM reservations WHERE idvilla = ? &&"
-                        + "((checkin_date <= ? AND checkout_date >= ?) || "
-                        + "(checkin_date <= ? AND checkout_date >= ?)|| "
-                        + "(checkin_date >= ? AND checkout_date <= ?))";
-
 //                String query = "SELECT * FROM reservations WHERE idvilla = ? &&"
-//                        + "checkin <= ? AND checkout >= ?";
+//                        + "((checkin_date <= ? AND checkout_date >= ?) || "
+//                        + "(checkin_date <= ? AND checkout_date >= ?)|| "
+//                        + "(checkin_date >= ? AND checkout_date <= ?))";
+
+                String query = "SELECT * FROM reservations WHERE idvilla = ? &&"
+                        + "checkin_date < ? AND checkout_date > ?";
                 // set preparedStatement
                 PreparedStatement sql = (PreparedStatement) connect.prepareStatement(query);
-//
-//                sql.setDate(2, checkIn);
-//                sql.setDate(1, checkOut);
+                sql.setInt(1, idvilla);
+                sql.setDate(2, checkOut);
+                sql.setDate(3, checkIn);
 
                 //set paramater
-                sql.setInt(1, idvilla);
-                sql.setDate(2, checkIn);
-                sql.setDate(3, checkIn);
-                sql.setDate(4, checkOut);
-                sql.setDate(5, checkOut);
-                sql.setDate(6, checkIn);
-                sql.setDate(7, checkOut);
+//                sql.setInt(1, idvilla);
+//                sql.setDate(2, checkIn);
+//                sql.setDate(3, checkIn);
+//                sql.setDate(4, checkOut);
+//                sql.setDate(5, checkOut);
+//                sql.setDate(6, checkIn);
+//                sql.setDate(7, checkOut);
                 result = sql.executeQuery();
 
                 if (result.next()) {
@@ -519,21 +517,21 @@ public class Reservations extends DbConnection {
 
                     String statusValue = result.getString("status");
                     String statusClass = "status-" + statusValue.toLowerCase();
-                    
+
                     String paymentValue = result.getString("url_bukti_pembayaran");
                     String statusCheck = "";
-                    
-                    if(paymentValue == null){
+
+                    if (paymentValue == null) {
                         statusCheck = ""
-                            + "<div class='mb-3'>"
-                            +"<label for='formFileSm' class='form-label karla-normal' style='text-align: left;'>Payment Slip hasn't uploaded yet. <br>To Upload payment slip, you need to <br>1. Upload your payment slip photo to Google Drive<br>2. Share and get the link<br>3. Set the link to anyone can view<br>4. Copy the link and paste it here.</label>"
-                            + "<form method='POST' action='track-order-handler.jsp'>"
-                            + "<input type='hidden' name='command' value='uploadBuktiPembayaran'>"
-                            + "<input type='hidden' name='idReservation' value='" + idreservation + "'>"
-                            + "<input type='text' name='urlBuktiPembayaran' class='form-control mb-3' id='exampleFormControlInput1' placeholder='https://drive.google.com/file/d/xxx'>"
-                            + "<button class='btn btn-success rubik-bold color-white background-green mb-3' type='submit' style='width: 100%;'>Upload</button>"
-                            + "</form>"
-                            + "</div>";
+                                + "<div class='mb-3'>"
+                                + "<label for='formFileSm' class='form-label karla-normal' style='text-align: left;'>Payment Slip hasn't uploaded yet. <br>To Upload payment slip, you need to <br>1. Upload your payment slip photo to Google Drive<br>2. Share and get the link<br>3. Set the link to anyone can view<br>4. Copy the link and paste it here.</label>"
+                                + "<form method='POST' action='track-order-handler.jsp'>"
+                                + "<input type='hidden' name='command' value='uploadBuktiPembayaran'>"
+                                + "<input type='hidden' name='idReservation' value='" + idreservation + "'>"
+                                + "<input type='text' name='urlBuktiPembayaran' class='form-control mb-3' id='exampleFormControlInput1' placeholder='https://drive.google.com/file/d/xxx'>"
+                                + "<button class='btn btn-success rubik-bold color-white background-green mb-3' type='submit' style='width: 100%;'>Upload</button>"
+                                + "</form>"
+                                + "</div>";
                     }
 
                     String hasilDOM = ""
@@ -687,11 +685,10 @@ public class Reservations extends DbConnection {
         return null;
     }
 
-    public ArrayList<String> DisplayReservationAll(String kriteria, String dicari) {
+    public String DisplayReservationAll(String kriteria, String dicari) {
         try {
             if (!connect.isClosed()) {
                 String query = "";
-                ArrayList<String> listOfReservation = new ArrayList<>();
                 if (kriteria.equals("") || dicari.equals("")) {
                     query = "SELECT r.idreservation, r.res_timestamp, r.checkin_date, "
                             + "r.checkout_date, r.status, r.total_guest, r.total_price, r.notes, r.url_bukti_pembayaran, "
@@ -709,21 +706,18 @@ public class Reservations extends DbConnection {
                             + "FROM reservations r "
                             + "INNER JOIN villas v ON r.idvilla = v.idvilla "
                             + "INNER JOIN users u ON r.iduser = u.iduser "
-                            + "WHERE " + kriteria + " = " + dicari + " AND checkout_date >= CURDATE();";
+                            + "WHERE " + kriteria + " = '" + dicari + "' AND checkout_date >= CURDATE();";
                 }
 
                 PreparedStatement sql = (PreparedStatement) connect.prepareStatement(query);
-                sql.setString(1, kriteria);
-                sql.setString(2, dicari);
                 result = sql.executeQuery();
-
+                String hasil = "";
+                String ket = "[1]idreservation,[2]res_timestamp,"
+                        + "[3]chcekin_date,[4]checkout_date,[5]status,[6]total_guest,[7]total_price,"
+                        + "[8]notes,[19]url_bukti_pembayaran,[10]idvilla,[11]villa_name,"
+                        + "[12]iduser,[13]fullname,[14]display_name[15],phone_number,[16]email,[17]no_ktp;;";
                 while (result.next()) {
-                    String ket = "[1]hasilTrackOrder,[2]idreservation,[3]res_timestamp,"
-                            + "[4]chcekin_date,[5]checkout_date,[6]status,[7]total_guest,[8]total_price,"
-                            + "[9]notes,[10]url_bukti_pembayaran,[11]idvilla,[12]villa_name,"
-                            + "[13]iduser,[14]fullname,[15]display_name[16],phone_number,[17]email,[17]no_ktp;;";
-
-                    String hasil = String.valueOf(result.getInt("idreservation")) + ";;"
+                    hasil = hasil + ket + String.valueOf(result.getInt("idreservation")) + ";;"
                             + String.valueOf(result.getTimestamp("res_timestamp")) + ";;"
                             + result.getDate("checkin_date").toString() + ";;"
                             + result.getDate("checkout_date").toString() + ";;"
@@ -739,72 +733,14 @@ public class Reservations extends DbConnection {
                             + result.getString("display_name") + ";;"
                             + result.getString("phone_number") + ";;"
                             + result.getString("email") + ";;"
-                            + result.getString("no_ktp");
-                    listOfReservation.add(ket + "true;;" + hasil);
+                            + result.getString("no_ktp") + "||";
                 }
-                return listOfReservation;
+                return hasil;
             } else {
                 System.out.println("Tidak terkoneksi database");
             }
         } catch (SQLException ex) {
             Logger.getLogger(Reservations.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return null;
-    }
-
-    //G PAKEK -----------------------------------------------------------------------------
-    public ArrayList<String> DisplayReservation(String kriteria, String dicari) {
-        String message = "";
-        String query = "";
-        try {
-            // set query
-            if (kriteria.equals("") && dicari.equals("")) {
-                query = "SELECT r.idreservation, r.res_timestamp, r.checkin_date, "
-                        + "r.checkout_date, r.status, r.total_guest, r.total_price, r.notes, r.url_bukti_pembayaran, "
-                        + "v.idvilla, v.name, v.price, v.description"
-                        + "u.iduser, u.fullname, u.display_name, u.phone_number, u.email, u.no_ktp "
-                        + "FROM reservations r "
-                        + "INNER JOIN villas v ON r.idvilla = v.idvilla "
-                        + "INNER JOIN users u ON r.iduser = u.iduser AND checkout_date>= CURDATE();";
-            } else {
-                query = "SELECT r.idreservation, r.res_timestamp, r.checkin_date, "
-                        + "r.checkout_date, r.status, r.total_guest, r.total_price, r.notes, r.url_bukti_pembayaran, "
-                        + "v.idvilla, v.name, v.price, v.description"
-                        + "u.iduser, u.fullname, u.display_name, u.phone_number, u.email, u.no_ktp "
-                        + "FROM reservations r "
-                        + "INNER JOIN villas v ON r.idvilla = v.idvilla "
-                        + "INNER JOIN users u ON r.iduser = u.iduser "
-                        + "WHERE " + kriteria + " = " + dicari + "AND checkout_date>= CURDATE();";
-            }
-            // set preparedStatement
-            PreparedStatement sql = (PreparedStatement) connect.prepareStatement(query);
-            result = sql.executeQuery();
-            String ket = "[1]hasilDisplayReservasi[,2]r.idreservation,[3]r.res_timestamp,[4]r.checkin_date,"
-                    + "[5]r.checkout_date,[6]r.status,[7]r.total_guest,[8]r.total_price,[9]r.notes,[10]r.url_bukti_pembayaran, "
-                    + "[11]v.idvilla,[12]v.name,[13]v.price,[14] v.description"
-                    + "[15]u.iduser,[16] u.fullname,[17]u.display_name,[18]u.phone_number,[19]u.email";
-            while (result.next()) {
-                String hasil = String.valueOf(result.getInt("idreservation")) + ";;"
-                        + String.valueOf(result.getTimestamp("res_timestamp")) + ";;"
-                        + result.getDate("checkin_date").toString() + ";;"
-                        + result.getDate("checkout_date").toString() + ";;"
-                        + result.getString("status") + ";;"
-                        + String.valueOf(result.getInt("total_guest")) + ";;"
-                        + result.getString("notes") + ";;"
-                        + result.getString("url_bukti_pembayaran") + ";;"
-                        + String.valueOf(result.getInt("idvilla")) + ";;"
-                        + result.getString("name") + ";;"
-                        + String.valueOf(result.getInt("iduser")) + ";;"
-                        + result.getString("fullname") + ";;"
-                        + result.getString("email") + ";;"
-                        + result.getString("no_ktp");
-                // ini belum di code
-                String nanti = "||";
-
-            }
-            return null;
-        } catch (Exception ex) {
-            System.out.println("Error Baca Data Reservasi: " + ex);
         }
         return null;
     }
