@@ -55,9 +55,17 @@ public class FormLoginAdmin extends javax.swing.JFrame {
         });
 
         textPassword.setFont(new java.awt.Font("Rubik", 0, 14)); // NOI18N
+        textPassword.setText("toto");
         textPassword.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+        textPassword.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                textPasswordActionPerformed(evt);
+            }
+        });
 
         textEmail.setFont(new java.awt.Font("Rubik", 0, 14)); // NOI18N
+        textEmail.setText("toto@gmail.com");
+        textEmail.setToolTipText("");
         textEmail.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
 
         jLabel2.setFont(new java.awt.Font("Rubik", 0, 14)); // NOI18N
@@ -133,6 +141,10 @@ public class FormLoginAdmin extends javax.swing.JFrame {
            
        
     }//GEN-LAST:event_buttonLoginActionPerformed
+
+    private void textPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textPasswordActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_textPasswordActionPerformed
 
     /**
      * @param args the command line arguments

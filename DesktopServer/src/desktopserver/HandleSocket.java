@@ -24,6 +24,7 @@ public class HandleSocket extends Thread{
     BufferedReader input;
     String email,displayName,idUser;
     Boolean chatWithBot;
+    Integer botStep;
     
     
     public HandleSocket(FormDashboard _parent, Socket _client)
@@ -58,21 +59,21 @@ public class HandleSocket extends Thread{
                 System.out.println("58 ReadLine : " + tmp);
                 if(tmp.contains("JOIN"))
                 {
-                   /* chatWithBot = true;
-                    SendChat("Selamat datang di hibitsu Bpk/Ibu " + displayName + "("+email + ") \n "
-                            + "Apabila anda ingin konsultasi secara langsung dengan Admin, anda dapat menekan tombol audio/video call di atas,\n" 
-                            + "Apabila anda ingin berbincang-bincang dengan saya(bot), anda dapat melakukannya dengan memilih salah satu angka dari opsi di bawah :\n" 
-                            + "1. Reservasi\n" 
-                            + "2. Check Booking / Track Order\n"
-                            + "3. Konsultasi Chat dengan Admin\n");
-                    */
+                    chatWithBot = true;
+                    botStep = 0;
+                    
                      
                      parent.clientsArr.add(this);
                      parent.AddComboBoxClient(displayName, email);
                     
-                    String msgWelcome = "Halo, apa yang bisa dibantu?";
+                    String msgWelcome = "Selamat datang di hibitsu\n"
+                            + "Jika ingin konsultasi langsung dengan Admin,\ndapat menekan chat/audio/video call di atas,\n"
+                            + "Jika ingin berbicara dengan saya(BotChat),\ndapat melakukannya dengan memilih salah satu angka dari opsi di bawah :\n" 
+                            + "1. Reservasi\n" 
+                            + "2. Track Order Booking\n";
                     String historyChat =  parent.TampilChat(email, parent.emailAdmin,"client");
                     
+                    msgWelcome += "EndFromBot";
                     
                     SendChat(historyChat + "\n;;DONE;;");
                     
@@ -89,13 +90,14 @@ public class HandleSocket extends Thread{
                     if(selectedComboBox.contains(thisClient))
                     {
                         System.out.println("95");
-                        parent.textArea.append("Admin : " + msgWelcome + "\n");
+                        parent.textArea.append("BotChat :\n" + msgWelcome + "\n");
                     }
 
                                
                    
                                       
                 }
+               
                 else if(tmp.contains("LOGIN"))
                 {
                     String[] login = tmp.split(";;");
@@ -125,9 +127,51 @@ public class HandleSocket extends Thread{
                 {
                     parent.RemoveComboBoxClient(displayName, email);
                 }
+                else if(chatWithBot == true)
+                {
+                    String selectedComboBox =  parent.comboBoxClient.getSelectedItem().toString();
+                    
+                    String thisClient = email ;
+                    
+                    String[] arr = tmp.split(";;");
+                    //parent.SimpanChat(email, parent.emailAdmin, arr[1]);
+                    String warning = "";
+                    
+                    if(botStep == 0) 
+                    {
+                        try
+                        {
+                            botStep = 1;
+                            Integer hasil = Integer.parseInt(arr[1]);
+                            
+                            if(hasil == 1)
+                            {
+                                
+                            }
+                            else
+                            {
+                                
+                            }
+                            
+                        }
+                        catch(Exception e)
+                        {
+                            warning = "Harap memberi input dalam bentuk angka saja sesuai opsi.";
+                        }
+                        
+                    }
+                    
+                    //System.out.println("Selected Combo Box : " + selectedComboBox + "\n email Client ini : " + thisClient + "\n Hasil : " + selectedComboBox.contains(thisClient));
+                    
+                    if(selectedComboBox.contains(thisClient))
+                    {
+                        System.out.println("142");
+                        parent.ShowChat(tmp);
+                    }
+                }
                 else
                 {
-                    System.out.println("129");
+                    
                     
                     String selectedComboBox =  parent.comboBoxClient.getSelectedItem().toString();
                     
@@ -136,7 +180,7 @@ public class HandleSocket extends Thread{
                     String[] arr = tmp.split(";;");
                     parent.SimpanChat(email, parent.emailAdmin, arr[1]);
                     
-                    System.out.println("Selected Combo Box : " + selectedComboBox + "\n email Client ini : " + thisClient + "\n Hasil : " + selectedComboBox.contains(thisClient));
+                    //System.out.println("Selected Combo Box : " + selectedComboBox + "\n email Client ini : " + thisClient + "\n Hasil : " + selectedComboBox.contains(thisClient));
                     
                     if(selectedComboBox.contains(thisClient))
                     {

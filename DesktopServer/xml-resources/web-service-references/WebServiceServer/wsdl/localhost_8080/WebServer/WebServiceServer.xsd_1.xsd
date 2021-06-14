@@ -179,6 +179,18 @@
 </xs:sequence>
 </xs:complexType>
 
+<xs:complexType name="TrackOrder2">
+<xs:sequence>
+<xs:element name="idreservation" type="xs:int" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="TrackOrder2Response">
+<xs:sequence>
+<xs:element name="return" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
 <xs:complexType name="CheckAvailability">
 <xs:sequence>
 <xs:element name="idvilla" type="xs:int" minOccurs="0"/>
@@ -193,18 +205,6 @@
 </xs:sequence>
 </xs:complexType>
 
-<xs:complexType name="TrackOrder2">
-<xs:sequence>
-<xs:element name="idreservation" type="xs:int" minOccurs="0"/>
-</xs:sequence>
-</xs:complexType>
-
-<xs:complexType name="TrackOrder2Response">
-<xs:sequence>
-<xs:element name="return" type="xs:string" minOccurs="0"/>
-</xs:sequence>
-</xs:complexType>
-
 <xs:complexType name="DisplayReservationAll">
 <xs:sequence>
 <xs:element name="kriteria" type="xs:string" minOccurs="0"/>
@@ -214,7 +214,7 @@
 
 <xs:complexType name="DisplayReservationAllResponse">
 <xs:sequence>
-<xs:element name="return" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+<xs:element name="return" type="xs:string" minOccurs="0"/>
 </xs:sequence>
 </xs:complexType>
 
@@ -263,7 +263,7 @@
 
 <xs:complexType name="DisplayAllClientResponse">
 <xs:sequence>
-<xs:element name="return" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+<xs:element name="return" type="xs:string" minOccurs="0"/>
 </xs:sequence>
 </xs:complexType>
 
@@ -284,6 +284,18 @@
 </xs:sequence>
 </xs:complexType>
 
+<xs:complexType name="DisplayContacts">
+<xs:sequence>
+<xs:element name="iduser" type="xs:int" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="DisplayContactsResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
 <xs:complexType name="Registration">
 <xs:sequence>
 <xs:element name="fullname" type="xs:string" minOccurs="0"/>
@@ -296,18 +308,6 @@
 </xs:complexType>
 
 <xs:complexType name="RegistrationResponse">
-<xs:sequence>
-<xs:element name="return" type="xs:string" minOccurs="0"/>
-</xs:sequence>
-</xs:complexType>
-
-<xs:complexType name="DisplayContacts">
-<xs:sequence>
-<xs:element name="iduser" type="xs:int" minOccurs="0"/>
-</xs:sequence>
-</xs:complexType>
-
-<xs:complexType name="DisplayContactsResponse">
 <xs:sequence>
 <xs:element name="return" type="xs:string" minOccurs="0"/>
 </xs:sequence>

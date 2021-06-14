@@ -4,35 +4,23 @@
 <xsd:import namespace="http://disprog.ubaya.com/" schemaLocation="http://localhost:8080/WebServer/WebServiceServer?xsd=1"/>
 </xsd:schema>
 </types>
-<message name="CheckAvailability">
-<part name="parameters" element="tns:CheckAvailability"/>
+<message name="ChangeStatus">
+<part name="parameters" element="tns:ChangeStatus"/>
 </message>
-<message name="CheckAvailabilityResponse">
-<part name="parameters" element="tns:CheckAvailabilityResponse"/>
+<message name="ChangeStatusResponse">
+<part name="parameters" element="tns:ChangeStatusResponse"/>
 </message>
-<message name="UpdateReservation">
-<part name="parameters" element="tns:UpdateReservation"/>
+<message name="TrackOrder1">
+<part name="parameters" element="tns:TrackOrder1"/>
 </message>
-<message name="UpdateReservationResponse">
-<part name="parameters" element="tns:UpdateReservationResponse"/>
+<message name="TrackOrder1Response">
+<part name="parameters" element="tns:TrackOrder1Response"/>
 </message>
-<message name="DisplayReservationAll">
-<part name="parameters" element="tns:DisplayReservationAll"/>
+<message name="UploadPayment">
+<part name="parameters" element="tns:UploadPayment"/>
 </message>
-<message name="DisplayReservationAllResponse">
-<part name="parameters" element="tns:DisplayReservationAllResponse"/>
-</message>
-<message name="InsertReservation">
-<part name="parameters" element="tns:InsertReservation"/>
-</message>
-<message name="InsertReservationResponse">
-<part name="parameters" element="tns:InsertReservationResponse"/>
-</message>
-<message name="DisplayVillaAll">
-<part name="parameters" element="tns:DisplayVillaAll"/>
-</message>
-<message name="DisplayVillaAllResponse">
-<part name="parameters" element="tns:DisplayVillaAllResponse"/>
+<message name="UploadPaymentResponse">
+<part name="parameters" element="tns:UploadPaymentResponse"/>
 </message>
 <message name="LoginClient">
 <part name="parameters" element="tns:LoginClient"/>
@@ -40,17 +28,83 @@
 <message name="LoginClientResponse">
 <part name="parameters" element="tns:LoginClientResponse"/>
 </message>
+<message name="TrackOrder2">
+<part name="parameters" element="tns:TrackOrder2"/>
+</message>
+<message name="TrackOrder2Response">
+<part name="parameters" element="tns:TrackOrder2Response"/>
+</message>
+<message name="DisplayPayment">
+<part name="parameters" element="tns:DisplayPayment"/>
+</message>
+<message name="DisplayPaymentResponse">
+<part name="parameters" element="tns:DisplayPaymentResponse"/>
+</message>
+<message name="DisplayVillaAll">
+<part name="parameters" element="tns:DisplayVillaAll"/>
+</message>
+<message name="DisplayVillaAllResponse">
+<part name="parameters" element="tns:DisplayVillaAllResponse"/>
+</message>
 <message name="DisplayVillaId">
 <part name="parameters" element="tns:DisplayVillaId"/>
 </message>
 <message name="DisplayVillaIdResponse">
 <part name="parameters" element="tns:DisplayVillaIdResponse"/>
 </message>
+<message name="CheckAvailability">
+<part name="parameters" element="tns:CheckAvailability"/>
+</message>
+<message name="CheckAvailabilityResponse">
+<part name="parameters" element="tns:CheckAvailabilityResponse"/>
+</message>
+<message name="DisplayReservationAll">
+<part name="parameters" element="tns:DisplayReservationAll"/>
+</message>
+<message name="DisplayReservationAllResponse">
+<part name="parameters" element="tns:DisplayReservationAllResponse"/>
+</message>
+<message name="UpdateReservation">
+<part name="parameters" element="tns:UpdateReservation"/>
+</message>
+<message name="UpdateReservationResponse">
+<part name="parameters" element="tns:UpdateReservationResponse"/>
+</message>
+<message name="InsertReservation">
+<part name="parameters" element="tns:InsertReservation"/>
+</message>
+<message name="InsertReservationResponse">
+<part name="parameters" element="tns:InsertReservationResponse"/>
+</message>
+<message name="TrackOrderApp">
+<part name="parameters" element="tns:TrackOrderApp"/>
+</message>
+<message name="TrackOrderAppResponse">
+<part name="parameters" element="tns:TrackOrderAppResponse"/>
+</message>
+<message name="DisplayAllClient">
+<part name="parameters" element="tns:DisplayAllClient"/>
+</message>
+<message name="DisplayAllClientResponse">
+<part name="parameters" element="tns:DisplayAllClientResponse"/>
+</message>
+<message name="LoginAdmin">
+<part name="parameters" element="tns:LoginAdmin"/>
+</message>
+<message name="LoginAdminResponse">
+<part name="parameters" element="tns:LoginAdminResponse"/>
+</message>
 <message name="DisplayChat">
 <part name="parameters" element="tns:DisplayChat"/>
 </message>
 <message name="DisplayChatResponse">
 <part name="parameters" element="tns:DisplayChatResponse"/>
+</message>
+<message name="DisplayContacts">
+<part name="parameters" element="tns:DisplayContacts"/>
+</message>
+<message name="DisplayContactsResponse">
+<part name="parameters" element="tns:DisplayContactsResponse"/>
 </message>
 <message name="Registration">
 <part name="parameters" element="tns:Registration"/>
@@ -64,92 +118,74 @@
 <message name="InsertChatResponse">
 <part name="parameters" element="tns:InsertChatResponse"/>
 </message>
-<message name="TrackOrderApp">
-<part name="parameters" element="tns:TrackOrderApp"/>
-</message>
-<message name="TrackOrderAppResponse">
-<part name="parameters" element="tns:TrackOrderAppResponse"/>
-</message>
-<message name="LoginAdmin">
-<part name="parameters" element="tns:LoginAdmin"/>
-</message>
-<message name="LoginAdminResponse">
-<part name="parameters" element="tns:LoginAdminResponse"/>
-</message>
-<message name="DisplayPayment">
-<part name="parameters" element="tns:DisplayPayment"/>
-</message>
-<message name="DisplayPaymentResponse">
-<part name="parameters" element="tns:DisplayPaymentResponse"/>
-</message>
-<message name="DisplayContacts">
-<part name="parameters" element="tns:DisplayContacts"/>
-</message>
-<message name="DisplayContactsResponse">
-<part name="parameters" element="tns:DisplayContactsResponse"/>
-</message>
-<message name="TrackOrder1">
-<part name="parameters" element="tns:TrackOrder1"/>
-</message>
-<message name="TrackOrder1Response">
-<part name="parameters" element="tns:TrackOrder1Response"/>
-</message>
-<message name="ChangeStatus">
-<part name="parameters" element="tns:ChangeStatus"/>
-</message>
-<message name="ChangeStatusResponse">
-<part name="parameters" element="tns:ChangeStatusResponse"/>
-</message>
-<message name="DisplayAllClient">
-<part name="parameters" element="tns:DisplayAllClient"/>
-</message>
-<message name="DisplayAllClientResponse">
-<part name="parameters" element="tns:DisplayAllClientResponse"/>
-</message>
-<message name="TrackOrder2">
-<part name="parameters" element="tns:TrackOrder2"/>
-</message>
-<message name="TrackOrder2Response">
-<part name="parameters" element="tns:TrackOrder2Response"/>
-</message>
-<message name="UploadPayment">
-<part name="parameters" element="tns:UploadPayment"/>
-</message>
-<message name="UploadPaymentResponse">
-<part name="parameters" element="tns:UploadPaymentResponse"/>
-</message>
 <portType name="WebServiceServer">
-<operation name="CheckAvailability">
-<input wsam:Action="http://disprog.ubaya.com/WebServiceServer/CheckAvailabilityRequest" message="tns:CheckAvailability"/>
-<output wsam:Action="http://disprog.ubaya.com/WebServiceServer/CheckAvailabilityResponse" message="tns:CheckAvailabilityResponse"/>
+<operation name="ChangeStatus">
+<input wsam:Action="http://disprog.ubaya.com/WebServiceServer/ChangeStatusRequest" message="tns:ChangeStatus"/>
+<output wsam:Action="http://disprog.ubaya.com/WebServiceServer/ChangeStatusResponse" message="tns:ChangeStatusResponse"/>
 </operation>
-<operation name="UpdateReservation">
-<input wsam:Action="http://disprog.ubaya.com/WebServiceServer/UpdateReservationRequest" message="tns:UpdateReservation"/>
-<output wsam:Action="http://disprog.ubaya.com/WebServiceServer/UpdateReservationResponse" message="tns:UpdateReservationResponse"/>
+<operation name="TrackOrder1">
+<input wsam:Action="http://disprog.ubaya.com/WebServiceServer/TrackOrder1Request" message="tns:TrackOrder1"/>
+<output wsam:Action="http://disprog.ubaya.com/WebServiceServer/TrackOrder1Response" message="tns:TrackOrder1Response"/>
 </operation>
-<operation name="DisplayReservationAll">
-<input wsam:Action="http://disprog.ubaya.com/WebServiceServer/DisplayReservationAllRequest" message="tns:DisplayReservationAll"/>
-<output wsam:Action="http://disprog.ubaya.com/WebServiceServer/DisplayReservationAllResponse" message="tns:DisplayReservationAllResponse"/>
-</operation>
-<operation name="InsertReservation">
-<input wsam:Action="http://disprog.ubaya.com/WebServiceServer/InsertReservationRequest" message="tns:InsertReservation"/>
-<output wsam:Action="http://disprog.ubaya.com/WebServiceServer/InsertReservationResponse" message="tns:InsertReservationResponse"/>
-</operation>
-<operation name="DisplayVillaAll">
-<input wsam:Action="http://disprog.ubaya.com/WebServiceServer/DisplayVillaAllRequest" message="tns:DisplayVillaAll"/>
-<output wsam:Action="http://disprog.ubaya.com/WebServiceServer/DisplayVillaAllResponse" message="tns:DisplayVillaAllResponse"/>
+<operation name="UploadPayment">
+<input wsam:Action="http://disprog.ubaya.com/WebServiceServer/UploadPaymentRequest" message="tns:UploadPayment"/>
+<output wsam:Action="http://disprog.ubaya.com/WebServiceServer/UploadPaymentResponse" message="tns:UploadPaymentResponse"/>
 </operation>
 <operation name="LoginClient">
 <input wsam:Action="http://disprog.ubaya.com/WebServiceServer/LoginClientRequest" message="tns:LoginClient"/>
 <output wsam:Action="http://disprog.ubaya.com/WebServiceServer/LoginClientResponse" message="tns:LoginClientResponse"/>
 </operation>
+<operation name="TrackOrder2">
+<input wsam:Action="http://disprog.ubaya.com/WebServiceServer/TrackOrder2Request" message="tns:TrackOrder2"/>
+<output wsam:Action="http://disprog.ubaya.com/WebServiceServer/TrackOrder2Response" message="tns:TrackOrder2Response"/>
+</operation>
+<operation name="DisplayPayment">
+<input wsam:Action="http://disprog.ubaya.com/WebServiceServer/DisplayPaymentRequest" message="tns:DisplayPayment"/>
+<output wsam:Action="http://disprog.ubaya.com/WebServiceServer/DisplayPaymentResponse" message="tns:DisplayPaymentResponse"/>
+</operation>
+<operation name="DisplayVillaAll">
+<input wsam:Action="http://disprog.ubaya.com/WebServiceServer/DisplayVillaAllRequest" message="tns:DisplayVillaAll"/>
+<output wsam:Action="http://disprog.ubaya.com/WebServiceServer/DisplayVillaAllResponse" message="tns:DisplayVillaAllResponse"/>
+</operation>
 <operation name="DisplayVillaId">
 <input wsam:Action="http://disprog.ubaya.com/WebServiceServer/DisplayVillaIdRequest" message="tns:DisplayVillaId"/>
 <output wsam:Action="http://disprog.ubaya.com/WebServiceServer/DisplayVillaIdResponse" message="tns:DisplayVillaIdResponse"/>
 </operation>
+<operation name="CheckAvailability">
+<input wsam:Action="http://disprog.ubaya.com/WebServiceServer/CheckAvailabilityRequest" message="tns:CheckAvailability"/>
+<output wsam:Action="http://disprog.ubaya.com/WebServiceServer/CheckAvailabilityResponse" message="tns:CheckAvailabilityResponse"/>
+</operation>
+<operation name="DisplayReservationAll">
+<input wsam:Action="http://disprog.ubaya.com/WebServiceServer/DisplayReservationAllRequest" message="tns:DisplayReservationAll"/>
+<output wsam:Action="http://disprog.ubaya.com/WebServiceServer/DisplayReservationAllResponse" message="tns:DisplayReservationAllResponse"/>
+</operation>
+<operation name="UpdateReservation">
+<input wsam:Action="http://disprog.ubaya.com/WebServiceServer/UpdateReservationRequest" message="tns:UpdateReservation"/>
+<output wsam:Action="http://disprog.ubaya.com/WebServiceServer/UpdateReservationResponse" message="tns:UpdateReservationResponse"/>
+</operation>
+<operation name="InsertReservation">
+<input wsam:Action="http://disprog.ubaya.com/WebServiceServer/InsertReservationRequest" message="tns:InsertReservation"/>
+<output wsam:Action="http://disprog.ubaya.com/WebServiceServer/InsertReservationResponse" message="tns:InsertReservationResponse"/>
+</operation>
+<operation name="TrackOrderApp">
+<input wsam:Action="http://disprog.ubaya.com/WebServiceServer/TrackOrderAppRequest" message="tns:TrackOrderApp"/>
+<output wsam:Action="http://disprog.ubaya.com/WebServiceServer/TrackOrderAppResponse" message="tns:TrackOrderAppResponse"/>
+</operation>
+<operation name="DisplayAllClient">
+<input wsam:Action="http://disprog.ubaya.com/WebServiceServer/DisplayAllClientRequest" message="tns:DisplayAllClient"/>
+<output wsam:Action="http://disprog.ubaya.com/WebServiceServer/DisplayAllClientResponse" message="tns:DisplayAllClientResponse"/>
+</operation>
+<operation name="LoginAdmin">
+<input wsam:Action="http://disprog.ubaya.com/WebServiceServer/LoginAdminRequest" message="tns:LoginAdmin"/>
+<output wsam:Action="http://disprog.ubaya.com/WebServiceServer/LoginAdminResponse" message="tns:LoginAdminResponse"/>
+</operation>
 <operation name="DisplayChat">
 <input wsam:Action="http://disprog.ubaya.com/WebServiceServer/DisplayChatRequest" message="tns:DisplayChat"/>
 <output wsam:Action="http://disprog.ubaya.com/WebServiceServer/DisplayChatResponse" message="tns:DisplayChatResponse"/>
+</operation>
+<operation name="DisplayContacts">
+<input wsam:Action="http://disprog.ubaya.com/WebServiceServer/DisplayContactsRequest" message="tns:DisplayContacts"/>
+<output wsam:Action="http://disprog.ubaya.com/WebServiceServer/DisplayContactsResponse" message="tns:DisplayContactsResponse"/>
 </operation>
 <operation name="Registration">
 <input wsam:Action="http://disprog.ubaya.com/WebServiceServer/RegistrationRequest" message="tns:Registration"/>
@@ -159,46 +195,10 @@
 <input wsam:Action="http://disprog.ubaya.com/WebServiceServer/InsertChatRequest" message="tns:InsertChat"/>
 <output wsam:Action="http://disprog.ubaya.com/WebServiceServer/InsertChatResponse" message="tns:InsertChatResponse"/>
 </operation>
-<operation name="TrackOrderApp">
-<input wsam:Action="http://disprog.ubaya.com/WebServiceServer/TrackOrderAppRequest" message="tns:TrackOrderApp"/>
-<output wsam:Action="http://disprog.ubaya.com/WebServiceServer/TrackOrderAppResponse" message="tns:TrackOrderAppResponse"/>
-</operation>
-<operation name="LoginAdmin">
-<input wsam:Action="http://disprog.ubaya.com/WebServiceServer/LoginAdminRequest" message="tns:LoginAdmin"/>
-<output wsam:Action="http://disprog.ubaya.com/WebServiceServer/LoginAdminResponse" message="tns:LoginAdminResponse"/>
-</operation>
-<operation name="DisplayPayment">
-<input wsam:Action="http://disprog.ubaya.com/WebServiceServer/DisplayPaymentRequest" message="tns:DisplayPayment"/>
-<output wsam:Action="http://disprog.ubaya.com/WebServiceServer/DisplayPaymentResponse" message="tns:DisplayPaymentResponse"/>
-</operation>
-<operation name="DisplayContacts">
-<input wsam:Action="http://disprog.ubaya.com/WebServiceServer/DisplayContactsRequest" message="tns:DisplayContacts"/>
-<output wsam:Action="http://disprog.ubaya.com/WebServiceServer/DisplayContactsResponse" message="tns:DisplayContactsResponse"/>
-</operation>
-<operation name="TrackOrder1">
-<input wsam:Action="http://disprog.ubaya.com/WebServiceServer/TrackOrder1Request" message="tns:TrackOrder1"/>
-<output wsam:Action="http://disprog.ubaya.com/WebServiceServer/TrackOrder1Response" message="tns:TrackOrder1Response"/>
-</operation>
-<operation name="ChangeStatus">
-<input wsam:Action="http://disprog.ubaya.com/WebServiceServer/ChangeStatusRequest" message="tns:ChangeStatus"/>
-<output wsam:Action="http://disprog.ubaya.com/WebServiceServer/ChangeStatusResponse" message="tns:ChangeStatusResponse"/>
-</operation>
-<operation name="DisplayAllClient">
-<input wsam:Action="http://disprog.ubaya.com/WebServiceServer/DisplayAllClientRequest" message="tns:DisplayAllClient"/>
-<output wsam:Action="http://disprog.ubaya.com/WebServiceServer/DisplayAllClientResponse" message="tns:DisplayAllClientResponse"/>
-</operation>
-<operation name="TrackOrder2">
-<input wsam:Action="http://disprog.ubaya.com/WebServiceServer/TrackOrder2Request" message="tns:TrackOrder2"/>
-<output wsam:Action="http://disprog.ubaya.com/WebServiceServer/TrackOrder2Response" message="tns:TrackOrder2Response"/>
-</operation>
-<operation name="UploadPayment">
-<input wsam:Action="http://disprog.ubaya.com/WebServiceServer/UploadPaymentRequest" message="tns:UploadPayment"/>
-<output wsam:Action="http://disprog.ubaya.com/WebServiceServer/UploadPaymentResponse" message="tns:UploadPaymentResponse"/>
-</operation>
 </portType>
 <binding name="WebServiceServerPortBinding" type="tns:WebServiceServer">
 <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
-<operation name="CheckAvailability">
+<operation name="ChangeStatus">
 <soap:operation soapAction=""/>
 <input>
 <soap:body use="literal"/>
@@ -207,7 +207,7 @@
 <soap:body use="literal"/>
 </output>
 </operation>
-<operation name="UpdateReservation">
+<operation name="TrackOrder1">
 <soap:operation soapAction=""/>
 <input>
 <soap:body use="literal"/>
@@ -216,25 +216,7 @@
 <soap:body use="literal"/>
 </output>
 </operation>
-<operation name="DisplayReservationAll">
-<soap:operation soapAction=""/>
-<input>
-<soap:body use="literal"/>
-</input>
-<output>
-<soap:body use="literal"/>
-</output>
-</operation>
-<operation name="InsertReservation">
-<soap:operation soapAction=""/>
-<input>
-<soap:body use="literal"/>
-</input>
-<output>
-<soap:body use="literal"/>
-</output>
-</operation>
-<operation name="DisplayVillaAll">
+<operation name="UploadPayment">
 <soap:operation soapAction=""/>
 <input>
 <soap:body use="literal"/>
@@ -252,6 +234,33 @@
 <soap:body use="literal"/>
 </output>
 </operation>
+<operation name="TrackOrder2">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+<output>
+<soap:body use="literal"/>
+</output>
+</operation>
+<operation name="DisplayPayment">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+<output>
+<soap:body use="literal"/>
+</output>
+</operation>
+<operation name="DisplayVillaAll">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+<output>
+<soap:body use="literal"/>
+</output>
+</operation>
 <operation name="DisplayVillaId">
 <soap:operation soapAction=""/>
 <input>
@@ -261,7 +270,79 @@
 <soap:body use="literal"/>
 </output>
 </operation>
+<operation name="CheckAvailability">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+<output>
+<soap:body use="literal"/>
+</output>
+</operation>
+<operation name="DisplayReservationAll">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+<output>
+<soap:body use="literal"/>
+</output>
+</operation>
+<operation name="UpdateReservation">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+<output>
+<soap:body use="literal"/>
+</output>
+</operation>
+<operation name="InsertReservation">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+<output>
+<soap:body use="literal"/>
+</output>
+</operation>
+<operation name="TrackOrderApp">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+<output>
+<soap:body use="literal"/>
+</output>
+</operation>
+<operation name="DisplayAllClient">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+<output>
+<soap:body use="literal"/>
+</output>
+</operation>
+<operation name="LoginAdmin">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+<output>
+<soap:body use="literal"/>
+</output>
+</operation>
 <operation name="DisplayChat">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+<output>
+<soap:body use="literal"/>
+</output>
+</operation>
+<operation name="DisplayContacts">
 <soap:operation soapAction=""/>
 <input>
 <soap:body use="literal"/>
@@ -280,87 +361,6 @@
 </output>
 </operation>
 <operation name="InsertChat">
-<soap:operation soapAction=""/>
-<input>
-<soap:body use="literal"/>
-</input>
-<output>
-<soap:body use="literal"/>
-</output>
-</operation>
-<operation name="TrackOrderApp">
-<soap:operation soapAction=""/>
-<input>
-<soap:body use="literal"/>
-</input>
-<output>
-<soap:body use="literal"/>
-</output>
-</operation>
-<operation name="LoginAdmin">
-<soap:operation soapAction=""/>
-<input>
-<soap:body use="literal"/>
-</input>
-<output>
-<soap:body use="literal"/>
-</output>
-</operation>
-<operation name="DisplayPayment">
-<soap:operation soapAction=""/>
-<input>
-<soap:body use="literal"/>
-</input>
-<output>
-<soap:body use="literal"/>
-</output>
-</operation>
-<operation name="DisplayContacts">
-<soap:operation soapAction=""/>
-<input>
-<soap:body use="literal"/>
-</input>
-<output>
-<soap:body use="literal"/>
-</output>
-</operation>
-<operation name="TrackOrder1">
-<soap:operation soapAction=""/>
-<input>
-<soap:body use="literal"/>
-</input>
-<output>
-<soap:body use="literal"/>
-</output>
-</operation>
-<operation name="ChangeStatus">
-<soap:operation soapAction=""/>
-<input>
-<soap:body use="literal"/>
-</input>
-<output>
-<soap:body use="literal"/>
-</output>
-</operation>
-<operation name="DisplayAllClient">
-<soap:operation soapAction=""/>
-<input>
-<soap:body use="literal"/>
-</input>
-<output>
-<soap:body use="literal"/>
-</output>
-</operation>
-<operation name="TrackOrder2">
-<soap:operation soapAction=""/>
-<input>
-<soap:body use="literal"/>
-</input>
-<output>
-<soap:body use="literal"/>
-</output>
-</operation>
-<operation name="UploadPayment">
 <soap:operation soapAction=""/>
 <input>
 <soap:body use="literal"/>
