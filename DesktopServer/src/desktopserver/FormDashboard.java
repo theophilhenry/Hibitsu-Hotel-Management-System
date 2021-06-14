@@ -216,10 +216,41 @@ public class FormDashboard extends javax.swing.JFrame implements Runnable {
             comboBoxVillaType.addItem(arr2[1] + ")" + arr2[2] + "\n");
         }
         
+    }
+    
+    public String TampilSemuaVilla()
+    {
+        String result = displayVillaAll();
+        String[] arr1 = result.split("\\|\\|");
+        String hasil = "";
         
-       
+        
+        for(Integer i=0;i<arr1.length; i++)
+        {
+            String[] arr2 = arr1[i].split(";;");
+            hasil += arr2[1] + ")" + arr2[2] + "\n";
+        }
+        return hasil;
+        
     }
 
+    public String CekAvaible(String checkin, String checkout, String idVilla)
+    {
+        Integer id = Integer.parseInt(idVilla);
+        
+        String hasil = checkAvailability(id, checkin, checkout);
+        String[] arr = hasil.split(";;");
+        return arr[1];
+        
+    }
+    
+    
+    
+    
+    
+    
+    
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -261,6 +292,7 @@ public class FormDashboard extends javax.swing.JFrame implements Runnable {
         comboBoxClient = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setLocation(new java.awt.Point(1000, 200));
 
         jLabel1.setFont(new java.awt.Font("Rubik", 1, 24)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(29, 212, 121));
@@ -667,14 +699,13 @@ public class FormDashboard extends javax.swing.JFrame implements Runnable {
         
         JOptionPane.showMessageDialog(null,status + "\nOrder ID : " + arr2[2]);
         
-        
-        
-        
-        
-        
-                
+      
     }//GEN-LAST:event_buttonBookActionPerformed
 
+
+    
+    
+    
     /**
      * @param args the command line arguments
      */
@@ -797,5 +828,11 @@ public class FormDashboard extends javax.swing.JFrame implements Runnable {
         com.ubaya.disprog.WebServiceServer_Service service = new com.ubaya.disprog.WebServiceServer_Service();
         com.ubaya.disprog.WebServiceServer port = service.getWebServiceServerPort();
         return port.insertReservation(checkinDate, checkoutDate, totalGuest, notes, iduser, idvilla);
+    }
+
+    public static String trackOrderApp(java.lang.Integer idreservation) {
+        com.ubaya.disprog.WebServiceServer_Service service = new com.ubaya.disprog.WebServiceServer_Service();
+        com.ubaya.disprog.WebServiceServer port = service.getWebServiceServerPort();
+        return port.trackOrderApp(idreservation);
     }
 }

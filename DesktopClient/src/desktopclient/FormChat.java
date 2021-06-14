@@ -89,7 +89,7 @@ public class FormChat extends javax.swing.JFrame implements Runnable {
                     }
                     else
                     {
-                        textArea.append(" " + message + "\n");
+                        textArea.append(" " + message + "\n\n");
                         
                     }
                     
@@ -105,14 +105,16 @@ public class FormChat extends javax.swing.JFrame implements Runnable {
                     textArea.append(" ChatBot : \n");
                     oneTimePrint =1;
                 }
-                
+               
                 if(message.equals(("EndFromBot")))
                 {
                     oneTimePrint = 0;
+                   
                 }
                 else
                 {
-                    textArea.append(" " + message + "\n");
+                    
+                    textArea.append(" " + message + "\n\n");
                 }
                 
                 
@@ -121,7 +123,7 @@ public class FormChat extends javax.swing.JFrame implements Runnable {
             else
             {
                 System.out.println("80");
-                textArea.append(" Admin : " + message + "\n");
+                textArea.append(" Admin : " + message + "\n\n");
             }
             
             
@@ -137,7 +139,7 @@ public class FormChat extends javax.swing.JFrame implements Runnable {
     {
         try {
             output.writeBytes(email + ";;" + msg + "\n");
-            textArea.append(" Me : " + msg + "\n");
+            textArea.append(" Me : " + msg + "\n\n");
             
         } catch (IOException ex) {
             Logger.getLogger(FormChat.class.getName()).log(Level.SEVERE, null, ex);

@@ -128,6 +128,33 @@ public interface WebServiceServer {
      * @return
      *     returns java.lang.String
      */
+    @WebMethod(operationName = "DisplayVillaAllWeb")
+    @WebResult(targetNamespace = "")
+    @RequestWrapper(localName = "DisplayVillaAllWeb", targetNamespace = "http://disprog.ubaya.com/", className = "com.ubaya.disprog.DisplayVillaAllWeb")
+    @ResponseWrapper(localName = "DisplayVillaAllWebResponse", targetNamespace = "http://disprog.ubaya.com/", className = "com.ubaya.disprog.DisplayVillaAllWebResponse")
+    @Action(input = "http://disprog.ubaya.com/WebServiceServer/DisplayVillaAllWebRequest", output = "http://disprog.ubaya.com/WebServiceServer/DisplayVillaAllWebResponse")
+    public String displayVillaAllWeb();
+
+    /**
+     * 
+     * @param idvilla
+     * @return
+     *     returns java.lang.String
+     */
+    @WebMethod(operationName = "DisplayVillaIdWeb")
+    @WebResult(targetNamespace = "")
+    @RequestWrapper(localName = "DisplayVillaIdWeb", targetNamespace = "http://disprog.ubaya.com/", className = "com.ubaya.disprog.DisplayVillaIdWeb")
+    @ResponseWrapper(localName = "DisplayVillaIdWebResponse", targetNamespace = "http://disprog.ubaya.com/", className = "com.ubaya.disprog.DisplayVillaIdWebResponse")
+    @Action(input = "http://disprog.ubaya.com/WebServiceServer/DisplayVillaIdWebRequest", output = "http://disprog.ubaya.com/WebServiceServer/DisplayVillaIdWebResponse")
+    public String displayVillaIdWeb(
+        @WebParam(name = "idvilla", targetNamespace = "")
+        Integer idvilla);
+
+    /**
+     * 
+     * @return
+     *     returns java.lang.String
+     */
     @WebMethod(operationName = "DisplayVillaAll")
     @WebResult(targetNamespace = "")
     @RequestWrapper(localName = "DisplayVillaAll", targetNamespace = "http://disprog.ubaya.com/", className = "com.ubaya.disprog.DisplayVillaAll")

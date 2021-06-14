@@ -32,9 +32,17 @@
 
 <xs:element name="DisplayVillaAllResponse" type="tns:DisplayVillaAllResponse"/>
 
+<xs:element name="DisplayVillaAllWeb" type="tns:DisplayVillaAllWeb"/>
+
+<xs:element name="DisplayVillaAllWebResponse" type="tns:DisplayVillaAllWebResponse"/>
+
 <xs:element name="DisplayVillaId" type="tns:DisplayVillaId"/>
 
 <xs:element name="DisplayVillaIdResponse" type="tns:DisplayVillaIdResponse"/>
+
+<xs:element name="DisplayVillaIdWeb" type="tns:DisplayVillaIdWeb"/>
+
+<xs:element name="DisplayVillaIdWebResponse" type="tns:DisplayVillaIdWebResponse"/>
 
 <xs:element name="InsertChat" type="tns:InsertChat"/>
 
@@ -97,6 +105,16 @@
 </xs:complexType>
 
 <xs:complexType name="ChangeStatusResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="DisplayVillaAllWeb">
+<xs:sequence/>
+</xs:complexType>
+
+<xs:complexType name="DisplayVillaAllWebResponse">
 <xs:sequence>
 <xs:element name="return" type="xs:string" minOccurs="0"/>
 </xs:sequence>
@@ -308,6 +326,18 @@
 </xs:complexType>
 
 <xs:complexType name="RegistrationResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="DisplayVillaIdWeb">
+<xs:sequence>
+<xs:element name="idvilla" type="xs:int" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="DisplayVillaIdWebResponse">
 <xs:sequence>
 <xs:element name="return" type="xs:string" minOccurs="0"/>
 </xs:sequence>

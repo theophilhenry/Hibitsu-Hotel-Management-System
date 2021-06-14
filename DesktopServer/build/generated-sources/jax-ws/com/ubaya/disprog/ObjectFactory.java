@@ -27,6 +27,7 @@ public class ObjectFactory {
     private final static QName _LoginAdminResponse_QNAME = new QName("http://disprog.ubaya.com/", "LoginAdminResponse");
     private final static QName _DisplayChatResponse_QNAME = new QName("http://disprog.ubaya.com/", "DisplayChatResponse");
     private final static QName _DisplayVillaAllResponse_QNAME = new QName("http://disprog.ubaya.com/", "DisplayVillaAllResponse");
+    private final static QName _DisplayVillaAllWebResponse_QNAME = new QName("http://disprog.ubaya.com/", "DisplayVillaAllWebResponse");
     private final static QName _InsertReservation_QNAME = new QName("http://disprog.ubaya.com/", "InsertReservation");
     private final static QName _TrackOrder2Response_QNAME = new QName("http://disprog.ubaya.com/", "TrackOrder2Response");
     private final static QName _InsertChat_QNAME = new QName("http://disprog.ubaya.com/", "InsertChat");
@@ -36,6 +37,7 @@ public class ObjectFactory {
     private final static QName _LoginAdmin_QNAME = new QName("http://disprog.ubaya.com/", "LoginAdmin");
     private final static QName _DisplayContactsResponse_QNAME = new QName("http://disprog.ubaya.com/", "DisplayContactsResponse");
     private final static QName _DisplayAllClientResponse_QNAME = new QName("http://disprog.ubaya.com/", "DisplayAllClientResponse");
+    private final static QName _DisplayVillaAllWeb_QNAME = new QName("http://disprog.ubaya.com/", "DisplayVillaAllWeb");
     private final static QName _UploadPayment_QNAME = new QName("http://disprog.ubaya.com/", "UploadPayment");
     private final static QName _ChangeStatus_QNAME = new QName("http://disprog.ubaya.com/", "ChangeStatus");
     private final static QName _InsertChatResponse_QNAME = new QName("http://disprog.ubaya.com/", "InsertChatResponse");
@@ -48,6 +50,7 @@ public class ObjectFactory {
     private final static QName _Registration_QNAME = new QName("http://disprog.ubaya.com/", "Registration");
     private final static QName _DisplayReservationAll_QNAME = new QName("http://disprog.ubaya.com/", "DisplayReservationAll");
     private final static QName _TrackOrderApp_QNAME = new QName("http://disprog.ubaya.com/", "TrackOrderApp");
+    private final static QName _DisplayVillaIdWeb_QNAME = new QName("http://disprog.ubaya.com/", "DisplayVillaIdWeb");
     private final static QName _RegistrationResponse_QNAME = new QName("http://disprog.ubaya.com/", "RegistrationResponse");
     private final static QName _UploadPaymentResponse_QNAME = new QName("http://disprog.ubaya.com/", "UploadPaymentResponse");
     private final static QName _DisplayReservationAllResponse_QNAME = new QName("http://disprog.ubaya.com/", "DisplayReservationAllResponse");
@@ -55,6 +58,7 @@ public class ObjectFactory {
     private final static QName _DisplayVillaId_QNAME = new QName("http://disprog.ubaya.com/", "DisplayVillaId");
     private final static QName _DisplayPaymentResponse_QNAME = new QName("http://disprog.ubaya.com/", "DisplayPaymentResponse");
     private final static QName _TrackOrderAppResponse_QNAME = new QName("http://disprog.ubaya.com/", "TrackOrderAppResponse");
+    private final static QName _DisplayVillaIdWebResponse_QNAME = new QName("http://disprog.ubaya.com/", "DisplayVillaIdWebResponse");
     private final static QName _LoginClientResponse_QNAME = new QName("http://disprog.ubaya.com/", "LoginClientResponse");
     private final static QName _DisplayVillaAll_QNAME = new QName("http://disprog.ubaya.com/", "DisplayVillaAll");
     private final static QName _DisplayVillaIdResponse_QNAME = new QName("http://disprog.ubaya.com/", "DisplayVillaIdResponse");
@@ -68,6 +72,14 @@ public class ObjectFactory {
      * 
      */
     public ObjectFactory() {
+    }
+
+    /**
+     * Create an instance of {@link DisplayVillaIdWebResponse }
+     * 
+     */
+    public DisplayVillaIdWebResponse createDisplayVillaIdWebResponse() {
+        return new DisplayVillaIdWebResponse();
     }
 
     /**
@@ -199,6 +211,14 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link DisplayVillaIdWeb }
+     * 
+     */
+    public DisplayVillaIdWeb createDisplayVillaIdWeb() {
+        return new DisplayVillaIdWeb();
+    }
+
+    /**
      * Create an instance of {@link RegistrationResponse }
      * 
      */
@@ -236,6 +256,14 @@ public class ObjectFactory {
      */
     public ChangeStatus createChangeStatus() {
         return new ChangeStatus();
+    }
+
+    /**
+     * Create an instance of {@link DisplayVillaAllWeb }
+     * 
+     */
+    public DisplayVillaAllWeb createDisplayVillaAllWeb() {
+        return new DisplayVillaAllWeb();
     }
 
     /**
@@ -335,6 +363,14 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link DisplayVillaAllWebResponse }
+     * 
+     */
+    public DisplayVillaAllWebResponse createDisplayVillaAllWebResponse() {
+        return new DisplayVillaAllWebResponse();
+    }
+
+    /**
      * Create an instance of {@link InsertReservation }
      * 
      */
@@ -399,6 +435,15 @@ public class ObjectFactory {
     @XmlElementDecl(namespace = "http://disprog.ubaya.com/", name = "DisplayVillaAllResponse")
     public JAXBElement<DisplayVillaAllResponse> createDisplayVillaAllResponse(DisplayVillaAllResponse value) {
         return new JAXBElement<DisplayVillaAllResponse>(_DisplayVillaAllResponse_QNAME, DisplayVillaAllResponse.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link DisplayVillaAllWebResponse }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://disprog.ubaya.com/", name = "DisplayVillaAllWebResponse")
+    public JAXBElement<DisplayVillaAllWebResponse> createDisplayVillaAllWebResponse(DisplayVillaAllWebResponse value) {
+        return new JAXBElement<DisplayVillaAllWebResponse>(_DisplayVillaAllWebResponse_QNAME, DisplayVillaAllWebResponse.class, null, value);
     }
 
     /**
@@ -480,6 +525,15 @@ public class ObjectFactory {
     @XmlElementDecl(namespace = "http://disprog.ubaya.com/", name = "DisplayAllClientResponse")
     public JAXBElement<DisplayAllClientResponse> createDisplayAllClientResponse(DisplayAllClientResponse value) {
         return new JAXBElement<DisplayAllClientResponse>(_DisplayAllClientResponse_QNAME, DisplayAllClientResponse.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link DisplayVillaAllWeb }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://disprog.ubaya.com/", name = "DisplayVillaAllWeb")
+    public JAXBElement<DisplayVillaAllWeb> createDisplayVillaAllWeb(DisplayVillaAllWeb value) {
+        return new JAXBElement<DisplayVillaAllWeb>(_DisplayVillaAllWeb_QNAME, DisplayVillaAllWeb.class, null, value);
     }
 
     /**
@@ -591,6 +645,15 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link DisplayVillaIdWeb }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://disprog.ubaya.com/", name = "DisplayVillaIdWeb")
+    public JAXBElement<DisplayVillaIdWeb> createDisplayVillaIdWeb(DisplayVillaIdWeb value) {
+        return new JAXBElement<DisplayVillaIdWeb>(_DisplayVillaIdWeb_QNAME, DisplayVillaIdWeb.class, null, value);
+    }
+
+    /**
      * Create an instance of {@link JAXBElement }{@code <}{@link RegistrationResponse }{@code >}}
      * 
      */
@@ -651,6 +714,15 @@ public class ObjectFactory {
     @XmlElementDecl(namespace = "http://disprog.ubaya.com/", name = "TrackOrderAppResponse")
     public JAXBElement<TrackOrderAppResponse> createTrackOrderAppResponse(TrackOrderAppResponse value) {
         return new JAXBElement<TrackOrderAppResponse>(_TrackOrderAppResponse_QNAME, TrackOrderAppResponse.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link DisplayVillaIdWebResponse }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://disprog.ubaya.com/", name = "DisplayVillaIdWebResponse")
+    public JAXBElement<DisplayVillaIdWebResponse> createDisplayVillaIdWebResponse(DisplayVillaIdWebResponse value) {
+        return new JAXBElement<DisplayVillaIdWebResponse>(_DisplayVillaIdWebResponse_QNAME, DisplayVillaIdWebResponse.class, null, value);
     }
 
     /**
