@@ -296,7 +296,7 @@ public class HandleSocket extends Thread{
                         try
                         {
                             String hasil = arr[1];
-                            if(hasil.equals(0))
+                            if(hasil.equals("0"))
                             {
                                 statusBot = "";
                                 botStep = 0;
@@ -327,7 +327,6 @@ public class HandleSocket extends Thread{
                                         test = Integer.parseInt(checkout[i]);
                                         
                                     }
-                                    
                                     String result = FormDashboard.checkAvailability(villaId, arrCek[1], arrCek[2]);
                                     
                                     if(result.contains("true"))
@@ -335,7 +334,7 @@ public class HandleSocket extends Thread{
                                         msg = "Villa tersedia pada tanggal " + arrCek[1] + "-" + arrCek[2] +"\n\n"
                                                 + "Opsi Menu : \n"
                                                 + "0) Kembali\n"
-                                                + "1) Cek Ketersediaan Villa\n"
+                                                + "1) Cek Ketersediaan Villa pada tanggal tertentu\n"
                                                 + "2) Booking Villa\n";
                                         statusBot = "reservasi";
                                         botStep = 1;
@@ -345,7 +344,7 @@ public class HandleSocket extends Thread{
                                          msg = "Villa tidak tersedia pada tanggal " + arrCek[1] + "-" + arrCek[2] +"\n\n"
                                                 + "Opsi Menu : \n"
                                                 + "0) Kembali\n"
-                                                + "1) Cek Ketersediaan Villa\n"
+                                                + "1) Cek Ketersediaan Villa pada tanggal tertentu\n"
                                                 + "2) Booking Villa\n";;
                                         statusBot = "reservasi";
                                         botStep = 1;
@@ -354,7 +353,62 @@ public class HandleSocket extends Thread{
                                 }
                                 else
                                 {
+                                    //Contoh : 2#2021-06-15#2021-06-20#5#Butuh kompor 2
+                                    System.out.println("Hasil : " + hasil);
+                                    String[] arrBook = hasil.split("#");
+                                    String[] checkin = arrBook[1].split("-");
+                                    String[] checkout = arrBook[2].split("-");
                                     
+                                    System.out.println("362");
+                                    Integer villaId = Integer.parseInt(arrBook[0]);
+                                    System.out.println("364");
+                                    
+                                    Integer totalGuest = Integer.parseInt(arrBook[3]);
+                                    System.out.println("367");
+                                    Integer test;
+                                   
+                                    for (int i = 0; i < 3; i++) 
+                                    {
+                                        test = Integer.parseInt(checkin[i]);
+                                        
+                                    }
+                                    System.out.println("372");
+                                    for (int i = 0; i < 3; i++) 
+                                    {
+                                        test = Integer.parseInt(checkout[i]);
+                                        
+                                    }
+                                    
+                                    System.out.println("379");
+                                    String result = FormDashboard.insertReservation(arrBook[1], arrBook[2], totalGuest, arrBook[4], Integer.parseInt(idUser), villaId);
+                                    System.out.println("384");
+                                    System.out.println("Result : " + result);
+                                    String[] arrResult = result.split(";;");
+                                    
+                                    System.out.println("386");
+                                    
+                                    if(arrResult[1].equals("true"))
+                                    {
+                                        msg = "Villa sudah terbooking. Silahkan mengupload bukti pembayaran sebelum tanggal checkin\n"
+                                                + "Order Id reservasi : " + arrResult[2] + "\n"
+                                                + "Opsi Menu : \n"
+                                                + "0) Kembali\n"
+                                                + "1) Cek Ketersediaan Villa pada tanggal tertentu\n"
+                                                + "2) Booking Villa\n";;
+                                        statusBot = "reservasi";
+                                        botStep = 1;
+                                    }
+                                    else
+                                    {
+                                        msg = "Villa tidak dapat dibooking.\nKarena ada jadwal reservasi bertabrakan dengan pesanan lain.\n"
+                                                + "Opsi Menu : \n"
+                                                + "0) Kembali\n"
+                                                + "1) Cek Ketersediaan Villa pada tanggal tertentu\n"
+                                                + "2) Booking Villa\n";;
+                                        statusBot = "reservasi";
+                                        botStep = 1;
+                                               
+                                    }
                                 }
                             }
                         }
@@ -362,7 +416,7 @@ public class HandleSocket extends Thread{
                         {
                             msg = "Harap memberi input dalam bentuk angka sesuai format yang ada.";
                         }
-                        Integer hasil = Integer.parseInt(arr[1]);
+                        
                         
                         
                        
@@ -373,7 +427,7 @@ public class HandleSocket extends Thread{
                     parent.SimpanChat(parent.emailAdmin, email, msg);
                     if(selectedComboBox.contains(thisClient))
                     {
-                        System.out.println("142");
+                        
                         parent.ShowChat(tmp);
                         parent.textArea.append("Admin : " + msg + "\n");
                     }

@@ -68,6 +68,10 @@ public class FormChat extends javax.swing.JFrame implements Runnable {
         
     }
     
+    public void ScrollDown(){
+        textArea.setCaretPosition(textArea.getText().length());
+    }
+    
     private void ShowChat()
     {
         try {
@@ -114,7 +118,7 @@ public class FormChat extends javax.swing.JFrame implements Runnable {
                 else
                 {
                     
-                    textArea.append(" " + message + "\n\n");
+                    textArea.append(" " + message + "\n");
                 }
                 
                 
@@ -124,10 +128,11 @@ public class FormChat extends javax.swing.JFrame implements Runnable {
             {
                 System.out.println("80");
                 textArea.append(" Admin : " + message + "\n\n");
+                
             }
             
             
-            
+            ScrollDown();
             
            
         } catch (IOException ex) {
@@ -139,7 +144,8 @@ public class FormChat extends javax.swing.JFrame implements Runnable {
     {
         try {
             output.writeBytes(email + ";;" + msg + "\n");
-            textArea.append(" Me : " + msg + "\n\n");
+            textArea.append(" Me : " + msg + "\n");
+            ScrollDown();
             
         } catch (IOException ex) {
             Logger.getLogger(FormChat.class.getName()).log(Level.SEVERE, null, ex);
@@ -256,6 +262,7 @@ public class FormChat extends javax.swing.JFrame implements Runnable {
         textArea.setColumns(20);
         textArea.setRows(5);
         textArea.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+        textArea.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
         jScrollPane1.setViewportView(textArea);
 
         txtChat.setFont(new java.awt.Font("Rubik", 0, 14)); // NOI18N
@@ -332,6 +339,7 @@ public class FormChat extends javax.swing.JFrame implements Runnable {
         String msg = txtChat.getText();
         SendChat(msg);
         txtChat.setText("");
+        ScrollDown();
         
     }//GEN-LAST:event_btnSendActionPerformed
 

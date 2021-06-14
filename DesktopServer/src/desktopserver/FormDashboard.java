@@ -62,7 +62,9 @@ public class FormDashboard extends javax.swing.JFrame implements Runnable {
     
      
     
-    
+    public void ScrollDown(){
+        textArea.setCaretPosition(textArea.getText().length());
+    }
     
     public void ShowChat(String msg)
     {
@@ -70,6 +72,7 @@ public class FormDashboard extends javax.swing.JFrame implements Runnable {
         String content = msgSplit[1];
         String clientName = comboBoxClient.getSelectedItem().toString();
         textArea.append(clientName + " : " + content + "\n");
+        ScrollDown();
         
     }
     
@@ -119,6 +122,7 @@ public class FormDashboard extends javax.swing.JFrame implements Runnable {
             
             
         }
+        ScrollDown();
     }
     
     public void SimpanChat(String emailSend, String emailReceiv, String msg)
@@ -824,7 +828,7 @@ public class FormDashboard extends javax.swing.JFrame implements Runnable {
         return port.checkAvailability(idvilla, checkin, checkout);
     }
 
-    private static String insertReservation(java.lang.String checkinDate, java.lang.String checkoutDate, java.lang.Integer totalGuest, java.lang.String notes, java.lang.Integer iduser, java.lang.Integer idvilla) {
+    public static String insertReservation(java.lang.String checkinDate, java.lang.String checkoutDate, java.lang.Integer totalGuest, java.lang.String notes, java.lang.Integer iduser, java.lang.Integer idvilla) {
         com.ubaya.disprog.WebServiceServer_Service service = new com.ubaya.disprog.WebServiceServer_Service();
         com.ubaya.disprog.WebServiceServer port = service.getWebServiceServerPort();
         return port.insertReservation(checkinDate, checkoutDate, totalGuest, notes, iduser, idvilla);
