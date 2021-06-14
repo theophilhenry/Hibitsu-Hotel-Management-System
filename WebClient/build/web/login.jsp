@@ -54,10 +54,8 @@
                                href="login.html">Login</a>
                         </li>
                     </ul>
-                    <form>
-                        <button class="btn btn-success rubik-bold color-white background-green" type="submit">Download
-                            App</button>
-                    </form>
+                    <button class="btn btn-success background-green"><a href="https://drive.google.com/uc?export=download&id=1ILQiR2KmkBBEBSSA4bdQ198P8s_MnPPX" class="rubik-bold color-white" style="text-decoration: none;">Download App</a>
+                    </button>
                 </div>
             </div>
         </nav>
