@@ -1,6 +1,6 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%
-    if(session.getAttribute("idUser") == null){
+    if (session.getAttribute("idUser") == null) {
         response.sendRedirect("index.jsp");
         return;
     }
@@ -22,11 +22,14 @@
         <link rel="stylesheet" href="styles/main.css">
         <link rel="stylesheet" href="styles/track-order.css">
 
+        <!-- Jquery -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
         <title>Template</title>
     </head>
 
     <body>
-        <nav class="navbar navbar-expand-lg navbar-light bg-light drop-shadow-0-4-10 mb-5">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top drop-shadow-0-4-10 mb-5">
             <div class="container-fluid">
                 <!-- Navbar Toggler -->
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo02"
@@ -58,7 +61,7 @@
                         <li class="nav-item me-3">
                             <form method='POST' action='login-handler.jsp'>
                                 <input type='hidden' name='command' value='logout'>
-                                <button type='submit' class="nav-link rubik-normal" style='padding-right: .5rem; padding-left: .5rem; padding: .5rem 1rem; border: none; background: none;' href="login.jsp">Logout</a>
+                                <button type='submit' class="nav-link rubik-normal" style='padding-right: .5rem; border: none; background: none;' href="login.jsp">Logout</a>
                             </form>
                         </li>
                         <% }%>
@@ -176,6 +179,22 @@
 
                 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
                         integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous">
+                </script>
+
+                <script>
+                    $(document).ready(function () {
+                        $(window).scroll(function () {
+                            var height = $('.grid-container').height();
+                            var scrollTop = $(window).scrollTop();
+
+                            if (scrollTop >= 20) {
+                                $('nav').addClass('solid-nav');
+                            } else {
+                                $('nav').removeClass('solid-nav');
+                            }
+
+                        });
+                    });
                 </script>
             </div>
 

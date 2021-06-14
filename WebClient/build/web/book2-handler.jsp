@@ -8,7 +8,6 @@
 
     // Untuk Booking ataupun Check Availability
     String command = request.getParameter("command");
-    int iduser = Integer.parseInt(String.valueOf(session.getAttribute("idUser")));
     int idvilla = Integer.parseInt(request.getParameter("idVilla"));
     String checkIn = request.getParameter("checkIn");
     String checkOut = request.getParameter("checkOut");
@@ -50,6 +49,9 @@
         }
 
     } else if (command.equals("book")) {
+        // Hanya book yang membutuhkan id user
+        int iduser = Integer.parseInt(String.valueOf(session.getAttribute("idUser")));
+        
         try {
             totalGuest = Integer.parseInt(request.getParameter("totalGuest"));
             notes = request.getParameter("notes");

@@ -184,7 +184,7 @@ public class Users extends DbConnection {
         try {
             if (!connect.isClosed()) {
                 // set query
-                String query = "INSERT INTO users(`fullname`,`display_name`,`phoneNumber`,`email`,`password`,`no_ktp`) "
+                String query = "INSERT INTO users(`fullname`,`display_name`,`phone_number`,`email`,`password`,`no_ktp`) "
                         + "VALUES(?,?,?,?,?,?)";
 
                 // set preparedStatement

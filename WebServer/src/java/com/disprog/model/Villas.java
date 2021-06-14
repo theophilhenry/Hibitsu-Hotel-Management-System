@@ -289,7 +289,7 @@ public class Villas extends DbConnection {
                             + "                    </div> "
                             + "                    <div class='information'> "
                             + "                        <p class='rubik-bold'>Unit Size</p> "
-                            + "                        <p>" + result.getString("unit_size") + " m</p> "
+                            + "                        <p>" + result.getString("unit_size") + " m<sup>2</sup></p> "
                             + "                    </div> "
                             + "                    <div class='information'> "
                             + "                        <p class='rubik-bold'>Price</p> "
