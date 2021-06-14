@@ -295,8 +295,8 @@ public class HandleSocket extends Thread{
                         
                         try
                         {
-                            Integer hasil = Integer.parseInt(arr[1]);
-                            if(hasil == 0)
+                            String hasil = arr[1];
+                            if(hasil.equals(0))
                             {
                                 statusBot = "";
                                 botStep = 0;
@@ -308,7 +308,49 @@ public class HandleSocket extends Thread{
                             {
                                 if(statusBot.equals("cekVilla"))
                                 {
-
+                                    String[] arrCek = hasil.split("#");
+                                    String[] checkin = arrCek[1].split("-");
+                                    String[] checkout = arrCek[2].split("-");
+                                    
+                                    Integer villaId = Integer.parseInt(arrCek[0]);
+                                    Integer test;
+                              
+                                    
+                                    for (int i = 0; i < 3; i++) 
+                                    {
+                                        test = Integer.parseInt(checkin[i]);
+                                        
+                                    }
+                                    
+                                    for (int i = 0; i < 3; i++) 
+                                    {
+                                        test = Integer.parseInt(checkout[i]);
+                                        
+                                    }
+                                    
+                                    String result = FormDashboard.checkAvailability(villaId, arrCek[1], arrCek[2]);
+                                    
+                                    if(result.contains("true"))
+                                    {
+                                        msg = "Villa tersedia pada tanggal " + arrCek[1] + "-" + arrCek[2] +"\n\n"
+                                                + "Opsi Menu : \n"
+                                                + "0) Kembali\n"
+                                                + "1) Cek Ketersediaan Villa\n"
+                                                + "2) Booking Villa\n";
+                                        statusBot = "reservasi";
+                                        botStep = 1;
+                                    }
+                                    else
+                                    {
+                                         msg = "Villa tidak tersedia pada tanggal " + arrCek[1] + "-" + arrCek[2] +"\n\n"
+                                                + "Opsi Menu : \n"
+                                                + "0) Kembali\n"
+                                                + "1) Cek Ketersediaan Villa\n"
+                                                + "2) Booking Villa\n";;
+                                        statusBot = "reservasi";
+                                        botStep = 1;
+                                    }
+                                    
                                 }
                                 else
                                 {
@@ -318,7 +360,7 @@ public class HandleSocket extends Thread{
                         }
                         catch(Exception ex)
                         {
-                            msg = "Harap memberi input dalam bentuk angka saja sesuai opsi.";
+                            msg = "Harap memberi input dalam bentuk angka sesuai format yang ada.";
                         }
                         Integer hasil = Integer.parseInt(arr[1]);
                         

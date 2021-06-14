@@ -818,7 +818,7 @@ public class FormDashboard extends javax.swing.JFrame implements Runnable {
         return port.displayChat(emailSender, emailReceiver);
     }
 
-    private static String checkAvailability(java.lang.Integer idvilla, java.lang.String checkin, java.lang.String checkout) {
+    public static String checkAvailability(java.lang.Integer idvilla, java.lang.String checkin, java.lang.String checkout) {
         com.ubaya.disprog.WebServiceServer_Service service = new com.ubaya.disprog.WebServiceServer_Service();
         com.ubaya.disprog.WebServiceServer port = service.getWebServiceServerPort();
         return port.checkAvailability(idvilla, checkin, checkout);
