@@ -88,6 +88,21 @@ public class WebServiceServer extends DbConnection {
         }
         return null;
     }
+    
+    @WebMethod(operationName = "CalculateTotalPrice")
+    public Integer CalculateTotalPrice(@WebParam(name = "idvilla") Integer idvilla,
+            @WebParam(name = "checkin") String checkIn,
+            @WebParam(name = "checkout") String checkOut) {
+        try {
+            Date checkInDate = Date.valueOf(checkIn);
+            Date checkOutDate = Date.valueOf(checkOut);
+            Integer result = model_Reservation.CalculateTotalPrice(idvilla, checkInDate, checkOutDate);
+            return result;
+        } catch (Exception ex) {
+            System.out.println("Error Web Service Check Availability : " + ex);
+        }
+        return null;
+    }
 
     //[BOOKNOW - 2], [APP - DASHBOARD]
     @WebMethod(operationName = "InsertReservation")

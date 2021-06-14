@@ -147,7 +147,7 @@ public class Reservations extends DbConnection {
     //</editor-fold>
 
     //<editor-fold defaultstate="collapsed" desc="Methods">
-    public Integer CalculateTotalPrice(Date checkIn, Date checkout, Integer idvilla) {
+    public Integer CalculateTotalPrice(Integer idvilla,Date checkIn, Date checkout) {
         try {
             if (!connect.isClosed()) {
                 // calculate different days
@@ -184,7 +184,7 @@ public class Reservations extends DbConnection {
             if (!connect.isClosed()) {
 
                 //get totalPrice
-                Integer totalPrice = this.CalculateTotalPrice(checkIn, checkOut, idvilla);
+                Integer totalPrice = this.CalculateTotalPrice(idvilla, checkIn, checkOut);
 
                 String check = this.CheckAvailability(idvilla, checkIn, checkOut);
                 if (check.contains("false")) {
@@ -238,7 +238,7 @@ public class Reservations extends DbConnection {
             if (!connect.isClosed()) {
 
                 //get totalPrice
-                Integer totalPrice = this.CalculateTotalPrice(checkIn, checkOut, idvilla);
+                Integer totalPrice = this.CalculateTotalPrice(idvilla, checkIn, checkOut);
 
                 String check = this.CheckAvailability(idvilla, checkIn, checkOut);
                 if (check.contains("false")) {
