@@ -380,7 +380,7 @@ public class Reservations extends DbConnection {
         String message = "";
         try {
             if (!connect.isClosed()) {
-                String ket = "[1]hasilUploadPayment;;";
+                String ket = "[1]hasilCheckAvailability;;";
                 //check tanggal dulu
 
                 if (checkIn.after(checkOut)) {
@@ -419,7 +419,7 @@ public class Reservations extends DbConnection {
                 System.out.println("Tidak terkoneksi database");
             }
         } catch (Exception ex) {
-            System.out.println("Error Check Avaibility: " + ex);
+            System.out.println("Error Class Reservation Check Avaibility: " + ex);
         }
         return message;
     }
@@ -437,6 +437,8 @@ public class Reservations extends DbConnection {
                         + "INNER JOIN users u ON r.iduser = u.iduser "
                         + "WHERE idreservation = ?;";
                 PreparedStatement sql = (PreparedStatement) connect.prepareStatement(query);
+                sql.setInt(1, idreservation);
+                
                 result = sql.executeQuery();
 
                 if (result.next()) {

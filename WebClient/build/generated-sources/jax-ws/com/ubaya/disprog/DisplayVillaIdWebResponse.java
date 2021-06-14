@@ -8,12 +8,12 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java class for DisplayAllClientResponse complex type.
+ * <p>Java class for DisplayVillaIdWebResponse complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType name="DisplayAllClientResponse"&gt;
+ * &lt;complexType name="DisplayVillaIdWebResponse"&gt;
  *   &lt;complexContent&gt;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
  *       &lt;sequence&gt;
@@ -27,10 +27,10 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "DisplayAllClientResponse", propOrder = {
+@XmlType(name = "DisplayVillaIdWebResponse", propOrder = {
     "_return"
 })
-public class DisplayAllClientResponse {
+public class DisplayVillaIdWebResponse {
 
     @XmlElement(name = "return")
     protected String _return;

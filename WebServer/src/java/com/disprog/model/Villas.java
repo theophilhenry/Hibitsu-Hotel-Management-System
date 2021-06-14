@@ -6,6 +6,7 @@
 package com.disprog.model;
 
 import com.mysql.jdbc.PreparedStatement;
+
 /**
  *
  * @author ohanna
@@ -147,7 +148,50 @@ public class Villas extends DbConnection {
         return null;
     }
 
-    //[BOOKNOW - 2]
+    public String DisplayVillaAllWeb() {
+        String ket = "[1]hasilTrue/False[2]DOM;;";
+        try {
+            if (!connect.isClosed()) {
+                //set query
+                String query = "SELECT `idvilla`,`name`,`description`,`url_photo` FROM `villas`";
+
+                //set preparedStatement
+                PreparedStatement sql = (PreparedStatement) connect.prepareStatement(query);
+                result = sql.executeQuery();
+                String grandResult = "";
+                //nanti mau diatur lagi return nya seperti apa
+                while (result.next()) {
+//                    String hasil = String.valueOf(result.getInt("idvilla")) + ";;"
+//                            + result.getString("name") + ";;"
+//                            + result.getString("description") + ";;"
+//                            + result.getString("url_photo") + "||";
+                    String hasil = ""
+                            + "<div class='grid-container grid-book1 box-model box-model1' style='padding: 0'> "
+                            + "<div class='grid-left' style='padding: 0'> "
+                            + "<img src='" + result.getString("url_photo") + "' class='img-hotel' alt=''> "
+                            + "</div> "
+                            + "<div class='grid-right'> "
+                            + "<p class='rubik-bold' style='font-size: 1.4em;'>" + result.getString("name") + "</p> "
+                            + "<p class='karla-normal'> " + result.getString("description") + " </p> "
+                            + "<form method='GET' action='book2.jsp'> "
+                            + "<input type='hidden' name='idVilla' value='" + String.valueOf(result.getInt("idvilla")) + "'> "
+                            + "<button class='btn btn-success rubik-bold color-white background-green' type='submit'>View Details</button> "
+                            + "</form> "
+                            + "</div> "
+                            + "</div> ";
+                    grandResult += hasil;
+                }
+                return ket + "true;;" + grandResult;
+            } else {
+                System.out.println("Tidak terkoneksi database");
+            }
+        } catch (Exception ex) {
+            System.out.println("Error DisplayVillaAll" + ex);
+        }
+        return ket + "false";
+    }
+
+    //[APP]
     public String DisplayVillaId(Integer idvilla) {
         try {
             if (!connect.isClosed()) {
@@ -178,6 +222,85 @@ public class Villas extends DbConnection {
                     return ket + "true;;" + hasil;
                 } else {
                     String ket = "[1]hasilDisplayVillaId";
+                    return ket + "false";
+                }
+            } else {
+                System.out.println("Tidak terkoneksi database");
+            }
+        } catch (Exception ex) {
+            System.out.println("Error DisplayVillaId: " + ex);
+        }
+        return null;
+    }
+
+    public String DisplayVillaIdWeb(Integer idvilla) {
+        try {
+            if (!connect.isClosed()) {
+                //set query
+                String query = "SELECT * FROM `villas` WHERE idvilla = ?";
+
+                //set preparedStatement
+                PreparedStatement sql = (PreparedStatement) connect.prepareStatement(query);
+                sql.setInt(1, idvilla);
+                result = sql.executeQuery();
+
+                //nanti mau diatur lagi return nya seperti apa
+                if (result.next()) {
+                    String ket = "[1]Keterangan Hasil [2] DOM;;";
+//                    String hasil = String.valueOf(result.getInt("idvilla")) + ";;"
+//                            + result.getString("name") + ";;"
+//                            + result.getString("address") + ";;"
+//                            + String.valueOf(result.getInt("total_bedroom")) + ";;"
+//                            + String.valueOf(result.getInt("total_bathroom")) + ";;"
+//                            + result.getString("facilities") + ";;"
+//                            + result.getString("unit_size") + ";;"
+//                            + result.getString("url_photo") + ";;"
+//                            + String.valueOf(result.getInt("price")) + ";;"
+//                            + result.getString("description") + ";;";
+                    String hasil = ""
+                            + "            <img src='" + result.getString("url_photo") + "' class='img-hotel' alt='Foto Hotel'>"
+                            + "            <div class='villa-description'> "
+                            + "                <p class='rubik-bold'>" + result.getString("name") + "</p> "
+                            + "                <p>" + result.getString("description") + "</p>"
+                            + "            </div> "
+                            + "            <div class='villa-details mb-4'> "
+                            + "                <div class='villa-description'> "
+                            + "                    <div class='information'> "
+                            + "                        <p class='rubik-bold'>Located at</p> "
+                            + "                        <p>" + result.getString("address") + "</p> "
+                            + "                    </div> "
+                            + "                    <div class='grid-container'> "
+                            + "                        <div class='grid-left'> "
+                            + "                            <div class='information'> "
+                            + "                                <p class='rubik-bold'>Total Bedroom</p> "
+                            + "                                <p>" + String.valueOf(result.getInt("total_bedroom")) + "</p> "
+                            + "                            </div> "
+                            + "                        </div> "
+                            + "                        <div class='grid-right'> "
+                            + "                            <div class='information'> "
+                            + "                                <p class='rubik-bold'>Total Bathroom</p> "
+                            + "                                <p>" + String.valueOf(result.getInt("total_bathroom")) + "</p> "
+                            + "                            </div> "
+                            + "                        </div> "
+                            + "                    </div> "
+                            + "                    <div class='information'> "
+                            + "                        <p class='rubik-bold'>Facilities</p> "
+                            + "                        <p>" + result.getString("facilities") + "</p> "
+                            + "                    </div> "
+                            + "                    <div class='information'> "
+                            + "                        <p class='rubik-bold'>Unit Size</p> "
+                            + "                        <p>" + result.getString("unit_size") + " m</p> "
+                            + "                    </div> "
+                            + "                    <div class='information'> "
+                            + "                        <p class='rubik-bold'>Price</p> "
+                            + "                        <p>" + String.valueOf(result.getInt("price")) + " / Day</p> "
+                            + "                    </div> "
+                            + "                </div> "
+                            + "            </div> ";
+
+                    return ket + "true;;" + hasil;
+                } else {
+                    String ket = "[1]hasilDisplayVillaId;;";
                     return ket + "false";
                 }
             } else {

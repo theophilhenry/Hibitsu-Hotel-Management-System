@@ -40,8 +40,12 @@ public class ObjectFactory {
     private final static QName _DisplayReservationAllResponse_QNAME = new QName("http://disprog.ubaya.com/", "DisplayReservationAllResponse");
     private final static QName _DisplayVillaAll_QNAME = new QName("http://disprog.ubaya.com/", "DisplayVillaAll");
     private final static QName _DisplayVillaAllResponse_QNAME = new QName("http://disprog.ubaya.com/", "DisplayVillaAllResponse");
+    private final static QName _DisplayVillaAllWeb_QNAME = new QName("http://disprog.ubaya.com/", "DisplayVillaAllWeb");
+    private final static QName _DisplayVillaAllWebResponse_QNAME = new QName("http://disprog.ubaya.com/", "DisplayVillaAllWebResponse");
     private final static QName _DisplayVillaId_QNAME = new QName("http://disprog.ubaya.com/", "DisplayVillaId");
     private final static QName _DisplayVillaIdResponse_QNAME = new QName("http://disprog.ubaya.com/", "DisplayVillaIdResponse");
+    private final static QName _DisplayVillaIdWeb_QNAME = new QName("http://disprog.ubaya.com/", "DisplayVillaIdWeb");
+    private final static QName _DisplayVillaIdWebResponse_QNAME = new QName("http://disprog.ubaya.com/", "DisplayVillaIdWebResponse");
     private final static QName _InsertChat_QNAME = new QName("http://disprog.ubaya.com/", "InsertChat");
     private final static QName _InsertChatResponse_QNAME = new QName("http://disprog.ubaya.com/", "InsertChatResponse");
     private final static QName _InsertReservation_QNAME = new QName("http://disprog.ubaya.com/", "InsertReservation");
@@ -199,6 +203,22 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link DisplayVillaAllWeb }
+     * 
+     */
+    public DisplayVillaAllWeb createDisplayVillaAllWeb() {
+        return new DisplayVillaAllWeb();
+    }
+
+    /**
+     * Create an instance of {@link DisplayVillaAllWebResponse }
+     * 
+     */
+    public DisplayVillaAllWebResponse createDisplayVillaAllWebResponse() {
+        return new DisplayVillaAllWebResponse();
+    }
+
+    /**
      * Create an instance of {@link DisplayVillaId }
      * 
      */
@@ -212,6 +232,22 @@ public class ObjectFactory {
      */
     public DisplayVillaIdResponse createDisplayVillaIdResponse() {
         return new DisplayVillaIdResponse();
+    }
+
+    /**
+     * Create an instance of {@link DisplayVillaIdWeb }
+     * 
+     */
+    public DisplayVillaIdWeb createDisplayVillaIdWeb() {
+        return new DisplayVillaIdWeb();
+    }
+
+    /**
+     * Create an instance of {@link DisplayVillaIdWebResponse }
+     * 
+     */
+    public DisplayVillaIdWebResponse createDisplayVillaIdWebResponse() {
+        return new DisplayVillaIdWebResponse();
     }
 
     /**
@@ -519,6 +555,24 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link DisplayVillaAllWeb }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://disprog.ubaya.com/", name = "DisplayVillaAllWeb")
+    public JAXBElement<DisplayVillaAllWeb> createDisplayVillaAllWeb(DisplayVillaAllWeb value) {
+        return new JAXBElement<DisplayVillaAllWeb>(_DisplayVillaAllWeb_QNAME, DisplayVillaAllWeb.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link DisplayVillaAllWebResponse }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://disprog.ubaya.com/", name = "DisplayVillaAllWebResponse")
+    public JAXBElement<DisplayVillaAllWebResponse> createDisplayVillaAllWebResponse(DisplayVillaAllWebResponse value) {
+        return new JAXBElement<DisplayVillaAllWebResponse>(_DisplayVillaAllWebResponse_QNAME, DisplayVillaAllWebResponse.class, null, value);
+    }
+
+    /**
      * Create an instance of {@link JAXBElement }{@code <}{@link DisplayVillaId }{@code >}}
      * 
      */
@@ -534,6 +588,24 @@ public class ObjectFactory {
     @XmlElementDecl(namespace = "http://disprog.ubaya.com/", name = "DisplayVillaIdResponse")
     public JAXBElement<DisplayVillaIdResponse> createDisplayVillaIdResponse(DisplayVillaIdResponse value) {
         return new JAXBElement<DisplayVillaIdResponse>(_DisplayVillaIdResponse_QNAME, DisplayVillaIdResponse.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link DisplayVillaIdWeb }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://disprog.ubaya.com/", name = "DisplayVillaIdWeb")
+    public JAXBElement<DisplayVillaIdWeb> createDisplayVillaIdWeb(DisplayVillaIdWeb value) {
+        return new JAXBElement<DisplayVillaIdWeb>(_DisplayVillaIdWeb_QNAME, DisplayVillaIdWeb.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link DisplayVillaIdWebResponse }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://disprog.ubaya.com/", name = "DisplayVillaIdWebResponse")
+    public JAXBElement<DisplayVillaIdWebResponse> createDisplayVillaIdWebResponse(DisplayVillaIdWebResponse value) {
+        return new JAXBElement<DisplayVillaIdWebResponse>(_DisplayVillaIdWebResponse_QNAME, DisplayVillaIdWebResponse.class, null, value);
     }
 
     /**

@@ -66,9 +66,6 @@ public final class index_jsp extends org.apache.jasper.runtime.HttpJspBase
       out.write("    </head>\n");
       out.write("\n");
       out.write("    <body>\n");
-      out.write("        ");
- int a = 1;
-      out.write("\n");
       out.write("        <nav class=\"navbar navbar-expand-lg navbar-light bg-light sticky-top drop-shadow-0-4-10\">\n");
       out.write("            <div class=\"container-fluid\">\n");
       out.write("                <!-- Navbar Toggler -->\n");
@@ -82,18 +79,36 @@ public final class index_jsp extends org.apache.jasper.runtime.HttpJspBase
       out.write("                <a class=\"navbar-brand rubik-bold color-green\" href=\"#\">日々つ HIBITSU</a>\n");
       out.write("                <div class=\"collapse navbar-collapse justify-content-end\" id=\"navbarTogglerDemo02\">\n");
       out.write("                    <ul class=\"navbar-nav mb-2 mb-lg-0\">\n");
-      out.write("                        <li class=\"nav-item\">\n");
-      out.write("                            <a class=\"nav-link active rubik-bold color-green\" aria-current=\"page\" href=\"#\">Home</a>\n");
+      out.write("                        <li class=\"nav-item me-3\">\n");
+      out.write("                            <a class=\"nav-link active rubik-bold color-green\" aria-current=\"page\" href=\"index.jsp\">Home</a>\n");
       out.write("                        </li>\n");
-      out.write("                        <li class=\"nav-item\">\n");
+      out.write("                        <li class=\"nav-item me-3\">\n");
       out.write("                            <a class=\"nav-link rubik-normal\" href=\"book1.jsp\">Book Now</a>\n");
       out.write("                        </li>\n");
-      out.write("                        <li class=\"nav-item\">\n");
-      out.write("                            <a class=\"nav-link rubik-normal\" href=\"track-order.jsp\">Track Order</a>\n");
-      out.write("                        </li>\n");
+      out.write("                        ");
+ if (session.getAttribute("idUser") == null) { 
+      out.write("\n");
       out.write("                        <li class=\"nav-item me-3\">\n");
       out.write("                            <a class=\"nav-link rubik-normal\" href=\"login.jsp\">Login</a>\n");
       out.write("                        </li>\n");
+      out.write("                        ");
+ }
+      out.write("\n");
+      out.write("                        ");
+ if (session.getAttribute("idUser") != null) { 
+      out.write("\n");
+      out.write("                        <li class=\"nav-item me-3\">\n");
+      out.write("                            <a class=\"nav-link rubik-normal\" href=\"track-order.jsp\">Track Order</a>\n");
+      out.write("                        </li>\n");
+      out.write("                        <li class=\"nav-item me-3\">\n");
+      out.write("                            <form method='POST' action='login-handler.jsp'>\n");
+      out.write("                                <input type='hidden' name='command' value='logout'>\n");
+      out.write("                                <button type='submit' class=\"nav-link rubik-normal\" style='padding-right: .5rem; padding-left: .5rem; padding: .5rem 1rem; border: none; background: none;' href=\"login.jsp\">Logout</a>\n");
+      out.write("                            </form>\n");
+      out.write("                        </li>\n");
+      out.write("                        ");
+ }
+      out.write("\n");
       out.write("                    </ul>\n");
       out.write("                    <form>\n");
       out.write("                        <button class=\"btn btn-success rubik-bold color-white background-green\" type=\"submit\">Download\n");
@@ -103,24 +118,36 @@ public final class index_jsp extends org.apache.jasper.runtime.HttpJspBase
       out.write("            </div>\n");
       out.write("        </nav>\n");
       out.write("\n");
+      out.write("        ");
+ if (session.getAttribute("printLogin") != null) { 
+      out.write("\n");
+      out.write("        <p class=\"rubik-bold color-green mt-5\" style='text-align: center;'>");
+ out.println(String.valueOf(session.getAttribute("printLogin"))); 
+      out.write("</p>\n");
+      out.write("        ");
+ }
+            session.removeAttribute("printLogin");
+        
+      out.write("\n");
+      out.write("\n");
       out.write("        <div class=\"grid-container grid-container-reverse box-model box-model1\">\n");
       out.write("            <div class=\"grid-left\">\n");
       out.write("                <p class=\"rubik-bold\" style=\"font-size: 2.2em; line-height: 44px;\">Explore Villas<br>On Bali</p>\n");
       out.write("                <p class=\"karla-normal\">We provide you wonderful experiences and excellent services especially our beloved\n");
       out.write("                    customers</p>\n");
-      out.write("                <button class=\"btn btn-success rubik-bold color-white background-green\" type=\"submit\">Book Now</button>\n");
+      out.write("                <a href=\"book1.jsp\" class=\"btn btn-success rubik-bold color-white background-green\">Book Now</a>\n");
       out.write("            </div>\n");
       out.write("            <div class=\"grid-right\">\n");
       out.write("                <div id=\"carouselExampleFade\" class=\"carousel slide carousel-fade\" data-bs-ride=\"carousel\">\n");
       out.write("                    <div class=\"carousel-inner\">\n");
       out.write("                        <div class=\"carousel-item active\">\n");
-      out.write("                            <img src=\"assets/images/carousel1.png\" class=\"d-block w-100\" alt=\"...\">\n");
+      out.write("                            <img src=\"assets/images/1.png\" class=\"d-block w-100\" alt=\"...\">\n");
       out.write("                        </div>\n");
       out.write("                        <div class=\"carousel-item\">\n");
-      out.write("                            <img src=\"assets/images/home2.png\" class=\"d-block w-100\" alt=\"...\">\n");
+      out.write("                            <img src=\"assets/images/2.png\" class=\"d-block w-100\" alt=\"...\">\n");
       out.write("                        </div>\n");
       out.write("                        <div class=\"carousel-item\">\n");
-      out.write("                            <img src=\"assets/images/carousel1.png\" class=\"d-block w-100\" alt=\"...\">\n");
+      out.write("                            <img src=\"assets/images/3.png\" class=\"d-block w-100\" alt=\"...\">\n");
       out.write("                        </div>\n");
       out.write("                    </div>\n");
       out.write("                    <button class=\"carousel-control-prev\" type=\"button\" data-bs-target=\"#carouselExampleFade\"\n");
@@ -157,7 +184,13 @@ public final class index_jsp extends org.apache.jasper.runtime.HttpJspBase
       out.write("                    <li>Make reservation anytime and anywhere</li>\n");
       out.write("                    <li>Track your order status</li>\n");
       out.write("                </ul>\n");
-      out.write("                <button class=\"btn btn-outline-success rubik-bold color-green border-green\" type=\"submit\">Sign Up</button>\n");
+      out.write("                ");
+ if (session.getAttribute("idUser") == null) { 
+      out.write("\n");
+      out.write("                <a href=\"login.jsp\" class=\"btn btn-outline-success rubik-bold color-green border-green\">Sign Up</a>\n");
+      out.write("                ");
+ } 
+      out.write("\n");
       out.write("            </div>\n");
       out.write("            <div class=\"grid-right\">\n");
       out.write("                <img src=\"assets/images/home3.png\" class=\"img-home3\" alt=\"\">\n");

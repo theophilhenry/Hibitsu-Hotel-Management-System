@@ -3,21 +3,20 @@ package com.ubaya.disprog;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java class for DisplayAllClientResponse complex type.
+ * <p>Java class for DisplayVillaIdWeb complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType name="DisplayAllClientResponse"&gt;
+ * &lt;complexType name="DisplayVillaIdWeb"&gt;
  *   &lt;complexContent&gt;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
  *       &lt;sequence&gt;
- *         &lt;element name="return" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
+ *         &lt;element name="idvilla" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/&gt;
  *       &lt;/sequence&gt;
  *     &lt;/restriction&gt;
  *   &lt;/complexContent&gt;
@@ -27,36 +26,35 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "DisplayAllClientResponse", propOrder = {
-    "_return"
+@XmlType(name = "DisplayVillaIdWeb", propOrder = {
+    "idvilla"
 })
-public class DisplayAllClientResponse {
+public class DisplayVillaIdWeb {
 
-    @XmlElement(name = "return")
-    protected String _return;
+    protected Integer idvilla;
 
     /**
-     * Gets the value of the return property.
+     * Gets the value of the idvilla property.
      * 
      * @return
      *     possible object is
-     *     {@link String }
+     *     {@link Integer }
      *     
      */
-    public String getReturn() {
-        return _return;
+    public Integer getIdvilla() {
+        return idvilla;
     }
 
     /**
-     * Sets the value of the return property.
+     * Sets the value of the idvilla property.
      * 
      * @param value
      *     allowed object is
-     *     {@link String }
+     *     {@link Integer }
      *     
      */
-    public void setReturn(String value) {
-        this._return = value;
+    public void setIdvilla(Integer value) {
+        this.idvilla = value;
     }
 
 }

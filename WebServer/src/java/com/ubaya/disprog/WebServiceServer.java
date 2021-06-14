@@ -11,6 +11,7 @@ import java.sql.Date;
 import javax.jws.WebService;
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
+
 /**
  *
  * @author ohanna
@@ -24,7 +25,7 @@ public class WebServiceServer extends DbConnection {
     Chats model_Chat = new Chats();
 
     //---------------------------WEB------------------------------
-    //[BOOKNOW - 1]
+    //[APP]
     @WebMethod(operationName = "DisplayVillaAll")
     public String DisplayVillaAll() {
         try {
@@ -36,7 +37,19 @@ public class WebServiceServer extends DbConnection {
         return null;
     }
 
-    //[BOOKNOW - 2]
+    //[BOOKNOW - 1]
+    @WebMethod(operationName = "DisplayVillaAllWeb")
+    public String DisplayVillaAllWeb() {
+        try {
+            String result = model_Villa.DisplayVillaAllWeb();
+            return result;
+        } catch (Exception ex) {
+            System.out.println("Error DisplayVillaAllWeb: " + ex);
+        }
+        return null;
+    }
+
+    //[APP]
     @WebMethod(operationName = "DisplayVillaId")
     public String DisplayVillaId(@WebParam(name = "idvilla") Integer idvilla) {
         try {
@@ -44,6 +57,18 @@ public class WebServiceServer extends DbConnection {
             return result;
         } catch (Exception ex) {
             System.out.println("Error DisplayVillaId: " + ex);
+        }
+        return null;
+    }
+
+    //[BOOKNOW - 2]
+    @WebMethod(operationName = "DisplayVillaIdWeb")
+    public String DisplayVillaIdWeb(@WebParam(name = "idvilla") Integer idvilla) {
+        try {
+            String result = model_Villa.DisplayVillaIdWeb(idvilla);
+            return result;
+        } catch (Exception ex) {
+            System.out.println("Error DisplayVillaId Web: " + ex);
         }
         return null;
     }
@@ -59,7 +84,7 @@ public class WebServiceServer extends DbConnection {
             String result = model_Reservation.CheckAvailability(idvilla, checkInDate, checkOutDate);
             return result;
         } catch (Exception ex) {
-            System.out.println("Error CheckAvailability: " + ex);
+            System.out.println("Error Web Service Check Availability : " + ex);
         }
         return null;
     }
@@ -251,7 +276,7 @@ public class WebServiceServer extends DbConnection {
     public String DisplayChat(
             @WebParam(name = "email_sender") String email_sender,
             @WebParam(name = "email_receiver") String email_receiver) {
-        try {  
+        try {
             String result = model_Chat.DisplayChat(email_sender, email_receiver);
             return result;
         } catch (Exception ex) {

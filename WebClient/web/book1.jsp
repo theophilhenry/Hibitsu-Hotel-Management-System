@@ -1,4 +1,5 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+
 <!doctype html>
 <html lang="en">
 
@@ -64,23 +65,45 @@
                 </div>
             </div>
         </nav>
+        <%
+            String keteranganSuksesGagal = "";
+            try {
+                com.ubaya.disprog.WebServiceServer_Service service = new com.ubaya.disprog.WebServiceServer_Service();
+                com.ubaya.disprog.WebServiceServer port = service.getWebServiceServerPort();
 
+                java.lang.String result = port.displayVillaAllWeb();
+                System.out.println(result);
+                String[] resultSplitted = result.split(";;");
+                keteranganSuksesGagal = resultSplitted[1];
+
+                if (keteranganSuksesGagal.equals("true")) {
+                    out.println(resultSplitted[2]);
+                } else {
+                    out.println("<p class='rubik-bold color-red'>404 : Sorry there's a problem</p>");
+                }
+
+            } catch (Exception ex) {
+                System.out.println("Error Display Villa All : " + ex);
+            }
+        %>
         <!-- Add Hotel Here -->
-        <div class="grid-container box-model box-model1" style="padding: 0">
-            <div class="grid-left" style="padding: 0">
-                <img src="assets/images/hotel1.png" class="img-hotel" alt="">
+        <!--
+        <div class='grid-container box-model box-model1' style='padding: 0'>
+            <div class='grid-left' style='padding: 0'>
+                <img src='assets/images/hotel1.png' class='img-hotel' alt=''>
             </div>
-            <div class="grid-right">
-                <p class="rubik-bold" style="font-size: 1.4em;;">The La'llorona</p>
-                <p class="karla-normal">A beautiful near beach villa, with a wonderful neighboorhood. Be amazed! Be
+            <div class='grid-right'>
+                <p class='rubik-bold' style='font-size: 1.4em;;'>The La'llorona</p>
+                <p class='karla-normal'>A beautiful near beach villa, with a wonderful neighboorhood. Be amazed! Be
                     Refreshed!
                     Other activities to do here is surfing, skying, running, jumping and other stuff!</p>
-                <form method="POST" action="book2.jsp">
+                <form method='GET' action='book2.jsp'>
                     <input type='hidden' name='idVilla' value='1'>
-                    <button class="btn btn-success rubik-bold color-white background-green" type="submit">View Details</button>
+                    <button class='btn btn-success rubik-bold color-white background-green' type='submit'>View Details</button>
                 </form>
             </div>
         </div>
+        -->
 
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
                 integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous">

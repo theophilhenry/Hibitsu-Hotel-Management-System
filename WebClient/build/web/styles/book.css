@@ -5,6 +5,14 @@
     width: 60vh;
 }
 
+.grid-book1 {
+    grid-template-columns : 1fr 1fr;
+}
+
+.grid-left img {
+    width: 100%;
+}
+
 /* || Book2 */
 .book-container {
     text-align: center;
@@ -47,7 +55,7 @@
 .client-order-container {
     width: 70%;
     margin: 0 auto;
-    
+
     background: #F2F2F2;
 }
 
@@ -56,7 +64,7 @@
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.25);
     padding: 20px;
     width: 100%;
-    
+
     text-align: center;
 }
 
@@ -65,14 +73,18 @@
         grid-template-areas: 
             'right'
             'left'
-        ;
+            ;
     }
 
     .grid-container {
         grid-template-areas: 
-        'left'
-        'right'
-    ;
+            'left'
+            'right'
+            ;
+    }
+
+    .grid-book1 {
+        grid-template-columns : auto auto;
     }
 
     .grid-left {

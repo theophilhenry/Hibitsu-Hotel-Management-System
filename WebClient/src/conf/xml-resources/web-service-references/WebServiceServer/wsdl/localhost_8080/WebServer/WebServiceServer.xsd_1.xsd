@@ -32,9 +32,17 @@
 
 <xs:element name="DisplayVillaAllResponse" type="tns:DisplayVillaAllResponse"/>
 
+<xs:element name="DisplayVillaAllWeb" type="tns:DisplayVillaAllWeb"/>
+
+<xs:element name="DisplayVillaAllWebResponse" type="tns:DisplayVillaAllWebResponse"/>
+
 <xs:element name="DisplayVillaId" type="tns:DisplayVillaId"/>
 
 <xs:element name="DisplayVillaIdResponse" type="tns:DisplayVillaIdResponse"/>
+
+<xs:element name="DisplayVillaIdWeb" type="tns:DisplayVillaIdWeb"/>
+
+<xs:element name="DisplayVillaIdWebResponse" type="tns:DisplayVillaIdWebResponse"/>
 
 <xs:element name="InsertChat" type="tns:InsertChat"/>
 
@@ -109,6 +117,16 @@
 </xs:complexType>
 
 <xs:complexType name="DisplayVillaIdResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="DisplayVillaAllWeb">
+<xs:sequence/>
+</xs:complexType>
+
+<xs:complexType name="DisplayVillaAllWebResponse">
 <xs:sequence>
 <xs:element name="return" type="xs:string" minOccurs="0"/>
 </xs:sequence>
@@ -226,7 +244,7 @@
 
 <xs:complexType name="DisplayReservationAllResponse">
 <xs:sequence>
-<xs:element name="return" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+<xs:element name="return" type="xs:string" minOccurs="0"/>
 </xs:sequence>
 </xs:complexType>
 
@@ -263,7 +281,19 @@
 
 <xs:complexType name="DisplayAllClientResponse">
 <xs:sequence>
-<xs:element name="return" type="xs:string" minOccurs="0" maxOccurs="unbounded"/>
+<xs:element name="return" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="DisplayContacts">
+<xs:sequence>
+<xs:element name="iduser" type="xs:int" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="DisplayContactsResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:string" minOccurs="0"/>
 </xs:sequence>
 </xs:complexType>
 
@@ -284,18 +314,6 @@
 </xs:sequence>
 </xs:complexType>
 
-<xs:complexType name="DisplayContacts">
-<xs:sequence>
-<xs:element name="iduser" type="xs:int" minOccurs="0"/>
-</xs:sequence>
-</xs:complexType>
-
-<xs:complexType name="DisplayContactsResponse">
-<xs:sequence>
-<xs:element name="return" type="xs:string" minOccurs="0"/>
-</xs:sequence>
-</xs:complexType>
-
 <xs:complexType name="InsertReservation">
 <xs:sequence>
 <xs:element name="checkin_date" type="xs:string" minOccurs="0"/>
@@ -308,6 +326,18 @@
 </xs:complexType>
 
 <xs:complexType name="InsertReservationResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="DisplayVillaIdWeb">
+<xs:sequence>
+<xs:element name="idvilla" type="xs:int" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="DisplayVillaIdWebResponse">
 <xs:sequence>
 <xs:element name="return" type="xs:string" minOccurs="0"/>
 </xs:sequence>

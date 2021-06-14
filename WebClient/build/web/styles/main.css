@@ -50,6 +50,10 @@ font-family: 'Rubik', sans-serif;
     color: #08BF5B !important;
 }
 
+.color-red {
+    color: #ff726f;
+}
+
 .color-white {
     color: #FFFFFF !important;
 }

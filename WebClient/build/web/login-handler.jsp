@@ -34,7 +34,7 @@
                 response.sendRedirect("login.jsp");
             }
         } catch (Exception ex) {
-            System.out.println("Book2 handler error : " + ex);
+            System.out.println("Login handler error : " + ex);
         }
 
     } else if (command.equals("register")) {
