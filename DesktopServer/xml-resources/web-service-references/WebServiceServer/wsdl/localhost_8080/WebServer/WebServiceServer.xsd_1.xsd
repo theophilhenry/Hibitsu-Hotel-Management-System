@@ -1,5 +1,9 @@
 <?xml version='1.0' encoding='UTF-8'?><!-- Published by JAX-WS RI (http://jax-ws.java.net). RI's version is Metro/2.3.2-b608 (trunk-7979; 2015-01-21T12:50:19+0000) JAXWS-RI/2.2.11-b150120.1832 JAXWS-API/2.2.12 JAXB-RI/2.2.12-b141219.1637 JAXB-API/2.2.13-b141020.1521 svn-revision#unknown. --><xs:schema xmlns:tns="http://disprog.ubaya.com/" xmlns:xs="http://www.w3.org/2001/XMLSchema" version="1.0" targetNamespace="http://disprog.ubaya.com/">
 
+<xs:element name="CalculateTotalPrice" type="tns:CalculateTotalPrice"/>
+
+<xs:element name="CalculateTotalPriceResponse" type="tns:CalculateTotalPriceResponse"/>
+
 <xs:element name="ChangeStatus" type="tns:ChangeStatus"/>
 
 <xs:element name="ChangeStatusResponse" type="tns:ChangeStatusResponse"/>
@@ -197,18 +201,6 @@
 </xs:sequence>
 </xs:complexType>
 
-<xs:complexType name="TrackOrder2">
-<xs:sequence>
-<xs:element name="idreservation" type="xs:int" minOccurs="0"/>
-</xs:sequence>
-</xs:complexType>
-
-<xs:complexType name="TrackOrder2Response">
-<xs:sequence>
-<xs:element name="return" type="xs:string" minOccurs="0"/>
-</xs:sequence>
-</xs:complexType>
-
 <xs:complexType name="CheckAvailability">
 <xs:sequence>
 <xs:element name="idvilla" type="xs:int" minOccurs="0"/>
@@ -218,6 +210,18 @@
 </xs:complexType>
 
 <xs:complexType name="CheckAvailabilityResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="TrackOrder2">
+<xs:sequence>
+<xs:element name="idreservation" type="xs:int" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="TrackOrder2Response">
 <xs:sequence>
 <xs:element name="return" type="xs:string" minOccurs="0"/>
 </xs:sequence>
@@ -245,6 +249,20 @@
 <xs:complexType name="TrackOrderAppResponse">
 <xs:sequence>
 <xs:element name="return" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="CalculateTotalPrice">
+<xs:sequence>
+<xs:element name="idvilla" type="xs:int" minOccurs="0"/>
+<xs:element name="checkin" type="xs:string" minOccurs="0"/>
+<xs:element name="checkout" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="CalculateTotalPriceResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:int" minOccurs="0"/>
 </xs:sequence>
 </xs:complexType>
 

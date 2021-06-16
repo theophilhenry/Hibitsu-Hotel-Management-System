@@ -16,7 +16,9 @@ import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -53,8 +55,9 @@ public class FormDashboard extends javax.swing.JFrame implements Runnable {
                 t.start();
             }
             
-            // set color form
+            TampilReservasi("", "");
             this.getContentPane().setBackground(Color.WHITE);
+            
         } catch (IOException ex) {
             Logger.getLogger(FormDashboard.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -136,6 +139,7 @@ public class FormDashboard extends javax.swing.JFrame implements Runnable {
         String result = displayChat(emailSend, emailReceiv);
         System.out.println("Hasil result \n" + result);
         String hasil = "";
+        String cekName = "admin";
         
         if(result.equals("") || result == null)
         {
@@ -145,61 +149,80 @@ public class FormDashboard extends javax.swing.JFrame implements Runnable {
         {
             String[] arr1 = result.split("\\|\\|");
         
-        System.out.println("Arr1 \n");
-        System.out.println(Arrays.toString(arr1));
-        
-        untukSiapa = untukSiapa.toLowerCase();
-        
-       
-        
-        if(untukSiapa.equals("admin"))
-        {
-            for(Integer i =0; i<arr1.length; i++)
+            System.out.println("Arr1 \n");
+            System.out.println(Arrays.toString(arr1));
+
+            untukSiapa = untukSiapa.toLowerCase();
+
+
+
+            if(untukSiapa.equals("admin"))
             {
-                String[] arr2 = arr1[i].split(";;");
-                
-                if(arr2[1].equals("3"))
+                for(Integer i =0; i<arr1.length; i++)
                 {
-                    
-                    hasil += "Admin : " + arr2[2] ;
-                }
-                else
-                {
-                    hasil += comboBoxClient.getSelectedItem().toString() + " : " + arr2[2] ;
-                }
-                
-                if(i!=arr1.length-1)
-                {
-                    hasil += "\n";
+                    String[] arr2 = arr1[i].split(";;");
+
+                    if(arr2[1].equals("3"))
+                    {
+                        if(cekName.equals("client"))
+                        {
+                            cekName = "admin";
+                            hasil += "\n";
+                        }
+
+                        hasil += "Admin : " + arr2[2] ;
+                    }
+                    else
+                    {
+                        if(cekName.equals("admin"))
+                        {
+                            cekName = "client";
+                            hasil += "\n";
+                        }
+                        hasil += comboBoxClient.getSelectedItem().toString() + " : " + arr2[2] ;
+                    }
+
+                    if(i!=arr1.length-1)
+                    {
+                        hasil += "\n";
+                    }
                 }
             }
-        }
-        else
-        {
-            for(Integer i =0; i<arr1.length; i++)
+            else
             {
-                String[] arr2 = arr1[i].split(";;");
-                
-                System.out.println("\n\n Arr2 : \n");
-                System.out.println(Arrays.toString(arr2));
-                
-                if(arr2[1].equals("3"))
+                for(Integer i =0; i<arr1.length; i++)
                 {
+                    String[] arr2 = arr1[i].split(";;");
                     
-                    hasil += "Admin : " + arr2[2] ;
-                }
-                else
-                {
-                    hasil += "Me : " + arr2[2] ;
-                }
-                
-                 if(i!=arr1.length-1)
-                {
-                    hasil += "\n";
+                    if(arr2[1].equals("3"))
+                    {
+                        if(cekName.equals("client"))
+                        {
+                            cekName = "admin";
+                            hasil += "\n\n";
+                        }
+                        cekName = "admin";
+                        hasil += "Admin : " + arr2[2] ;
+
+                    }
+                    else
+                    {
+                        if(cekName.equals("admin"))
+                        {
+                            cekName = "client";
+                            hasil += "\n\n";
+                        }
+                        
+                        hasil += "Me : " + arr2[2] ;
+                    }
+
+                     if(i!=arr1.length-1)
+                    {
+                        hasil += "\n";
+                    }
                 }
             }
-        }
-        //hasil += "========================================\n";
+            //hasil += "========================================\n";
         }
         
         
@@ -249,7 +272,34 @@ public class FormDashboard extends javax.swing.JFrame implements Runnable {
     }
     
     
-    
+    private void TampilReservasi(String kriteria, String dicari)
+    {
+        DefaultTableModel model = (DefaultTableModel) tableOrder.getModel();   
+        model.setRowCount(0);
+        tableOrder.getColumnModel().getColumn(0).setPreferredWidth(35);
+        tableOrder.getColumnModel().getColumn(5).setPreferredWidth(30);
+        String[] arr1 = displayReservationAll(kriteria, dicari).split("\\|\\|");
+        
+        
+        for (int i = 0; i < arr1.length; i++) {
+            System.out.println(arr1[i] + "\n");
+            String[] arr2 = arr1[i].split(";;");
+            System.out.println("\n\napa null : " + arr2[9] + "\n\n");
+            Object[] row = {arr2[1],arr2[13],arr2[11],arr2[3],arr2[4],arr2[5]};
+            model.addRow(row);
+            
+        }
+        
+        //[1]idreservation,[2]res_timestamp,[3]chcekin_date,[4]checkout_date,[5]status,[6]total_guest,[7]total_price,[8]notes,[19]url_bukti_pembayaran,[10]idvilla,
+        //[11]villa_name,[12]iduser,[13]fullname,[14]display_name[15],phone_number,[16]email,[17]no_ktp;;
+        //333;;2021-06-14 16:35:00.0;;2021-06-15;;2021-06-17;;PENDING;;2;;3600000;;Tolong sediakan grill;;null;;1;;The La Llorona;;1;;Jasti Ohanna;;jasti;;08123456789;;jasti@gmail.com;;3315060711900001
+
+
+        
+        
+        
+        
+    }
     
     
     
@@ -274,7 +324,7 @@ public class FormDashboard extends javax.swing.JFrame implements Runnable {
         jLabel9 = new javax.swing.JLabel();
         txtSearch = new javax.swing.JTextField();
         jScrollPane2 = new javax.swing.JScrollPane();
-        tblOrder = new javax.swing.JTable();
+        tableOrder = new javax.swing.JTable();
         comboBoxSelect = new javax.swing.JComboBox<>();
         btnSearch = new javax.swing.JButton();
         panelBooking = new javax.swing.JPanel();
@@ -296,7 +346,7 @@ public class FormDashboard extends javax.swing.JFrame implements Runnable {
         comboBoxClient = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setLocation(new java.awt.Point(1000, 200));
+        setLocation(new java.awt.Point(850, 200));
 
         jLabel1.setFont(new java.awt.Font("Rubik", 1, 24)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(29, 212, 121));
@@ -356,18 +406,29 @@ public class FormDashboard extends javax.swing.JFrame implements Runnable {
 
         txtSearch.setFont(new java.awt.Font("Rubik", 0, 14)); // NOI18N
 
-        tblOrder.setModel(new javax.swing.table.DefaultTableModel(
+        tableOrder.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Id Reservation", "Client Name", "Villla", "CheckIn Date", "CheckOut Date", "Status"
             }
-        ));
-        jScrollPane2.setViewportView(tblOrder);
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tableOrder.setSurrendersFocusOnKeystroke(true);
+        tableOrder.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tableOrderMouseClicked(evt);
+            }
+        });
+        jScrollPane2.setViewportView(tableOrder);
 
         comboBoxSelect.setFont(new java.awt.Font("Rubik", 1, 14)); // NOI18N
         comboBoxSelect.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
@@ -633,7 +694,8 @@ public class FormDashboard extends javax.swing.JFrame implements Runnable {
             textArea.setText("");
             
             textArea.append(historyChat + "\n");
-            textArea.append("----------------------Chat Sebelumnya-----------------------\n");
+            textArea.append("----------------------Chat Sebelumnya-----------------------\n\n");
+            ScrollDown();
     }//GEN-LAST:event_comboBoxClientItemStateChanged
 
     private void buttonCheckActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonCheckActionPerformed
@@ -706,6 +768,18 @@ public class FormDashboard extends javax.swing.JFrame implements Runnable {
       
     }//GEN-LAST:event_buttonBookActionPerformed
 
+    private void tableOrderMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableOrderMouseClicked
+        JTable source = (JTable)evt.getSource();
+        int row = source.rowAtPoint( evt.getPoint() );
+        String id = source.getModel().getValueAt(row, 0)+"";
+        
+        String result = displayReservationAll("idreservation", id);
+        
+        FormOrderDetail fod = new FormOrderDetail(result);
+        fod.setVisible(true);
+        
+    }//GEN-LAST:event_tableOrderMouseClicked
+
 
     
     
@@ -770,7 +844,7 @@ public class FormDashboard extends javax.swing.JFrame implements Runnable {
     private javax.swing.JPanel panelBooking;
     private javax.swing.JPanel panelChat;
     private javax.swing.JPanel panelTable;
-    private javax.swing.JTable tblOrder;
+    private javax.swing.JTable tableOrder;
     public javax.swing.JTextArea textArea;
     private javax.swing.JTextField textChat;
     private javax.swing.JTextField textEmail;
@@ -810,7 +884,7 @@ public class FormDashboard extends javax.swing.JFrame implements Runnable {
 
     
 
-    private static String displayVillaAll() {
+    public static String displayVillaAll() {
         com.ubaya.disprog.WebServiceServer_Service service = new com.ubaya.disprog.WebServiceServer_Service();
         com.ubaya.disprog.WebServiceServer port = service.getWebServiceServerPort();
         return port.displayVillaAll();
@@ -838,5 +912,23 @@ public class FormDashboard extends javax.swing.JFrame implements Runnable {
         com.ubaya.disprog.WebServiceServer_Service service = new com.ubaya.disprog.WebServiceServer_Service();
         com.ubaya.disprog.WebServiceServer port = service.getWebServiceServerPort();
         return port.trackOrderApp(idreservation);
+    }
+
+    private static String displayReservationAll(java.lang.String kriteria, java.lang.String dicari) {
+        com.ubaya.disprog.WebServiceServer_Service service = new com.ubaya.disprog.WebServiceServer_Service();
+        com.ubaya.disprog.WebServiceServer port = service.getWebServiceServerPort();
+        return port.displayReservationAll(kriteria, dicari);
+    }
+
+    public static String updateReservation(java.lang.String email, java.lang.String checkinDate, java.lang.String checkoutDate, java.lang.Integer totalGuest, java.lang.String notes, java.lang.Integer iduser, java.lang.Integer idvilla) {
+        com.ubaya.disprog.WebServiceServer_Service service = new com.ubaya.disprog.WebServiceServer_Service();
+        com.ubaya.disprog.WebServiceServer port = service.getWebServiceServerPort();
+        return port.updateReservation(email, checkinDate, checkoutDate, totalGuest, notes, iduser, idvilla);
+    }
+
+    public static String changeStatus(java.lang.String status, java.lang.Integer idreservation) {
+        com.ubaya.disprog.WebServiceServer_Service service = new com.ubaya.disprog.WebServiceServer_Service();
+        com.ubaya.disprog.WebServiceServer port = service.getWebServiceServerPort();
+        return port.changeStatus(status, idreservation);
     }
 }

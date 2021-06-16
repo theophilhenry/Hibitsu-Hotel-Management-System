@@ -37,6 +37,7 @@ public class ObjectFactory {
     private final static QName _LoginAdmin_QNAME = new QName("http://disprog.ubaya.com/", "LoginAdmin");
     private final static QName _DisplayContactsResponse_QNAME = new QName("http://disprog.ubaya.com/", "DisplayContactsResponse");
     private final static QName _DisplayAllClientResponse_QNAME = new QName("http://disprog.ubaya.com/", "DisplayAllClientResponse");
+    private final static QName _CalculateTotalPriceResponse_QNAME = new QName("http://disprog.ubaya.com/", "CalculateTotalPriceResponse");
     private final static QName _DisplayVillaAllWeb_QNAME = new QName("http://disprog.ubaya.com/", "DisplayVillaAllWeb");
     private final static QName _UploadPayment_QNAME = new QName("http://disprog.ubaya.com/", "UploadPayment");
     private final static QName _ChangeStatus_QNAME = new QName("http://disprog.ubaya.com/", "ChangeStatus");
@@ -50,6 +51,7 @@ public class ObjectFactory {
     private final static QName _Registration_QNAME = new QName("http://disprog.ubaya.com/", "Registration");
     private final static QName _DisplayReservationAll_QNAME = new QName("http://disprog.ubaya.com/", "DisplayReservationAll");
     private final static QName _TrackOrderApp_QNAME = new QName("http://disprog.ubaya.com/", "TrackOrderApp");
+    private final static QName _CalculateTotalPrice_QNAME = new QName("http://disprog.ubaya.com/", "CalculateTotalPrice");
     private final static QName _DisplayVillaIdWeb_QNAME = new QName("http://disprog.ubaya.com/", "DisplayVillaIdWeb");
     private final static QName _RegistrationResponse_QNAME = new QName("http://disprog.ubaya.com/", "RegistrationResponse");
     private final static QName _UploadPaymentResponse_QNAME = new QName("http://disprog.ubaya.com/", "UploadPaymentResponse");
@@ -179,6 +181,14 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link CalculateTotalPrice }
+     * 
+     */
+    public CalculateTotalPrice createCalculateTotalPrice() {
+        return new CalculateTotalPrice();
+    }
+
+    /**
      * Create an instance of {@link CheckAvailabilityResponse }
      * 
      */
@@ -256,6 +266,14 @@ public class ObjectFactory {
      */
     public ChangeStatus createChangeStatus() {
         return new ChangeStatus();
+    }
+
+    /**
+     * Create an instance of {@link CalculateTotalPriceResponse }
+     * 
+     */
+    public CalculateTotalPriceResponse createCalculateTotalPriceResponse() {
+        return new CalculateTotalPriceResponse();
     }
 
     /**
@@ -528,6 +546,15 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link CalculateTotalPriceResponse }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://disprog.ubaya.com/", name = "CalculateTotalPriceResponse")
+    public JAXBElement<CalculateTotalPriceResponse> createCalculateTotalPriceResponse(CalculateTotalPriceResponse value) {
+        return new JAXBElement<CalculateTotalPriceResponse>(_CalculateTotalPriceResponse_QNAME, CalculateTotalPriceResponse.class, null, value);
+    }
+
+    /**
      * Create an instance of {@link JAXBElement }{@code <}{@link DisplayVillaAllWeb }{@code >}}
      * 
      */
@@ -642,6 +669,15 @@ public class ObjectFactory {
     @XmlElementDecl(namespace = "http://disprog.ubaya.com/", name = "TrackOrderApp")
     public JAXBElement<TrackOrderApp> createTrackOrderApp(TrackOrderApp value) {
         return new JAXBElement<TrackOrderApp>(_TrackOrderApp_QNAME, TrackOrderApp.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link CalculateTotalPrice }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://disprog.ubaya.com/", name = "CalculateTotalPrice")
+    public JAXBElement<CalculateTotalPrice> createCalculateTotalPrice(CalculateTotalPrice value) {
+        return new JAXBElement<CalculateTotalPrice>(_CalculateTotalPrice_QNAME, CalculateTotalPrice.class, null, value);
     }
 
     /**

@@ -89,11 +89,11 @@ public class FormChat extends javax.swing.JFrame implements Runnable {
                     if(message.equals(";;DONE;;"))
                     {
                         cekChatHistory = true;
-                        textArea.append("----------------------Chat Sebelumnya-----------------------\n");
+                        textArea.append("----------------------Chat Sebelumnya-----------------------\n\n");
                     }
                     else
                     {
-                        textArea.append(" " + message + "\n\n");
+                        textArea.append(" " + message + "\n");
                         
                     }
                     

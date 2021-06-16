@@ -248,7 +248,7 @@ public class HandleSocket extends Thread{
                                     {
                                          String[] arrTrack = result.split(";;");
                                          String buktiBayar = "";
-                                         if(arrTrack[10].equals(null))
+                                         if(arrTrack[10].equals("null"))
                                          {
                                              buktiBayar = "Belum ada";
                                          }

@@ -4,7 +4,7 @@
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="3"/>
     <Property name="location" type="java.awt.Point" editor="org.netbeans.beaninfo.editors.PointEditor">
-      <Point value="[1000, 200]"/>
+      <Point value="[850, 200]"/>
     </Property>
   </Properties>
   <SyntheticProperties>
@@ -251,17 +251,23 @@
 
           <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
           <SubComponents>
-            <Component class="javax.swing.JTable" name="tblOrder">
+            <Component class="javax.swing.JTable" name="tableOrder">
               <Properties>
                 <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                  <Table columnCount="4" rowCount="4">
-                    <Column editable="true" title="Title 1" type="java.lang.Object"/>
-                    <Column editable="true" title="Title 2" type="java.lang.Object"/>
-                    <Column editable="true" title="Title 3" type="java.lang.Object"/>
-                    <Column editable="true" title="Title 4" type="java.lang.Object"/>
+                  <Table columnCount="6" rowCount="0">
+                    <Column editable="false" title="Id Reservation" type="java.lang.Object"/>
+                    <Column editable="false" title="Client Name" type="java.lang.Object"/>
+                    <Column editable="false" title="Villla" type="java.lang.Object"/>
+                    <Column editable="false" title="CheckIn Date" type="java.lang.Object"/>
+                    <Column editable="false" title="CheckOut Date" type="java.lang.Object"/>
+                    <Column editable="false" title="Status" type="java.lang.Object"/>
                   </Table>
                 </Property>
+                <Property name="surrendersFocusOnKeystroke" type="boolean" value="true"/>
               </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="tableOrderMouseClicked"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>
