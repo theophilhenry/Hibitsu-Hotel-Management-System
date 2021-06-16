@@ -231,7 +231,7 @@ public class Reservations extends DbConnection {
         return null;
     }
 
-    public String UpdateReservation(String email, Date checkIn, Date checkOut, Integer total_guest, String notes, Integer idvilla) {
+    public String UpdateReservation(String email, Date checkIn, Date checkOut, Integer total_guest, String notes, Integer idvilla,Integer orderId) {
 
         String message = "";
         try {
@@ -249,9 +249,9 @@ public class Reservations extends DbConnection {
                 // set query
                 String query = "UPDATE reservations r SET `r.checkin_date`=?,`r.checkout_date`=?,"
                         + "`r.total_guest`=?,`r.notes`=?,`r.total_price`=?,`r.idvilla`=? "
-                        + "FROM reservations r INNER JOIN villas v ON r.idvilla = v.idvilla "
-                        + "INNER JOIN users u ON r.idvilla = u.idvilla "
-                        + "WHERE u.email = ? AND r.idreservation = ?";
+                        + " FROM reservations r INNER JOIN villas v ON r.idvilla = v.idvilla "
+                        + " INNER JOIN users u ON r.iduser = u.iduser "
+                        + " WHERE u.email = ? AND r.idreservation = ?";
 
                 // set preparedStatement
                 PreparedStatement sql = (PreparedStatement) connect.prepareStatement(query);
@@ -262,8 +262,10 @@ public class Reservations extends DbConnection {
                 sql.setInt(3, total_guest);
                 sql.setString(4, notes);
                 sql.setInt(5, totalPrice);
-                sql.setString(6, email);
-                sql.setInt(7, idvilla);
+                sql.setInt(6, idvilla);
+                sql.setString(7, email);
+                sql.setInt(8, orderId);
+                
 
                 int affectedResult = sql.executeUpdate();
 

@@ -145,6 +145,7 @@
 <xs:element name="notes" type="xs:string" minOccurs="0"/>
 <xs:element name="iduser" type="xs:int" minOccurs="0"/>
 <xs:element name="idvilla" type="xs:int" minOccurs="0"/>
+<xs:element name="orderId" type="xs:int" minOccurs="0"/>
 </xs:sequence>
 </xs:complexType>
 

@@ -247,11 +247,12 @@ public class WebServiceServer extends DbConnection {
             @WebParam(name = "total_guest") Integer total_guest,
             @WebParam(name = "notes") String notes,
             @WebParam(name = "iduser") Integer iduser,
-            @WebParam(name = "idvilla") Integer idvilla) {
+            @WebParam(name = "idvilla") Integer idvilla,
+             @WebParam(name = "orderId") Integer orderId) {
         try {
             Date checkInDate = Date.valueOf(checkIn);
             Date checkOutDate = Date.valueOf(checkOut);
-            String result = model_Reservation.UpdateReservation(email, checkInDate, checkOutDate, total_guest, notes, iduser);
+            String result = model_Reservation.UpdateReservation(email, checkInDate, checkOutDate, total_guest, notes, iduser,orderId);
             return result;
         } catch (Exception ex) {
             System.out.println("Error Insert Chat: " + ex);

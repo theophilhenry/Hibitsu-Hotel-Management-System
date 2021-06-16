@@ -920,15 +920,17 @@ public class FormDashboard extends javax.swing.JFrame implements Runnable {
         return port.displayReservationAll(kriteria, dicari);
     }
 
-    public static String updateReservation(java.lang.String email, java.lang.String checkinDate, java.lang.String checkoutDate, java.lang.Integer totalGuest, java.lang.String notes, java.lang.Integer iduser, java.lang.Integer idvilla) {
-        com.ubaya.disprog.WebServiceServer_Service service = new com.ubaya.disprog.WebServiceServer_Service();
-        com.ubaya.disprog.WebServiceServer port = service.getWebServiceServerPort();
-        return port.updateReservation(email, checkinDate, checkoutDate, totalGuest, notes, iduser, idvilla);
-    }
+   
 
     public static String changeStatus(java.lang.String status, java.lang.Integer idreservation) {
         com.ubaya.disprog.WebServiceServer_Service service = new com.ubaya.disprog.WebServiceServer_Service();
         com.ubaya.disprog.WebServiceServer port = service.getWebServiceServerPort();
         return port.changeStatus(status, idreservation);
+    }
+
+    public static String updateReservation(java.lang.String email, java.lang.String checkinDate, java.lang.String checkoutDate, java.lang.Integer totalGuest, java.lang.String notes, java.lang.Integer iduser, java.lang.Integer idvilla, java.lang.Integer orderId) {
+        com.ubaya.disprog.WebServiceServer_Service service = new com.ubaya.disprog.WebServiceServer_Service();
+        com.ubaya.disprog.WebServiceServer port = service.getWebServiceServerPort();
+        return port.updateReservation(email, checkinDate, checkoutDate, totalGuest, notes, iduser, idvilla, orderId);
     }
 }

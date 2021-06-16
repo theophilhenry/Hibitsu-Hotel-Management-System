@@ -24,6 +24,7 @@ import javax.xml.bind.annotation.XmlType;
  *         &lt;element name="notes" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="iduser" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/>
  *         &lt;element name="idvilla" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/>
+ *         &lt;element name="orderId" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -40,7 +41,8 @@ import javax.xml.bind.annotation.XmlType;
     "totalGuest",
     "notes",
     "iduser",
-    "idvilla"
+    "idvilla",
+    "orderId"
 })
 public class UpdateReservation {
 
@@ -54,6 +56,7 @@ public class UpdateReservation {
     protected String notes;
     protected Integer iduser;
     protected Integer idvilla;
+    protected Integer orderId;
 
     /**
      * Gets the value of the email property.
@@ -221,6 +224,30 @@ public class UpdateReservation {
      */
     public void setIdvilla(Integer value) {
         this.idvilla = value;
+    }
+
+    /**
+     * Gets the value of the orderId property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Integer }
+     *     
+     */
+    public Integer getOrderId() {
+        return orderId;
+    }
+
+    /**
+     * Sets the value of the orderId property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Integer }
+     *     
+     */
+    public void setOrderId(Integer value) {
+        this.orderId = value;
     }
 
 }

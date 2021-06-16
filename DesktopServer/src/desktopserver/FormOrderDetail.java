@@ -339,13 +339,13 @@ public class FormOrderDetail extends javax.swing.JFrame {
             }
             else
             {
-                 resultUpdate = FormDashboard.updateReservation(sEmail, sCheckIn, sCheckOut, sTotalGuest, sNotes, idUser, sVillaId);
+                 resultUpdate = FormDashboard.updateReservation(sEmail, sCheckIn, sCheckOut, sTotalGuest, sNotes, idUser, sVillaId,Integer.parseInt(idReservation));
                  resultStatus = FormDashboard.changeStatus(sStatus,Integer.parseInt(idReservation));
             }
         }
         else
         {
-             resultUpdate = FormDashboard.updateReservation(sEmail, sCheckIn, sCheckOut, sTotalGuest, sNotes, idUser, sVillaId);
+             resultUpdate = FormDashboard.updateReservation(sEmail, sCheckIn, sCheckOut, sTotalGuest, sNotes, idUser, sVillaId,Integer.parseInt(idReservation));
              resultStatus = FormDashboard.changeStatus(sStatus,Integer.parseInt(idReservation));
         }
         

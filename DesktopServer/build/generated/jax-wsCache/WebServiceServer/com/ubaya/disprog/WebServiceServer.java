@@ -135,6 +135,7 @@ public interface WebServiceServer {
      * @param iduser
      * @param checkoutDate
      * @param notes
+     * @param orderId
      * @param totalGuest
      * @param checkinDate
      * @param email
@@ -160,7 +161,9 @@ public interface WebServiceServer {
         @WebParam(name = "iduser", targetNamespace = "")
         Integer iduser,
         @WebParam(name = "idvilla", targetNamespace = "")
-        Integer idvilla);
+        Integer idvilla,
+        @WebParam(name = "orderId", targetNamespace = "")
+        Integer orderId);
 
     /**
      * 
