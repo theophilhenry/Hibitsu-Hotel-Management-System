@@ -253,7 +253,7 @@ public class Reservations extends DbConnection {
                         + "`notes`= ?,`total_price`=?,`idvilla`=? "
                         + "WHERE u.email = ? AND  r.idreservation= ?";
                 // set preparedStatement
-                PreparedStatement sql = (PreparedStatement) connect.prepareStatement(query);
+                PreparedStatement sql = (PreparedStatement) connect.prepareStatement(query,PreparedStatement.RETURN_GENERATED_KEYS);
 
                 //set paramater
                 sql.setDate(1, checkIn);
