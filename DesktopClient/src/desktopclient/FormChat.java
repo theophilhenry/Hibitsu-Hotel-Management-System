@@ -14,6 +14,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -35,6 +36,7 @@ public class FormChat extends javax.swing.JFrame implements Runnable {
         initComponents();
         //coloring jform
         this.getContentPane().setBackground(Color.WHITE);
+        labelBot.setForeground(Color.green);
     }
     
     public FormChat(Socket inClient /*String _email, String _displayName*/ )
@@ -144,7 +146,7 @@ public class FormChat extends javax.swing.JFrame implements Runnable {
     {
         try {
             output.writeBytes(email + ";;" + msg + "\n");
-            textArea.append(" Me : " + msg + "\n");
+            textArea.append(" \n\nMe : " + msg + "\n\n");
             ScrollDown();
             
         } catch (IOException ex) {
@@ -163,13 +165,14 @@ public class FormChat extends javax.swing.JFrame implements Runnable {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        buttonClose = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
+        jLabelChat2 = new javax.swing.JLabel();
+        jLabelChat = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         panelChat = new javax.swing.JPanel();
@@ -177,6 +180,19 @@ public class FormChat extends javax.swing.JFrame implements Runnable {
         textArea = new javax.swing.JTextArea();
         txtChat = new javax.swing.JTextField();
         btnSend = new javax.swing.JButton();
+        jLabel9 = new javax.swing.JLabel();
+        labelBot = new javax.swing.JLabel();
+        buttonClose1 = new javax.swing.JButton();
+
+        buttonClose.setBackground(new java.awt.Color(255, 102, 102));
+        buttonClose.setFont(new java.awt.Font("Rubik", 1, 14)); // NOI18N
+        buttonClose.setForeground(new java.awt.Color(255, 255, 255));
+        buttonClose.setText("CLOSE");
+        buttonClose.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonCloseActionPerformed(evt);
+            }
+        });
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
@@ -205,11 +221,21 @@ public class FormChat extends javax.swing.JFrame implements Runnable {
         jLabel5.setForeground(new java.awt.Color(29, 212, 121));
         jLabel5.setText("AUDIO");
 
-        jLabel4.setFont(new java.awt.Font("Rubik", 1, 14)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(29, 212, 121));
-        jLabel4.setText("CHAT");
+        jLabelChat2.setFont(new java.awt.Font("Rubik", 1, 14)); // NOI18N
+        jLabelChat2.setForeground(new java.awt.Color(29, 212, 121));
+        jLabelChat2.setText("CHAT");
+        jLabelChat2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabelChat2MouseClicked(evt);
+            }
+        });
 
-        jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/desktopclient/icon/CHAT.png"))); // NOI18N
+        jLabelChat.setIcon(new javax.swing.ImageIcon(getClass().getResource("/desktopclient/icon/CHAT.png"))); // NOI18N
+        jLabelChat.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabelChatMouseClicked(evt);
+            }
+        });
 
         jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/desktopclient/icon/AUDIO.png"))); // NOI18N
 
@@ -225,8 +251,8 @@ public class FormChat extends javax.swing.JFrame implements Runnable {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(66, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel6)
-                    .addComponent(jLabel4))
+                    .addComponent(jLabelChat)
+                    .addComponent(jLabelChat2))
                 .addGap(72, 72, 72)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(jLabel7)
@@ -249,10 +275,10 @@ public class FormChat extends javax.swing.JFrame implements Runnable {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.TRAILING))
+                            .addComponent(jLabelChat, javax.swing.GroupLayout.Alignment.TRAILING))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabelChat2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(14, 14, 14))
         );
@@ -294,29 +320,52 @@ public class FormChat extends javax.swing.JFrame implements Runnable {
         panelChatLayout.setVerticalGroup(
             panelChatLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelChatLayout.createSequentialGroup()
-                .addContainerGap()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 385, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
                 .addGroup(panelChatLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtChat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnSend))
-                .addContainerGap(38, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
+
+        jLabel9.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel9.setText("Chat with Bot : ");
+
+        labelBot.setFont(new java.awt.Font("Tahoma", 1, 25)); // NOI18N
+        labelBot.setForeground(new java.awt.Color(0, 204, 0));
+        labelBot.setText("ON");
+
+        buttonClose1.setBackground(new java.awt.Color(255, 102, 102));
+        buttonClose1.setFont(new java.awt.Font("Rubik", 1, 14)); // NOI18N
+        buttonClose1.setForeground(new java.awt.Color(255, 255, 255));
+        buttonClose1.setText("CLOSE");
+        buttonClose1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonClose1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(38, 38, 38)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(jLabel2)
                     .addComponent(jLabel1)
-                    .addComponent(panelChat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(68, 68, 68)))
-                .addContainerGap(24, Short.MAX_VALUE))
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel9)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(labelBot)))
+                .addGap(92, 92, 92))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(29, 29, 29)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(buttonClose1, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(panelChat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(33, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -324,11 +373,17 @@ public class FormChat extends javax.swing.JFrame implements Runnable {
                 .addGap(31, 31, 31)
                 .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel9)
+                    .addComponent(labelBot))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(panelChat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(43, 43, 43)
+                .addComponent(buttonClose1)
                 .addContainerGap())
         );
 
@@ -345,9 +400,82 @@ public class FormChat extends javax.swing.JFrame implements Runnable {
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
        
-          /*  output.writeBytes("LOGOUT \n");*/
+          
        
     }//GEN-LAST:event_formWindowClosed
+
+    private void jLabelChatMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelChatMouseClicked
+       
+        try 
+        {
+        
+            if(chatWithBot == false)
+            {
+
+                chatWithBot = true;
+                 textArea.append("\n\n----------ChatBot Aktif----------\n\n");
+                output.writeBytes("CHATWITHBOT;;true\n");
+                labelBot.setForeground(Color.green);
+                 labelBot.setText("ON");
+                 JOptionPane.showMessageDialog(null, "Anda telah men-Aktifkan ChatBot.");
+               
+
+            }
+            else
+            {
+                chatWithBot = false;
+                output.writeBytes("CHATWITHBOT;;false\n");
+                labelBot.setForeground(Color.red);
+                labelBot.setText("OFF");
+                JOptionPane.showMessageDialog(null, "Anda telah men-Nonaktifkan ChatBot.\nSekarang anda bisa melakukan chat lansgung dengan admin.");
+                textArea.append("\n\n----------ChatBot Non-Aktif----------\n\n");
+            }
+        } 
+        catch (IOException ex) 
+        {
+            Logger.getLogger(FormChat.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jLabelChatMouseClicked
+
+    private void jLabelChat2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelChat2MouseClicked
+         try 
+        {
+        
+            if(chatWithBot == false)
+            {
+
+                chatWithBot = true;
+                output.writeBytes("CHATWITHBOT;;true\n");
+                labelBot.setForeground(Color.green);
+                 labelBot.setText("ON");
+
+            }
+            else
+            {
+                chatWithBot = false;
+                output.writeBytes("CHATWITHBOT;;false\n");
+                labelBot.setForeground(Color.red);
+                labelBot.setText("OFF");
+            }
+        } 
+        catch (IOException ex) 
+        {
+            Logger.getLogger(FormChat.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jLabelChat2MouseClicked
+
+    private void buttonCloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonCloseActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_buttonCloseActionPerformed
+
+    private void buttonClose1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonClose1ActionPerformed
+        try {
+            output.writeBytes("LOGOUT \n");
+            this.dispose();
+        } catch (IOException ex) {
+            Logger.getLogger(FormChat.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_buttonClose1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -387,16 +515,20 @@ public class FormChat extends javax.swing.JFrame implements Runnable {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnSend;
+    private javax.swing.JButton buttonClose;
+    private javax.swing.JButton buttonClose1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
+    private javax.swing.JLabel jLabelChat;
+    private javax.swing.JLabel jLabelChat2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel labelBot;
     private javax.swing.JPanel panelChat;
     private javax.swing.JTextArea textArea;
     private javax.swing.JTextField txtChat;

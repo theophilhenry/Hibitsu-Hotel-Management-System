@@ -46,6 +46,7 @@ public class FormDashboard extends javax.swing.JFrame implements Runnable {
             emailAdmin = "toto@gmail.com";
             idAdmin = "3";
             adaClient = false;
+            labelBot.setText("NONE");
             
             this.IsiComboBoxVilla();
             
@@ -348,6 +349,8 @@ public class FormDashboard extends javax.swing.JFrame implements Runnable {
         dateCheckIn = new com.toedter.calendar.JDateChooser();
         textTotalGuest = new com.toedter.components.JSpinField();
         comboBoxClient = new javax.swing.JComboBox<>();
+        labelBot = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setLocation(new java.awt.Point(850, 200));
@@ -651,6 +654,12 @@ public class FormDashboard extends javax.swing.JFrame implements Runnable {
             }
         });
 
+        labelBot.setBackground(new java.awt.Color(255, 0, 51));
+        labelBot.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        labelBot.setText("NONE");
+
+        jLabel10.setText("This Client BotChat :");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -660,14 +669,17 @@ public class FormDashboard extends javax.swing.JFrame implements Runnable {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(panelTable, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(comboBoxClient, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jLabel1))
-                            .addComponent(panelChat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(panelChat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(panelBooking, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(panelBooking, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(comboBoxClient, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel10)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(labelBot)
+                        .addGap(93, 93, 93)
+                        .addComponent(jLabel1)))
                 .addContainerGap(27, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -676,7 +688,9 @@ public class FormDashboard extends javax.swing.JFrame implements Runnable {
                 .addContainerGap(16, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(comboBoxClient, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(comboBoxClient, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel10)
+                    .addComponent(labelBot))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(panelBooking, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -708,20 +722,41 @@ public class FormDashboard extends javax.swing.JFrame implements Runnable {
     private void comboBoxClientItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_comboBoxClientItemStateChanged
         
         
-            String info = comboBoxClient.getSelectedItem().toString();
-           
-            String[] arr = info.split("\\(");
-            String emailDest = arr[1].substring(0,arr[1].length()-1);
-            
-            textEmail.setText(emailDest);
-            
-            String historyChat = TampilChat(emailAdmin, emailDest, "admin");
+        String info = comboBoxClient.getSelectedItem().toString();
 
-            textArea.setText("");
+        String[] arr = info.split("\\(");
+        String emailDest = arr[1].substring(0,arr[1].length()-1);
+
+        textEmail.setText(emailDest);
+
+        String historyChat = TampilChat(emailAdmin, emailDest, "admin");
+
+        textArea.setText("");
+
+        textArea.append(historyChat + "\n");
+        textArea.append("----------------------Chat Sebelumnya-----------------------\n\n");
+        ScrollDown();
+
+        for(HandleSocket client : clientsArr)
+        {
+
+            if(comboBoxClient.getSelectedItem().toString().contains(client.email))
+            {
+                if(client.chatWithBot == false)
+                {
+                    labelBot.setText("OFF");
+                    labelBot.setForeground(Color.red);
+                }
+                else
+                {
+                    labelBot.setText("ON");
+                    labelBot.setForeground(Color.green);
+                }
+            }
+
+
+        }
             
-            textArea.append(historyChat + "\n");
-            textArea.append("----------------------Chat Sebelumnya-----------------------\n\n");
-            ScrollDown();
     }//GEN-LAST:event_comboBoxClientItemStateChanged
 
     private void buttonCheckActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonCheckActionPerformed
@@ -812,12 +847,12 @@ public class FormDashboard extends javax.swing.JFrame implements Runnable {
         
         if(comboBoxFindOrder.getSelectedItem().toString().equals("Client Name"))
         {
-            kriteria = " u.fullname ";
+            kriteria = "fullname";
             System.out.println("Client Name");
         }
         else if(comboBoxFindOrder.getSelectedItem().toString().equals("Villa"))
         {
-            kriteria = " v.name ";
+            kriteria = "name";
             System.out.println("Villa");
         }
         else
@@ -839,12 +874,12 @@ public class FormDashboard extends javax.swing.JFrame implements Runnable {
         
         if(comboBoxFindOrder.getSelectedItem().toString().equals("Client Name"))
         {
-            kriteria = " u.fullname ";
+            kriteria = "fullname";
             
         }
         else if(comboBoxFindOrder.getSelectedItem().toString().equals("Villa"))
         {
-            kriteria = " v.name ";
+            kriteria = "name";
            
         }
         else
@@ -907,6 +942,7 @@ public class FormDashboard extends javax.swing.JFrame implements Runnable {
     private com.toedter.calendar.JDateChooser dateCheckIn;
     private com.toedter.calendar.JDateChooser dateCheckOut;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -917,6 +953,7 @@ public class FormDashboard extends javax.swing.JFrame implements Runnable {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    public javax.swing.JLabel labelBot;
     private javax.swing.JPanel panelBooking;
     private javax.swing.JPanel panelChat;
     private javax.swing.JPanel panelTable;

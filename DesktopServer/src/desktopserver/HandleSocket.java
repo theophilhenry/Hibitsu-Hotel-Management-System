@@ -5,6 +5,7 @@
  */
 package desktopserver;
 
+import java.awt.Color;
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -73,7 +74,7 @@ public class HandleSocket extends Thread{
                             + "2) Track Order Booking\n";
                     String historyChat =  parent.TampilChat(email, parent.emailAdmin,"client");
                     
-                    msgWelcome += "EndFromBot";
+                    
                     
                     
                     
@@ -84,12 +85,14 @@ public class HandleSocket extends Thread{
                     String selectedComboBox =  parent.comboBoxClient.getSelectedItem().toString();
                     String thisClient = email ;
                     
-                    System.out.println("92");
+                   
                     if(selectedComboBox.contains(thisClient))
                     {
                         System.out.println("95");
                         parent.textArea.append("BotChat :\n" + msgWelcome + "\n");
+                        parent.ScrollDown();
                     }
+                    msgWelcome += "EndFromBot";
                     SendChat(historyChat + "\n;;DONE;;");
                     SendChat(msgWelcome);
                    
@@ -98,7 +101,51 @@ public class HandleSocket extends Thread{
                    
                                       
                 }
-               
+                else if(tmp.contains("CHATWITHBOT"))
+                {
+                    String selectedComboBox =  parent.comboBoxClient.getSelectedItem().toString();
+                    String thisClient = email ;
+                    System.out.println("MASUK CHAT WITH BOT");
+                    if(tmp.contains("true"))
+                    {
+                        chatWithBot = false;
+                        String msgWelcome = "Selamat Datang Kembali!\n"
+                            + "Jika ingin berbicara dengan saya(BotChat),\nanda dapat melakukannya dengan memilih salah satu angka dari opsi di bawah :\n" 
+                            + "1) Reservasi\n" 
+                            + "2) Track Order Booking\n";
+                        
+
+                        if(selectedComboBox.contains(thisClient))
+                        {
+                            parent.textArea.append("BotChat :\n" + msgWelcome + "\n");
+                            parent.labelBot.setText("ON");
+                            parent.labelBot.setForeground(Color.green);
+                            
+                        }
+                        msgWelcome += "EndFromBot";
+                       
+                        SendChat(msgWelcome);
+
+                        parent.SimpanChat(parent.emailAdmin,email, msgWelcome);
+                    }
+                    else
+                    {
+                        botStep = 0;
+                        statusBot = "";
+                        chatWithBot = false;
+                        
+                        if(selectedComboBox.contains(thisClient))
+                        {
+                            parent.labelBot.setText("OFF");
+                            parent.labelBot.setForeground(Color.red);
+                            
+                        }
+                        
+                    }
+            
+                    
+                    
+                }
                 else if(tmp.contains("LOGIN"))
                 {
                     String[] login = tmp.split(";;");
@@ -126,7 +173,22 @@ public class HandleSocket extends Thread{
                 }
                 else if(tmp.contains("LOGOUT"))
                 {
+                    
+                    
+                    String selectedComboBox =  parent.comboBoxClient.getSelectedItem().toString();
+                    String thisClient = email ;
+                    
+                    if(selectedComboBox.contains(thisClient))
+                    {
+                        parent.labelBot.setText("NONE");
+                        parent.labelBot.setForeground(Color.black);
+                        parent.textArea.setText("");
+
+                    }
+                    
                     parent.RemoveComboBoxClient(displayName, email);
+                    parent.clientsArr.remove(this);
+                    
                 }
                 else if(chatWithBot == true)
                 {
@@ -172,10 +234,11 @@ public class HandleSocket extends Thread{
                             }
                             
                         }
-                        catch(Exception e)
+                        catch(Exception ex)
                         {
                             System.out.println("163");
                             msg = "Harap memberi input dalam bentuk angka saja sesuai opsi.";
+                            System.out.println(ex);
                                     
                             
                         }
@@ -282,10 +345,11 @@ public class HandleSocket extends Thread{
                            
                             
                         }
-                        catch(Exception e)
+                        catch(Exception ex)
                         {
                             System.out.println("163");
                             msg = "Harap memberi input dalam bentuk angka saja sesuai opsi.";
+                            System.out.println(ex);
                                     
                             
                         }
@@ -415,6 +479,7 @@ public class HandleSocket extends Thread{
                         catch(Exception ex)
                         {
                             msg = "Harap memberi input dalam bentuk angka sesuai format yang ada.";
+                            System.out.println(ex);
                         }
                         
                         
