@@ -272,7 +272,7 @@ public class FormDashboard extends javax.swing.JFrame implements Runnable {
     }
     
     
-    private void TampilReservasi(String kriteria, String dicari)
+    public void TampilReservasi(String kriteria, String dicari)
     {
         DefaultTableModel model = (DefaultTableModel) tableOrder.getModel();   
         model.setRowCount(0);
@@ -280,8 +280,8 @@ public class FormDashboard extends javax.swing.JFrame implements Runnable {
         tableOrder.getColumnModel().getColumn(5).setPreferredWidth(30);
         String[] arr1 = displayReservationAll(kriteria, dicari).split("\\|\\|");
         
-        
-        for (int i = 0; i < arr1.length; i++) {
+        if (arr1.length != 0) {
+             for (int i = 0; i < arr1.length; i++) {
             System.out.println(arr1[i] + "\n");
             String[] arr2 = arr1[i].split(";;");
             System.out.println("\n\napa null : " + arr2[9] + "\n\n");
@@ -289,6 +289,9 @@ public class FormDashboard extends javax.swing.JFrame implements Runnable {
             model.addRow(row);
             
         }
+        }
+        
+       
         
         //[1]idreservation,[2]res_timestamp,[3]chcekin_date,[4]checkout_date,[5]status,[6]total_guest,[7]total_price,[8]notes,[19]url_bukti_pembayaran,[10]idvilla,
         //[11]villa_name,[12]iduser,[13]fullname,[14]display_name[15],phone_number,[16]email,[17]no_ktp;;
@@ -322,11 +325,12 @@ public class FormDashboard extends javax.swing.JFrame implements Runnable {
         textArea = new javax.swing.JTextArea();
         panelTable = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
-        txtSearch = new javax.swing.JTextField();
+        textSearch = new javax.swing.JTextField();
         jScrollPane2 = new javax.swing.JScrollPane();
         tableOrder = new javax.swing.JTable();
-        comboBoxSelect = new javax.swing.JComboBox<>();
-        btnSearch = new javax.swing.JButton();
+        comboBoxFindOrder = new javax.swing.JComboBox<>();
+        buttonSearch = new javax.swing.JButton();
+        buttonRefresh = new javax.swing.JButton();
         panelBooking = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -404,7 +408,12 @@ public class FormDashboard extends javax.swing.JFrame implements Runnable {
         jLabel9.setForeground(new java.awt.Color(29, 212, 121));
         jLabel9.setText("Find Order");
 
-        txtSearch.setFont(new java.awt.Font("Rubik", 0, 14)); // NOI18N
+        textSearch.setFont(new java.awt.Font("Rubik", 0, 14)); // NOI18N
+        textSearch.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                textSearchKeyTyped(evt);
+            }
+        });
 
         tableOrder.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -430,13 +439,28 @@ public class FormDashboard extends javax.swing.JFrame implements Runnable {
         });
         jScrollPane2.setViewportView(tableOrder);
 
-        comboBoxSelect.setFont(new java.awt.Font("Rubik", 1, 14)); // NOI18N
-        comboBoxSelect.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        comboBoxFindOrder.setFont(new java.awt.Font("Rubik", 1, 14)); // NOI18N
+        comboBoxFindOrder.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "IdReservation", "Client Name", "Villa", "Checkin_Date", "Checkout_Date", "Status" }));
 
-        btnSearch.setBackground(new java.awt.Color(8, 191, 91));
-        btnSearch.setFont(new java.awt.Font("Rubik", 0, 14)); // NOI18N
-        btnSearch.setForeground(new java.awt.Color(255, 255, 255));
-        btnSearch.setText("SEARCH");
+        buttonSearch.setBackground(new java.awt.Color(8, 191, 91));
+        buttonSearch.setFont(new java.awt.Font("Rubik", 0, 14)); // NOI18N
+        buttonSearch.setForeground(new java.awt.Color(255, 255, 255));
+        buttonSearch.setText("SEARCH");
+        buttonSearch.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonSearchActionPerformed(evt);
+            }
+        });
+
+        buttonRefresh.setBackground(new java.awt.Color(8, 191, 91));
+        buttonRefresh.setFont(new java.awt.Font("Rubik", 0, 14)); // NOI18N
+        buttonRefresh.setForeground(new java.awt.Color(255, 255, 255));
+        buttonRefresh.setText("REFRESH TABLE");
+        buttonRefresh.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonRefreshActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout panelTableLayout = new javax.swing.GroupLayout(panelTable);
         panelTable.setLayout(panelTableLayout);
@@ -447,15 +471,16 @@ public class FormDashboard extends javax.swing.JFrame implements Runnable {
                 .addGroup(panelTableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane2)
                     .addGroup(panelTableLayout.createSequentialGroup()
-                        .addGroup(panelTableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel9)
-                            .addGroup(panelTableLayout.createSequentialGroup()
-                                .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(comboBoxSelect, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addComponent(jLabel9)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(panelTableLayout.createSequentialGroup()
+                        .addComponent(textSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(comboBoxFindOrder, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(buttonSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(buttonRefresh)))
                 .addGap(26, 26, 26))
         );
         panelTableLayout.setVerticalGroup(
@@ -465,10 +490,11 @@ public class FormDashboard extends javax.swing.JFrame implements Runnable {
                 .addComponent(jLabel9)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(panelTableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(comboBoxSelect, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(comboBoxFindOrder, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(panelTableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(btnSearch)))
+                        .addComponent(textSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(buttonSearch)
+                        .addComponent(buttonRefresh)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(32, Short.MAX_VALUE))
@@ -780,6 +806,55 @@ public class FormDashboard extends javax.swing.JFrame implements Runnable {
         
     }//GEN-LAST:event_tableOrderMouseClicked
 
+    private void buttonSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonSearchActionPerformed
+        String kriteria = "";
+        String dicari = textSearch.getText();
+        
+        if(comboBoxFindOrder.getSelectedItem().toString().equals("Client Name"))
+        {
+            kriteria = " u.fullname ";
+            System.out.println("Client Name");
+        }
+        else if(comboBoxFindOrder.getSelectedItem().toString().equals("Villa"))
+        {
+            kriteria = " v.name ";
+            System.out.println("Villa");
+        }
+        else
+        {
+            kriteria = comboBoxFindOrder.getSelectedItem().toString();
+        }
+        
+        TampilReservasi(kriteria, dicari);
+    }//GEN-LAST:event_buttonSearchActionPerformed
+
+    private void buttonRefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonRefreshActionPerformed
+        TampilReservasi("", "");
+    }//GEN-LAST:event_buttonRefreshActionPerformed
+
+    private void textSearchKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textSearchKeyTyped
+       
+        String kriteria = "";
+        String dicari = textSearch.getText();
+        
+        if(comboBoxFindOrder.getSelectedItem().toString().equals("Client Name"))
+        {
+            kriteria = " u.fullname ";
+            
+        }
+        else if(comboBoxFindOrder.getSelectedItem().toString().equals("Villa"))
+        {
+            kriteria = " v.name ";
+           
+        }
+        else
+        {
+            kriteria = comboBoxFindOrder.getSelectedItem().toString();
+        }
+        
+        TampilReservasi(kriteria, dicari);
+    }//GEN-LAST:event_textSearchKeyTyped
+
 
     
     
@@ -821,12 +896,13 @@ public class FormDashboard extends javax.swing.JFrame implements Runnable {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnSearch;
     private javax.swing.JButton buttonBook;
     private javax.swing.JButton buttonCheck;
+    private javax.swing.JButton buttonRefresh;
+    private javax.swing.JButton buttonSearch;
     private javax.swing.JButton buttonSend;
     public javax.swing.JComboBox<String> comboBoxClient;
-    private javax.swing.JComboBox<String> comboBoxSelect;
+    private javax.swing.JComboBox<String> comboBoxFindOrder;
     private javax.swing.JComboBox<String> comboBoxVillaType;
     private com.toedter.calendar.JDateChooser dateCheckIn;
     private com.toedter.calendar.JDateChooser dateCheckOut;
@@ -849,8 +925,8 @@ public class FormDashboard extends javax.swing.JFrame implements Runnable {
     private javax.swing.JTextField textChat;
     private javax.swing.JTextField textEmail;
     private javax.swing.JTextField textNotes;
+    private javax.swing.JTextField textSearch;
     private com.toedter.components.JSpinField textTotalGuest;
-    private javax.swing.JTextField txtSearch;
     // End of variables declaration//GEN-END:variables
 
     @Override
