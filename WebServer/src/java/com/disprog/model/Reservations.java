@@ -247,12 +247,11 @@ public class Reservations extends DbConnection {
                 }
 
                 // set query
-                String query = "UPDATE reservations r SET `r.checkin_date`=?,`r.checkout_date`=?,"
-                        + "`r.total_guest`=?,`r.notes`=?,`r.total_price`=?,`r.idvilla`=? "
-                        + " FROM reservations r INNER JOIN villas v ON r.idvilla = v.idvilla "
-                        + " INNER JOIN users u ON r.iduser = u.iduser "
-                        + " WHERE u.email = ? AND r.idreservation = ?";
-
+                String query = "UPDATE `reservations` r INNER JOIN `users` u ON r.iduser = u.iduser "
+                        + "SET`res_timestamp`=CURRENT_TIMESTAMP,`checkin_date`=?,"
+                        + "`checkout_date`=?,`total_guest`=?, "
+                        + "`notes`= ?,`total_price`=?,`idvilla`=? "
+                        + "WHERE u.email = ? AND  r.idreservation= ?";
                 // set preparedStatement
                 PreparedStatement sql = (PreparedStatement) connect.prepareStatement(query);
 

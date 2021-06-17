@@ -90,14 +90,15 @@ public class WebServiceServer extends DbConnection {
     }
     
     @WebMethod(operationName = "CalculateTotalPrice")
-    public Integer CalculateTotalPrice(@WebParam(name = "idvilla") Integer idvilla,
+    public String CalculateTotalPrice(@WebParam(name = "idvilla") Integer idvilla,
             @WebParam(name = "checkin") String checkIn,
             @WebParam(name = "checkout") String checkOut) {
         try {
             Date checkInDate = Date.valueOf(checkIn);
             Date checkOutDate = Date.valueOf(checkOut);
             Integer result = model_Reservation.CalculateTotalPrice(idvilla, checkInDate, checkOutDate);
-            return result;
+            String result_int = String.valueOf(result);
+            return result_int;
         } catch (Exception ex) {
             System.out.println("Error Web Service Check Availability : " + ex);
         }
