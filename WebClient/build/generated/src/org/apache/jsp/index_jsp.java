@@ -66,7 +66,7 @@ public final class index_jsp extends org.apache.jasper.runtime.HttpJspBase
       out.write("    </head>\n");
       out.write("\n");
       out.write("    <body>\n");
-      out.write("        <nav class=\"navbar navbar-expand-lg navbar-light bg-light sticky-top drop-shadow-0-4-10\">\n");
+      out.write("        <nav class=\"navbar navbar-expand-lg navbar-light bg-light sticky-top drop-shadow-0-4-10 mb-5\">\n");
       out.write("            <div class=\"container-fluid\">\n");
       out.write("                <!-- Navbar Toggler -->\n");
       out.write("                <button class=\"navbar-toggler\" type=\"button\" data-bs-toggle=\"collapse\" data-bs-target=\"#navbarTogglerDemo02\"\n");
@@ -103,17 +103,15 @@ public final class index_jsp extends org.apache.jasper.runtime.HttpJspBase
       out.write("                        <li class=\"nav-item me-3\">\n");
       out.write("                            <form method='POST' action='login-handler.jsp'>\n");
       out.write("                                <input type='hidden' name='command' value='logout'>\n");
-      out.write("                                <button type='submit' class=\"nav-link rubik-normal\" style='padding-right: .5rem; padding-left: .5rem; padding: .5rem 1rem; border: none; background: none;' href=\"login.jsp\">Logout</a>\n");
+      out.write("                                <button type='submit' class=\"nav-link rubik-normal\" style='padding-right: .5rem; border: none; background: none;' href=\"login.jsp\">Logout</a>\n");
       out.write("                            </form>\n");
       out.write("                        </li>\n");
       out.write("                        ");
  }
       out.write("\n");
       out.write("                    </ul>\n");
-      out.write("                    <form>\n");
-      out.write("                        <button class=\"btn btn-success rubik-bold color-white background-green\" type=\"submit\">Download\n");
-      out.write("                            App</button>\n");
-      out.write("                    </form>\n");
+      out.write("                    <button class=\"btn btn-success background-green\"><a href=\"https://drive.google.com/uc?export=download&id=1ILQiR2KmkBBEBSSA4bdQ198P8s_MnPPX\" class=\"rubik-bold color-white\" style=\"text-decoration: none;\">Download App</a>\n");
+      out.write("                    </button>\n");
       out.write("                </div>\n");
       out.write("            </div>\n");
       out.write("        </nav>\n");
@@ -189,7 +187,7 @@ public final class index_jsp extends org.apache.jasper.runtime.HttpJspBase
       out.write("\n");
       out.write("                <a href=\"login.jsp\" class=\"btn btn-outline-success rubik-bold color-green border-green\">Sign Up</a>\n");
       out.write("                ");
- } 
+ }
       out.write("\n");
       out.write("            </div>\n");
       out.write("            <div class=\"grid-right\">\n");
@@ -220,7 +218,6 @@ public final class index_jsp extends org.apache.jasper.runtime.HttpJspBase
       out.write("        <script src=\"https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js\"\n");
       out.write("                integrity=\"sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4\" crossorigin=\"anonymous\">\n");
       out.write("        </script>\n");
-      out.write("\n");
       out.write("\n");
       out.write("        <script>\n");
       out.write("            $(document).ready(function () {\n");
