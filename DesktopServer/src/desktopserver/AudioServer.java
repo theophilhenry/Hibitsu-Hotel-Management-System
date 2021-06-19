@@ -253,6 +253,7 @@ public class AudioServer extends javax.swing.JFrame {
         txtTimer = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Audio Server");
 
         jLabel1.setText("SERVER");
 

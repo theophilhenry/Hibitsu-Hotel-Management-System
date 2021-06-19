@@ -18,6 +18,7 @@ import java.util.logging.Logger;
  *
  * @author TOTO
  */
+
 public class HandleSocket extends Thread{
     FormDashboard parent;
     Socket client;
@@ -190,6 +191,7 @@ public class HandleSocket extends Thread{
                     client.close();
                     parent.clientsArr.remove(this);
                     
+                    
                 }
                 else if(chatWithBot == true)
                 {
@@ -232,6 +234,7 @@ public class HandleSocket extends Thread{
                             else
                             {
                                 msg = "Harap menginputkan angka sesuai dengan menu yang ada.";
+                                botStep = 0;
                             }
                             
                         }
@@ -240,6 +243,7 @@ public class HandleSocket extends Thread{
                             System.out.println("163");
                             msg = "Harap memberi input dalam bentuk angka saja sesuai opsi.";
                             System.out.println(ex);
+                            botStep = 0;
                                     
                             
                         }
@@ -292,6 +296,7 @@ public class HandleSocket extends Thread{
                                 else
                                 {
                                      msg = "Harap menginputkan angka sesuai dengan menu yang ada.";
+                                     botStep = 1;
                                 }
                             }
                             else
@@ -351,6 +356,7 @@ public class HandleSocket extends Thread{
                             System.out.println("163");
                             msg = "Harap memberi input dalam bentuk angka saja sesuai opsi.";
                             System.out.println(ex);
+                            botStep = 1;
                                     
                             
                         }
@@ -481,6 +487,7 @@ public class HandleSocket extends Thread{
                         {
                             msg = "Harap memberi input dalam bentuk angka sesuai format yang ada.";
                             System.out.println(ex);
+                            botStep = 1;
                         }
                         
                         

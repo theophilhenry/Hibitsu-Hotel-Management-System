@@ -496,7 +496,9 @@ public class Reservations extends DbConnection {
                     String statusCheck = "";
 
                     if (paymentValue == null) {
-                        statusCheck = ""
+                        if(statusValue.equals("PENDING"))
+                        {
+                            statusCheck = ""
                                 + "<div class='mb-3'>"
                                 + "<label for='formFileSm' class='form-label karla-normal' style='text-align: left;'>Payment Slip hasn't uploaded yet. <br>To Upload payment slip, you need to <br>1. Upload your payment slip photo to Google Drive<br>2. Share and get the link<br>3. Set the link to anyone can view<br>4. Copy the link and paste it here.</label>"
                                 + "<form method='POST' action='track-order-handler.jsp'>"
@@ -506,6 +508,8 @@ public class Reservations extends DbConnection {
                                 + "<button class='btn btn-success rubik-bold color-white background-green mb-3' type='submit' style='width: 100%;'>Upload</button>"
                                 + "</form>"
                                 + "</div>";
+                        }
+                        
                     }
 
                     String hasilDOM = ""

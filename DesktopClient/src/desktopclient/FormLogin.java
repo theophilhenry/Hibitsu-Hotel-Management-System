@@ -28,18 +28,13 @@ public class FormLogin extends javax.swing.JFrame {
      */
     public FormLogin() {
         
-        try {
-            initComponents();
-            //coloring white form
-            this.getContentPane().setBackground(Color.WHITE);
+        
+        initComponents();
+        //coloring white form
+        this.getContentPane().setBackground(Color.WHITE);
             
-            client = new Socket("localhost",12345);
-            output = new DataOutputStream(client.getOutputStream());
-            input = new BufferedReader(new InputStreamReader(client.getInputStream()));
-        } catch (IOException ex) {
-            Logger.getLogger(FormLogin.class.getName()).log(Level.SEVERE, null, ex);
-        }
-                    
+       
+             
        
 
     }
@@ -136,6 +131,19 @@ public class FormLogin extends javax.swing.JFrame {
 
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
         try {
+                       
+            if(client == null)
+            {
+                client = new Socket("localhost",12345);
+                output = new DataOutputStream(client.getOutputStream());
+                input = new BufferedReader(new InputStreamReader(client.getInputStream()));
+                
+               
+            }
+            
+            
+            
+            
             String email = txtEmail.getText();
             String password = txtPassword.getText();
             
@@ -145,9 +153,9 @@ public class FormLogin extends javax.swing.JFrame {
             
             if(status.contains("true"))
             {
+                String[] arr = status.split(";;");
                 
-                
-                FormChat fc = new FormChat(client/*,email,arr[1]*/);
+                FormChat fc = new FormChat(client,email,arr[4]);
                 fc.setVisible(true);
                 this.dispose();
             }
@@ -156,7 +164,8 @@ public class FormLogin extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "Your Email or Password is wrong.");
             }
         } catch (IOException ex) {
-            Logger.getLogger(FormLogin.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FormLogin.class.getName()).log(Level.SEVERE, null,ex);
+            JOptionPane.showMessageDialog(null, "Maaf, server Hibitsu sedang tidak aktif");
         }
     }//GEN-LAST:event_btnLoginActionPerformed
 

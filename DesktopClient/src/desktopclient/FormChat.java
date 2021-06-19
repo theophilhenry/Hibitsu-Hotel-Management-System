@@ -46,15 +46,15 @@ public class FormChat extends javax.swing.JFrame implements Runnable {
         labelBot.setForeground(Color.green);
     }
 
-    public FormChat(Socket inClient /*String _email, String _displayName*/) {
+    public FormChat(Socket inClient, String _email, String _displayName) {
         try {
             initComponents();
             //coloring jform
             this.getContentPane().setBackground(Color.WHITE);
 
             client = inClient;
-            //email = _email;
-            //displayName = _displayName;
+            email = _email;
+            displayName = _displayName;
             input = new BufferedReader(new InputStreamReader(client.getInputStream()));
             output = new DataOutputStream(client.getOutputStream());
             chatWithBot = true;
@@ -415,50 +415,12 @@ public class FormChat extends javax.swing.JFrame implements Runnable {
     }//GEN-LAST:event_formWindowClosed
 
     private void jLabelChatMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelChatMouseClicked
-
-        try {
-
-            if (chatWithBot == false) {
-
-                chatWithBot = true;
-                textArea.append("\n\n----------ChatBot Aktif----------\n\n");
-                output.writeBytes("CHATWITHBOT;;true\n");
-                labelBot.setForeground(Color.green);
-                labelBot.setText("ON");
-                JOptionPane.showMessageDialog(null, "Anda telah men-Aktifkan ChatBot.");
-
-            } else {
-                chatWithBot = false;
-                output.writeBytes("CHATWITHBOT;;false\n");
-                labelBot.setForeground(Color.red);
-                labelBot.setText("OFF");
-                JOptionPane.showMessageDialog(null, "Anda telah men-Nonaktifkan ChatBot.\nSekarang anda bisa melakukan chat lansgung dengan admin.");
-                textArea.append("\n\n----------ChatBot Non-Aktif----------\n\n");
-            }
-        } catch (IOException ex) {
-            Logger.getLogger(FormChat.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        BotChatOff();
+        
     }//GEN-LAST:event_jLabelChatMouseClicked
 
     private void jLabelChat2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelChat2MouseClicked
-        try {
-
-            if (chatWithBot == false) {
-
-                chatWithBot = true;
-                output.writeBytes("CHATWITHBOT;;true\n");
-                labelBot.setForeground(Color.green);
-                labelBot.setText("ON");
-
-            } else {
-                chatWithBot = false;
-                output.writeBytes("CHATWITHBOT;;false\n");
-                labelBot.setForeground(Color.red);
-                labelBot.setText("OFF");
-            }
-        } catch (IOException ex) {
-            Logger.getLogger(FormChat.class.getName()).log(Level.SEVERE, null, ex);
-        }
+       BotChatOff();
     }//GEN-LAST:event_jLabelChat2MouseClicked
 
     private void buttonCloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonCloseActionPerformed
@@ -471,6 +433,7 @@ public class FormChat extends javax.swing.JFrame implements Runnable {
             
             
             this.dispose();
+            System.exit(1);
            
         } catch (IOException ex) {
             Logger.getLogger(FormChat.class.getName()).log(Level.SEVERE, null, ex);
@@ -501,6 +464,32 @@ public class FormChat extends javax.swing.JFrame implements Runnable {
         VideoCall();
     }//GEN-LAST:event_txtVideoCallMouseClicked
 
+    
+    public void BotChatOff()
+    {
+        try {
+
+            if (chatWithBot == false) {
+
+                chatWithBot = true;
+                textArea.append("\n\n----------ChatBot Aktif----------\n\n");
+                output.writeBytes("CHATWITHBOT;;true\n");
+                labelBot.setForeground(Color.green);
+                labelBot.setText("ON");
+                JOptionPane.showMessageDialog(null, "Anda telah men-Aktifkan ChatBot.");
+
+            } else {
+                chatWithBot = false;
+                output.writeBytes("CHATWITHBOT;;false\n");
+                labelBot.setForeground(Color.red);
+                labelBot.setText("OFF");
+                JOptionPane.showMessageDialog(null, "Anda telah men-Nonaktifkan ChatBot.\nSekarang anda bisa melakukan chat lansgung dengan admin.");
+                textArea.append("\n\n----------ChatBot Non-Aktif----------\n\n");
+            }
+        } catch (IOException ex) {
+            Logger.getLogger(FormChat.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
     public void AudioCall() {
         try {
             if (audioSock.isClosed()) {
@@ -512,7 +501,7 @@ public class FormChat extends javax.swing.JFrame implements Runnable {
             sendData = new byte[2048];
 
             System.out.println("Sending Data ...");
-            String kirim = "AudioCall";
+            String kirim = "AudioCall;;" + displayName + "(" + email + ")";
             sendData = kirim.getBytes();
             System.out.println("Data Sent!");
 
@@ -554,7 +543,7 @@ public class FormChat extends javax.swing.JFrame implements Runnable {
             sendData = new byte[2048];
 
             System.out.println("Sending Data ...");
-            String kirim = "VideoCall";
+            String kirim = "VideoCall;;" + displayName + "(" + email + ")";
             sendData = kirim.getBytes();
             System.out.println("Data Sent!");
 

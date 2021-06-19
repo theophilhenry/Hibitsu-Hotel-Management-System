@@ -302,11 +302,13 @@ public class FormDashboard extends javax.swing.JFrame implements Runnable {
 
                         InetAddress ipClient = incomingPacket.getAddress();
                         int portClient = incomingPacket.getPort();
-
+                        
                         if (parent.onCall == false) {
                             // Biar saat lagi request telephon, gabisa di call sm orang lain
                             parent.setOnCall(true);
-                            int answer = JOptionPane.showConfirmDialog(parent, "Anda di telephon oleh " + ipClient + " dari port " + portClient, "Call Masuk", JOptionPane.YES_NO_OPTION);
+                            String[] arrNama = received.split(";;");
+                            
+                            int answer = JOptionPane.showConfirmDialog(parent, "Anda di telephon oleh " + arrNama[1] , "Call Masuk", JOptionPane.YES_NO_OPTION);
 
                             if (answer == 0) { // Yes
                                 String kirim = "yes";
@@ -339,7 +341,8 @@ public class FormDashboard extends javax.swing.JFrame implements Runnable {
                         if (parent.onCall == false) {
                             // Biar saat lagi request telephon, gabisa di call sm orang lain
                             parent.setOnCall(true);
-                            int answer = JOptionPane.showConfirmDialog(parent, "Anda di telephon oleh " + ipAudioClient + " dari port " + portAudioClient, "Call Masuk", JOptionPane.YES_NO_OPTION);
+                            String[] arrNama = received.split(";;");
+                            int answer = JOptionPane.showConfirmDialog(parent, "Anda di telephon oleh " + arrNama[1] , "Call Masuk", JOptionPane.YES_NO_OPTION);
 
                             if (answer == 0) { // Yes
                                 String kirim = "yes";
@@ -403,7 +406,6 @@ public class FormDashboard extends javax.swing.JFrame implements Runnable {
         jScrollPane2 = new javax.swing.JScrollPane();
         tableOrder = new javax.swing.JTable();
         comboBoxFindOrder = new javax.swing.JComboBox<>();
-        buttonSearch = new javax.swing.JButton();
         buttonRefresh = new javax.swing.JButton();
         panelBooking = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
@@ -486,8 +488,8 @@ public class FormDashboard extends javax.swing.JFrame implements Runnable {
 
         textSearch.setFont(new java.awt.Font("Rubik", 0, 14)); // NOI18N
         textSearch.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                textSearchKeyTyped(evt);
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                textSearchKeyReleased(evt);
             }
         });
 
@@ -518,16 +520,6 @@ public class FormDashboard extends javax.swing.JFrame implements Runnable {
         comboBoxFindOrder.setFont(new java.awt.Font("Rubik", 1, 14)); // NOI18N
         comboBoxFindOrder.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "IdReservation", "Client Name", "Villa", "Checkin_Date", "Checkout_Date", "Status" }));
 
-        buttonSearch.setBackground(new java.awt.Color(8, 191, 91));
-        buttonSearch.setFont(new java.awt.Font("Rubik", 0, 14)); // NOI18N
-        buttonSearch.setForeground(new java.awt.Color(255, 255, 255));
-        buttonSearch.setText("SEARCH");
-        buttonSearch.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                buttonSearchActionPerformed(evt);
-            }
-        });
-
         buttonRefresh.setBackground(new java.awt.Color(8, 191, 91));
         buttonRefresh.setFont(new java.awt.Font("Rubik", 0, 14)); // NOI18N
         buttonRefresh.setForeground(new java.awt.Color(255, 255, 255));
@@ -553,8 +545,6 @@ public class FormDashboard extends javax.swing.JFrame implements Runnable {
                         .addComponent(textSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(comboBoxFindOrder, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(buttonSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(buttonRefresh)))
                 .addGap(26, 26, 26))
@@ -569,7 +559,6 @@ public class FormDashboard extends javax.swing.JFrame implements Runnable {
                     .addComponent(comboBoxFindOrder, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(panelTableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(textSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(buttonSearch)
                         .addComponent(buttonRefresh)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -898,34 +887,16 @@ public class FormDashboard extends javax.swing.JFrame implements Runnable {
 
         String result = displayReservationAll("idreservation", id);
 
-        FormOrderDetail fod = new FormOrderDetail(result);
+        FormOrderDetail fod = new FormOrderDetail(result,this);
         fod.setVisible(true);
 
     }//GEN-LAST:event_tableOrderMouseClicked
-
-    private void buttonSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonSearchActionPerformed
-        String kriteria = "";
-        String dicari = textSearch.getText();
-
-        if (comboBoxFindOrder.getSelectedItem().toString().equals("Client Name")) {
-            kriteria = "fullname";
-//            System.out.println("Client Name");
-        } else if (comboBoxFindOrder.getSelectedItem().toString().equals("Villa")) {
-            kriteria = "name";
-//            System.out.println("Villa");
-        } else {
-            kriteria = comboBoxFindOrder.getSelectedItem().toString();
-        }
-
-        TampilReservasi(kriteria, dicari);
-    }//GEN-LAST:event_buttonSearchActionPerformed
 
     private void buttonRefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonRefreshActionPerformed
         TampilReservasi("", "");
     }//GEN-LAST:event_buttonRefreshActionPerformed
 
-    private void textSearchKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textSearchKeyTyped
-
+    private void textSearchKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textSearchKeyReleased
         String kriteria = "";
         String dicari = textSearch.getText();
 
@@ -940,7 +911,7 @@ public class FormDashboard extends javax.swing.JFrame implements Runnable {
         }
 
         TampilReservasi(kriteria, dicari);
-    }//GEN-LAST:event_textSearchKeyTyped
+    }//GEN-LAST:event_textSearchKeyReleased
 
     /**
      * @param args the command line arguments
@@ -982,7 +953,6 @@ public class FormDashboard extends javax.swing.JFrame implements Runnable {
     private javax.swing.JButton buttonBook;
     private javax.swing.JButton buttonCheck;
     private javax.swing.JButton buttonRefresh;
-    private javax.swing.JButton buttonSearch;
     private javax.swing.JButton buttonSend;
     public javax.swing.JComboBox<String> comboBoxClient;
     private javax.swing.JComboBox<String> comboBoxFindOrder;

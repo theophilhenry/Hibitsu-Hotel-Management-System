@@ -298,8 +298,8 @@ public class VideoAudioClient extends javax.swing.JFrame {
 
         VideoTransmitter() {
 //            System.out.println(Webcam.getWebcams());
-//            webcam = Webcam.getDefault();
-            webcam = Webcam.getWebcamByName("DroidCam Source 3 1");
+            webcam = Webcam.getDefault();
+//            webcam = Webcam.getWebcamByName("DroidCam Source 3 1");
             Dimension dim = new Dimension(640, 480);
             webcam.setViewSize(dim);
         }
