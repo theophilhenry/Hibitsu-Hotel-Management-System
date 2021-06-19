@@ -114,16 +114,6 @@
 </xs:sequence>
 </xs:complexType>
 
-<xs:complexType name="DisplayVillaAllWeb">
-<xs:sequence/>
-</xs:complexType>
-
-<xs:complexType name="DisplayVillaAllWebResponse">
-<xs:sequence>
-<xs:element name="return" type="xs:string" minOccurs="0"/>
-</xs:sequence>
-</xs:complexType>
-
 <xs:complexType name="DisplayVillaId">
 <xs:sequence>
 <xs:element name="idvilla" type="xs:int" minOccurs="0"/>
@@ -131,6 +121,16 @@
 </xs:complexType>
 
 <xs:complexType name="DisplayVillaIdResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="DisplayVillaAllWeb">
+<xs:sequence/>
+</xs:complexType>
+
+<xs:complexType name="DisplayVillaAllWebResponse">
 <xs:sequence>
 <xs:element name="return" type="xs:string" minOccurs="0"/>
 </xs:sequence>
@@ -253,20 +253,6 @@
 </xs:sequence>
 </xs:complexType>
 
-<xs:complexType name="CalculateTotalPrice">
-<xs:sequence>
-<xs:element name="idvilla" type="xs:int" minOccurs="0"/>
-<xs:element name="checkin" type="xs:string" minOccurs="0"/>
-<xs:element name="checkout" type="xs:string" minOccurs="0"/>
-</xs:sequence>
-</xs:complexType>
-
-<xs:complexType name="CalculateTotalPriceResponse">
-<xs:sequence>
-<xs:element name="return" type="xs:string" minOccurs="0"/>
-</xs:sequence>
-</xs:complexType>
-
 <xs:complexType name="InsertChat">
 <xs:sequence>
 <xs:element name="email_sender" type="xs:string" minOccurs="0"/>
@@ -276,6 +262,20 @@
 </xs:complexType>
 
 <xs:complexType name="InsertChatResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="CalculateTotalPrice">
+<xs:sequence>
+<xs:element name="idvilla" type="xs:int" minOccurs="0"/>
+<xs:element name="checkin" type="xs:string" minOccurs="0"/>
+<xs:element name="checkout" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="CalculateTotalPriceResponse">
 <xs:sequence>
 <xs:element name="return" type="xs:string" minOccurs="0"/>
 </xs:sequence>
@@ -299,6 +299,18 @@
 </xs:complexType>
 
 <xs:complexType name="DisplayAllClientResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="DisplayContacts">
+<xs:sequence>
+<xs:element name="iduser" type="xs:int" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="DisplayContactsResponse">
 <xs:sequence>
 <xs:element name="return" type="xs:string" minOccurs="0"/>
 </xs:sequence>
@@ -333,18 +345,6 @@
 </xs:complexType>
 
 <xs:complexType name="RegistrationResponse">
-<xs:sequence>
-<xs:element name="return" type="xs:string" minOccurs="0"/>
-</xs:sequence>
-</xs:complexType>
-
-<xs:complexType name="DisplayContacts">
-<xs:sequence>
-<xs:element name="iduser" type="xs:int" minOccurs="0"/>
-</xs:sequence>
-</xs:complexType>
-
-<xs:complexType name="DisplayContactsResponse">
 <xs:sequence>
 <xs:element name="return" type="xs:string" minOccurs="0"/>
 </xs:sequence>

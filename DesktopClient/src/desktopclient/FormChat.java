@@ -10,6 +10,11 @@ import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.net.DatagramPacket;
+import java.net.DatagramSocket;
+import java.net.InetAddress;
+import java.net.InetSocketAddress;
+import java.net.MulticastSocket;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.logging.Level;
@@ -21,14 +26,15 @@ import javax.swing.JOptionPane;
  * @author ohanna
  */
 public class FormChat extends javax.swing.JFrame implements Runnable {
+
     Socket client;
-    String email,displayName;
+    String email, displayName;
     BufferedReader input;
     DataOutputStream output;
     Thread t;
-    Boolean chatWithBot,cekChatHistory;
+    Boolean chatWithBot, cekChatHistory;
     Integer oneTimePrint;
-    
+
     /**
      * Creates new form FormChat
      */
@@ -38,14 +44,13 @@ public class FormChat extends javax.swing.JFrame implements Runnable {
         this.getContentPane().setBackground(Color.WHITE);
         labelBot.setForeground(Color.green);
     }
-    
-    public FormChat(Socket inClient /*String _email, String _displayName*/ )
-    {
+
+    public FormChat(Socket inClient /*String _email, String _displayName*/) {
         try {
             initComponents();
             //coloring jform
             this.getContentPane().setBackground(Color.WHITE);
-            
+
             client = inClient;
             //email = _email;
             //displayName = _displayName;
@@ -55,106 +60,88 @@ public class FormChat extends javax.swing.JFrame implements Runnable {
             cekChatHistory = false;
             oneTimePrint = 0;
             output.writeBytes("JOIN \n");
-            
-            if(t == null)
-            {
-                t = new Thread(this,"client");
+
+            // Audio Socket
+            audioSock = new MulticastSocket(null);
+            audioSock.setReuseAddress(true);
+            audioSock.bind(new InetSocketAddress(InetAddress.getByName("localhost"), 0));
+
+            // Video Socket
+            videoSock = new MulticastSocket(null);
+            videoSock.setReuseAddress(true);
+            videoSock.bind(new InetSocketAddress(InetAddress.getByName("localhost"), 0));
+
+            if (t == null) {
+                t = new Thread(this, "client");
                 t.start();
             }
-            
-            
+
         } catch (IOException ex) {
             Logger.getLogger(FormChat.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-        
+
     }
-    
-    public void ScrollDown(){
+
+    public void ScrollDown() {
         textArea.setCaretPosition(textArea.getText().length());
     }
-    
-    private void ShowChat()
-    {
+
+    private void ShowChat() {
         try {
-            
+
             String message = input.readLine();
-            
-            if(cekChatHistory == false)
-            {
-                if(message.equals("false"))
-                {
-                    
-                }
-                else
-                {
-                    if(message.equals(";;DONE;;"))
-                    {
+
+            if (cekChatHistory == false) {
+                if (message.equals("false")) {
+
+                } else {
+                    if (message.equals(";;DONE;;")) {
                         cekChatHistory = true;
                         textArea.append("----------------------Chat Sebelumnya-----------------------\n\n");
-                    }
-                    else
-                    {
+                    } else {
                         textArea.append(" " + message + "\n");
-                        
+
                     }
-                    
-                    
+
                 }
-                
-                
-            }
-            else if(chatWithBot == true)
-            {
-                if(oneTimePrint == 0)
-                {
+
+            } else if (chatWithBot == true) {
+                if (oneTimePrint == 0) {
                     textArea.append(" ChatBot : \n");
-                    oneTimePrint =1;
+                    oneTimePrint = 1;
                 }
-               
-                if(message.equals(("EndFromBot")))
-                {
+
+                if (message.equals(("EndFromBot"))) {
                     oneTimePrint = 0;
-                   
-                }
-                else
-                {
-                    
+
+                } else {
+
                     textArea.append(" " + message + "\n");
                 }
-                
-                
-               
-            }
-            else
-            {
+
+            } else {
                 System.out.println("80");
                 textArea.append(" Admin : " + message + "\n\n");
-                
+
             }
-            
-            
+
             ScrollDown();
-            
-           
+
         } catch (IOException ex) {
             Logger.getLogger(FormChat.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
-    private void SendChat(String msg)
-    {
+
+    private void SendChat(String msg) {
         try {
             output.writeBytes(email + ";;" + msg + "\n");
             textArea.append(" \n\nMe : " + msg + "\n\n");
             ScrollDown();
-            
+
         } catch (IOException ex) {
             Logger.getLogger(FormChat.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
-    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -169,12 +156,12 @@ public class FormChat extends javax.swing.JFrame implements Runnable {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
+        txtVideoCall = new javax.swing.JLabel();
+        txtAudioCall = new javax.swing.JLabel();
         jLabelChat2 = new javax.swing.JLabel();
         jLabelChat = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
+        btnAudioCall = new javax.swing.JLabel();
+        btnVideoCall = new javax.swing.JLabel();
         panelChat = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         textArea = new javax.swing.JTextArea();
@@ -213,13 +200,23 @@ public class FormChat extends javax.swing.JFrame implements Runnable {
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
 
-        jLabel3.setFont(new java.awt.Font("Rubik", 1, 14)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(29, 212, 121));
-        jLabel3.setText("VIDEO");
+        txtVideoCall.setFont(new java.awt.Font("Rubik", 1, 14)); // NOI18N
+        txtVideoCall.setForeground(new java.awt.Color(29, 212, 121));
+        txtVideoCall.setText("VIDEO");
+        txtVideoCall.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                txtVideoCallMouseClicked(evt);
+            }
+        });
 
-        jLabel5.setFont(new java.awt.Font("Rubik", 1, 14)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(29, 212, 121));
-        jLabel5.setText("AUDIO");
+        txtAudioCall.setFont(new java.awt.Font("Rubik", 1, 14)); // NOI18N
+        txtAudioCall.setForeground(new java.awt.Color(29, 212, 121));
+        txtAudioCall.setText("AUDIO");
+        txtAudioCall.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                txtAudioCallMouseClicked(evt);
+            }
+        });
 
         jLabelChat2.setFont(new java.awt.Font("Rubik", 1, 14)); // NOI18N
         jLabelChat2.setForeground(new java.awt.Color(29, 212, 121));
@@ -237,12 +234,22 @@ public class FormChat extends javax.swing.JFrame implements Runnable {
             }
         });
 
-        jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/desktopclient/icon/AUDIO.png"))); // NOI18N
+        btnAudioCall.setIcon(new javax.swing.ImageIcon(getClass().getResource("/desktopclient/icon/AUDIO.png"))); // NOI18N
+        btnAudioCall.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnAudioCallMouseClicked(evt);
+            }
+        });
 
-        jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/desktopclient/icon/VIDEO.png"))); // NOI18N
-        jLabel8.setToolTipText("");
-        jLabel8.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
-        jLabel8.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnVideoCall.setIcon(new javax.swing.ImageIcon(getClass().getResource("/desktopclient/icon/VIDEO.png"))); // NOI18N
+        btnVideoCall.setToolTipText("");
+        btnVideoCall.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
+        btnVideoCall.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnVideoCall.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnVideoCallMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -255,12 +262,12 @@ public class FormChat extends javax.swing.JFrame implements Runnable {
                     .addComponent(jLabelChat2))
                 .addGap(72, 72, 72)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(jLabel7)
-                    .addComponent(jLabel5))
+                    .addComponent(btnAudioCall)
+                    .addComponent(txtAudioCall))
                 .addGap(72, 72, 72)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel8))
+                    .addComponent(txtVideoCall)
+                    .addComponent(btnVideoCall))
                 .addGap(59, 59, 59))
         );
         jPanel1Layout.setVerticalGroup(
@@ -269,17 +276,17 @@ public class FormChat extends javax.swing.JFrame implements Runnable {
                 .addContainerGap(17, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel7)
+                        .addComponent(btnAudioCall)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(txtAudioCall, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(btnVideoCall, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabelChat, javax.swing.GroupLayout.Alignment.TRAILING))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabelChat2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(txtVideoCall, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(14, 14, 14))
         );
 
@@ -382,9 +389,9 @@ public class FormChat extends javax.swing.JFrame implements Runnable {
                     .addComponent(labelBot))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(panelChat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(43, 43, 43)
+                .addGap(29, 29, 29)
                 .addComponent(buttonClose1)
-                .addContainerGap())
+                .addGap(20, 20, 20))
         );
 
         pack();
@@ -395,34 +402,28 @@ public class FormChat extends javax.swing.JFrame implements Runnable {
         SendChat(msg);
         txtChat.setText("");
         ScrollDown();
-        
+
     }//GEN-LAST:event_btnSendActionPerformed
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
-       
-          
-       
+
+
     }//GEN-LAST:event_formWindowClosed
 
     private void jLabelChatMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelChatMouseClicked
-       
-        try 
-        {
-        
-            if(chatWithBot == false)
-            {
+
+        try {
+
+            if (chatWithBot == false) {
 
                 chatWithBot = true;
-                 textArea.append("\n\n----------ChatBot Aktif----------\n\n");
+                textArea.append("\n\n----------ChatBot Aktif----------\n\n");
                 output.writeBytes("CHATWITHBOT;;true\n");
                 labelBot.setForeground(Color.green);
-                 labelBot.setText("ON");
-                 JOptionPane.showMessageDialog(null, "Anda telah men-Aktifkan ChatBot.");
-               
+                labelBot.setText("ON");
+                JOptionPane.showMessageDialog(null, "Anda telah men-Aktifkan ChatBot.");
 
-            }
-            else
-            {
+            } else {
                 chatWithBot = false;
                 output.writeBytes("CHATWITHBOT;;false\n");
                 labelBot.setForeground(Color.red);
@@ -430,36 +431,28 @@ public class FormChat extends javax.swing.JFrame implements Runnable {
                 JOptionPane.showMessageDialog(null, "Anda telah men-Nonaktifkan ChatBot.\nSekarang anda bisa melakukan chat lansgung dengan admin.");
                 textArea.append("\n\n----------ChatBot Non-Aktif----------\n\n");
             }
-        } 
-        catch (IOException ex) 
-        {
+        } catch (IOException ex) {
             Logger.getLogger(FormChat.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jLabelChatMouseClicked
 
     private void jLabelChat2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelChat2MouseClicked
-         try 
-        {
-        
-            if(chatWithBot == false)
-            {
+        try {
+
+            if (chatWithBot == false) {
 
                 chatWithBot = true;
                 output.writeBytes("CHATWITHBOT;;true\n");
                 labelBot.setForeground(Color.green);
-                 labelBot.setText("ON");
+                labelBot.setText("ON");
 
-            }
-            else
-            {
+            } else {
                 chatWithBot = false;
                 output.writeBytes("CHATWITHBOT;;false\n");
                 labelBot.setForeground(Color.red);
                 labelBot.setText("OFF");
             }
-        } 
-        catch (IOException ex) 
-        {
+        } catch (IOException ex) {
             Logger.getLogger(FormChat.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jLabelChat2MouseClicked
@@ -476,6 +469,114 @@ public class FormChat extends javax.swing.JFrame implements Runnable {
             Logger.getLogger(FormChat.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_buttonClose1ActionPerformed
+
+    byte[] receiveData;
+    byte[] sendData;
+    DatagramPacket sendPacket, receivePacket;
+
+    DatagramSocket audioSock;
+    DatagramSocket videoSock;
+
+
+    private void txtAudioCallMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtAudioCallMouseClicked
+        AudioCall();
+    }//GEN-LAST:event_txtAudioCallMouseClicked
+
+    private void btnAudioCallMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAudioCallMouseClicked
+        AudioCall();
+    }//GEN-LAST:event_btnAudioCallMouseClicked
+
+    private void btnVideoCallMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnVideoCallMouseClicked
+        VideoCall();
+    }//GEN-LAST:event_btnVideoCallMouseClicked
+
+    private void txtVideoCallMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtVideoCallMouseClicked
+        VideoCall();
+    }//GEN-LAST:event_txtVideoCallMouseClicked
+
+    public void AudioCall() {
+        try {
+            if (audioSock.isClosed()) {
+                audioSock = new MulticastSocket(null);
+                audioSock.setReuseAddress(true);
+                audioSock.bind(new InetSocketAddress(InetAddress.getByName("localhost"), 0));
+            }
+            receiveData = new byte[2048];
+            sendData = new byte[2048];
+
+            System.out.println("Sending Data ...");
+            String kirim = "AudioCall";
+            sendData = kirim.getBytes();
+            System.out.println("Data Sent!");
+
+            sendPacket = new DatagramPacket(sendData, sendData.length, InetAddress.getByName("localhost"), 5000);
+            audioSock.send(sendPacket);
+
+            receivePacket = new DatagramPacket(receiveData, receiveData.length);
+            audioSock.receive(receivePacket);
+
+            System.out.println("Data Received!");
+
+            String received = new String(receivePacket.getData(), receivePacket.getOffset(), receivePacket.getLength());
+            if (received.equals("yes")) {
+                AudioClient audioClient = new AudioClient(audioSock, this);
+                audioClient.setVisible(true);
+                this.setVisible(false);
+            } else if (received.equals("no")) {
+                JOptionPane.showMessageDialog(rootPane, "Owner is currently on call");
+            } else if (received.equals("decline")) {
+                JOptionPane.showMessageDialog(rootPane, "Call declined, owner is busy");
+            }
+        } catch (Exception e) {
+            System.out.println("Error Btn Call : " + e);
+        }
+    }
+
+    public void VideoCall() {
+        try {
+            if (audioSock.isClosed()) {
+                audioSock = new MulticastSocket(null);
+                audioSock.setReuseAddress(true);
+                audioSock.bind(new InetSocketAddress(InetAddress.getByName("localhost"), 0));
+
+                videoSock = new MulticastSocket(null);
+                videoSock.setReuseAddress(true);
+                videoSock.bind(new InetSocketAddress(InetAddress.getByName("localhost"), 0));
+            }
+            receiveData = new byte[2048];
+            sendData = new byte[2048];
+
+            System.out.println("Sending Data ...");
+            String kirim = "VideoCall";
+            sendData = kirim.getBytes();
+            System.out.println("Data Sent!");
+
+            sendPacket = new DatagramPacket(sendData, sendData.length, InetAddress.getByName("localhost"), 5000);
+            audioSock.send(sendPacket);
+
+            receivePacket = new DatagramPacket(receiveData, receiveData.length);
+            audioSock.receive(receivePacket);
+
+            System.out.println("Data Received!");
+
+            String received = new String(receivePacket.getData(), receivePacket.getOffset(), receivePacket.getLength());
+            if (received.equals("yes")) {
+
+                videoSock.send(sendPacket);
+
+                VideoAudioClient vaClient = new VideoAudioClient(audioSock, videoSock, this);
+                vaClient.setVisible(true);
+                this.setVisible(false);
+
+            } else if (received.equals("no")) {
+                JOptionPane.showMessageDialog(rootPane, "Owner is currently on call");
+            } else if (received.equals("decline")) {
+                JOptionPane.showMessageDialog(rootPane, "Call declined, owner is busy");
+            }
+        } catch (Exception e) {
+            System.out.println("Error Btn VideoCall : " + e);
+        }
+    }
 
     /**
      * @param args the command line arguments
@@ -514,15 +615,13 @@ public class FormChat extends javax.swing.JFrame implements Runnable {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel btnAudioCall;
     private javax.swing.JButton btnSend;
+    private javax.swing.JLabel btnVideoCall;
     private javax.swing.JButton buttonClose;
     private javax.swing.JButton buttonClose1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JLabel jLabelChat;
     private javax.swing.JLabel jLabelChat2;
@@ -531,13 +630,14 @@ public class FormChat extends javax.swing.JFrame implements Runnable {
     private javax.swing.JLabel labelBot;
     private javax.swing.JPanel panelChat;
     private javax.swing.JTextArea textArea;
+    private javax.swing.JLabel txtAudioCall;
     private javax.swing.JTextField txtChat;
+    private javax.swing.JLabel txtVideoCall;
     // End of variables declaration//GEN-END:variables
 
     @Override
     public void run() {
-        while(true)
-        {
+        while (true) {
             ShowChat();
         }
     }

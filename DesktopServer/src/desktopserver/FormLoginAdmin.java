@@ -19,7 +19,7 @@ public class FormLoginAdmin extends javax.swing.JFrame {
      */
     public FormLoginAdmin() {
         initComponents();
-         this.getContentPane().setBackground(Color.WHITE);
+        this.getContentPane().setBackground(Color.WHITE);
     }
 
     /**
@@ -95,7 +95,7 @@ public class FormLoginAdmin extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(109, 109, 109)
                         .addComponent(jLabel1)))
-                .addContainerGap(63, Short.MAX_VALUE))
+                .addContainerGap(53, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -112,34 +112,29 @@ public class FormLoginAdmin extends javax.swing.JFrame {
                     .addComponent(textPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(buttonLogin)
-                .addContainerGap(112, Short.MAX_VALUE))
+                .addContainerGap(47, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void buttonLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonLoginActionPerformed
-       
+
         String email = textEmail.getText();
         String psw = textPassword.getText();
-        
+
         String[] hasil = loginAdmin(email, psw).split(";;");
-        
-        if(hasil[1].equals("true"))
-        {
+
+        if (hasil[1].equals("true")) {
             FormDashboard fd = new FormDashboard();
             fd.setVisible(true);
             this.dispose();
-            
-        }
-        else
-        {
+
+        } else {
             JOptionPane.showMessageDialog(null, "Your Email or Password is wrong.");
         }
-        
-           
-           
-       
+
+
     }//GEN-LAST:event_buttonLoginActionPerformed
 
     private void textPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textPasswordActionPerformed

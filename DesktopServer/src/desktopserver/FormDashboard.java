@@ -9,6 +9,9 @@ import java.awt.Color;
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.net.DatagramPacket;
+import java.net.DatagramSocket;
+import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
@@ -31,284 +34,354 @@ public class FormDashboard extends javax.swing.JFrame implements Runnable {
     public ArrayList<HandleSocket> clientsArr = new ArrayList<HandleSocket>();
     Thread t;
     HandleSocket hs;
-    public String emailAdmin,idAdmin;
+    public String emailAdmin, idAdmin;
     public Boolean adaClient;
-    
-    
+
     /**
      * Creates new form FormDashboard
      */
     public FormDashboard() {
         try {
             initComponents();
-            
+
             this.ss = new ServerSocket(12345);
             emailAdmin = "toto@gmail.com";
             idAdmin = "3";
             adaClient = false;
             labelBot.setText("NONE");
-            
+
             this.IsiComboBoxVilla();
-            
-            if(t==null)
-            {
-                t = new Thread(this,"Server");
+
+            if (t == null) {
+                t = new Thread(this, "Server");
                 t.start();
             }
-            
+
             TampilReservasi("", "");
             this.getContentPane().setBackground(Color.WHITE);
-            
+
+            waitingForCall = new WaitingForCall(this);
+
         } catch (IOException ex) {
             Logger.getLogger(FormDashboard.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
-     
-    
-    public void ScrollDown(){
+
+    public void ScrollDown() {
         textArea.setCaretPosition(textArea.getText().length());
     }
-    
-    public void ShowChat(String msg)
-    {
+
+    public void ShowChat(String msg) {
         String[] msgSplit = msg.split(";;");
         String content = msgSplit[1];
         String clientName = comboBoxClient.getSelectedItem().toString();
         textArea.append(clientName + " : " + content + "\n");
         ScrollDown();
-        
+
     }
-    
-    public void AddComboBoxClient(String name, String email)
-    {
-                
-        comboBoxClient.addItem( name + " (" + email + ")");
+
+    public void AddComboBoxClient(String name, String email) {
+
+        comboBoxClient.addItem(name + " (" + email + ")");
         adaClient = true;
     }
-    
-    public void RemoveComboBoxClient(String name, String email)
-    {
+
+    public void RemoveComboBoxClient(String name, String email) {
         comboBoxClient.removeItem(name + " (" + email + ")");
     }
-    
-   
-    
-    public String LoginUser(String email,String password)
-    {
+
+    public String LoginUser(String email, String password) {
         String status = "Your username or password is incorrect";
         //Ambil nama panggilan dari webservice 
-        
-        String hasil = loginClient(email,password);
-        
-        if(hasil.contains("true"))
-        {
+
+        String hasil = loginClient(email, password);
+
+        if (hasil.contains("true")) {
             String[] arr = hasil.split(";;");
-            
-        }
-        else
-        {
+
+        } else {
             status = "Your username or password is incorrect";
         }
-        
-        return(status);
+
+        return (status);
     }
-    
-    public void SendChatToOne(String msg)
-    {
-        for(HandleSocket client : clientsArr)
-        {
-            
-            if(comboBoxClient.getSelectedItem().toString().contains(client.email))
-            {
+
+    public void SendChatToOne(String msg) {
+        for (HandleSocket client : clientsArr) {
+
+            if (comboBoxClient.getSelectedItem().toString().contains(client.email)) {
                 client.SendChat(msg);
             }
-            
-            
+
         }
         ScrollDown();
     }
-    
-    public void SimpanChat(String emailSend, String emailReceiv, String msg)
-    {
-        
-        System.out.println(insertChat(emailSend ,emailReceiv,msg ));
+
+    public void SimpanChat(String emailSend, String emailReceiv, String msg) {
+
+//        System.out.println(insertChat(emailSend ,emailReceiv,msg ));
     }
-     
-    public String TampilChat(String emailSend, String emailReceiv, String untukSiapa)
-    {
+
+    public String TampilChat(String emailSend, String emailReceiv, String untukSiapa) {
         String result = displayChat(emailSend, emailReceiv);
-        System.out.println("Hasil result \n" + result);
+//        System.out.println("Hasil result \n" + result);
         String hasil = "";
         String cekName = "admin";
-        
-        if(result.equals("") || result == null)
-        {
-            hasil = "false";
-        }
-        else
-        {
-            String[] arr1 = result.split("\\|\\|");
-        
-            System.out.println("Arr1 \n");
-            System.out.println(Arrays.toString(arr1));
 
+        if (result.equals("") || result == null) {
+            hasil = "false";
+        } else {
+            String[] arr1 = result.split("\\|\\|");
+
+//            System.out.println("Arr1 \n");
+//            System.out.println(Arrays.toString(arr1));
             untukSiapa = untukSiapa.toLowerCase();
 
-
-
-            if(untukSiapa.equals("admin"))
-            {
-                for(Integer i =0; i<arr1.length; i++)
-                {
+            if (untukSiapa.equals("admin")) {
+                for (Integer i = 0; i < arr1.length; i++) {
                     String[] arr2 = arr1[i].split(";;");
 
-                    if(arr2[1].equals("3"))
-                    {
-                        if(cekName.equals("client"))
-                        {
+                    if (arr2[1].equals("3")) {
+                        if (cekName.equals("client")) {
                             cekName = "admin";
                             hasil += "\n";
                         }
 
-                        hasil += "Admin : " + arr2[2] ;
-                    }
-                    else
-                    {
-                        if(cekName.equals("admin"))
-                        {
+                        hasil += "Admin : " + arr2[2];
+                    } else {
+                        if (cekName.equals("admin")) {
                             cekName = "client";
                             hasil += "\n";
                         }
-                        hasil += comboBoxClient.getSelectedItem().toString() + " : " + arr2[2] ;
+                        hasil += comboBoxClient.getSelectedItem().toString() + " : " + arr2[2];
                     }
 
-                    if(i!=arr1.length-1)
-                    {
+                    if (i != arr1.length - 1) {
                         hasil += "\n";
                     }
                 }
-            }
-            else
-            {
-                for(Integer i =0; i<arr1.length; i++)
-                {
+            } else {
+                for (Integer i = 0; i < arr1.length; i++) {
                     String[] arr2 = arr1[i].split(";;");
-                    
-                    if(arr2[1].equals("3"))
-                    {
-                        if(cekName.equals("client"))
-                        {
+
+                    if (arr2[1].equals("3")) {
+                        if (cekName.equals("client")) {
                             cekName = "admin";
                             hasil += "\n\n";
                         }
                         cekName = "admin";
-                        hasil += "Admin : " + arr2[2] ;
+                        hasil += "Admin : " + arr2[2];
 
-                    }
-                    else
-                    {
-                        if(cekName.equals("admin"))
-                        {
+                    } else {
+                        if (cekName.equals("admin")) {
                             cekName = "client";
                             hasil += "\n\n";
                         }
-                        
-                        hasil += "Me : " + arr2[2] ;
+
+                        hasil += "Me : " + arr2[2];
                     }
 
-                     if(i!=arr1.length-1)
-                    {
+                    if (i != arr1.length - 1) {
                         hasil += "\n";
                     }
                 }
             }
             //hasil += "========================================\n";
         }
-        
-        
+
         return hasil;
-        
-       
+
     }
-    
-    public void IsiComboBoxVilla()
-    {
+
+    public void IsiComboBoxVilla() {
         String result = displayVillaAll();
         String[] arr1 = result.split("\\|\\|");
-        System.out.println(Arrays.toString(arr1));
-        
-        for(Integer i=0;i<arr1.length; i++)
-        {
+//        System.out.println(Arrays.toString(arr1));
+
+        for (Integer i = 0; i < arr1.length; i++) {
             String[] arr2 = arr1[i].split(";;");
             comboBoxVillaType.addItem(arr2[1] + ")" + arr2[2] + "\n");
         }
-        
+
     }
-    
-    public String TampilSemuaVilla()
-    {
+
+    public String TampilSemuaVilla() {
         String result = displayVillaAll();
         String[] arr1 = result.split("\\|\\|");
         String hasil = "";
-        
-        
-        for(Integer i=0;i<arr1.length; i++)
-        {
+
+        for (Integer i = 0; i < arr1.length; i++) {
             String[] arr2 = arr1[i].split(";;");
             hasil += arr2[1] + ")" + arr2[2] + "\n";
         }
         return hasil;
-        
+
     }
 
-    public String CekAvaible(String checkin, String checkout, String idVilla)
-    {
+    public String CekAvaible(String checkin, String checkout, String idVilla) {
         Integer id = Integer.parseInt(idVilla);
-        
+
         String hasil = checkAvailability(id, checkin, checkout);
         String[] arr = hasil.split(";;");
         return arr[1];
-        
+
     }
-    
-    
-    public void TampilReservasi(String kriteria, String dicari)
-    {
-        DefaultTableModel model = (DefaultTableModel) tableOrder.getModel();   
+
+    public void TampilReservasi(String kriteria, String dicari) {
+        DefaultTableModel model = (DefaultTableModel) tableOrder.getModel();
         model.setRowCount(0);
         tableOrder.getColumnModel().getColumn(0).setPreferredWidth(35);
         tableOrder.getColumnModel().getColumn(5).setPreferredWidth(30);
         String[] arr1 = displayReservationAll(kriteria, dicari).split("\\|\\|");
-        
+
         if (arr1.length != 0) {
-             for (int i = 0; i < arr1.length; i++) {
-            System.out.println(arr1[i] + "\n");
-            String[] arr2 = arr1[i].split(";;");
-            System.out.println("\n\napa null : " + arr2[9] + "\n\n");
-            Object[] row = {arr2[1],arr2[13],arr2[11],arr2[3],arr2[4],arr2[5]};
-            model.addRow(row);
-            
+            for (int i = 0; i < arr1.length; i++) {
+//            System.out.println(arr1[i] + "\n");
+                String[] arr2 = arr1[i].split(";;");
+//            System.out.println("\n\napa null : " + arr2[9] + "\n\n");
+                Object[] row = {arr2[1], arr2[13], arr2[11], arr2[3], arr2[4], arr2[5]};
+                model.addRow(row);
+
+            }
         }
-        }
-        
-       
-        
+
         //[1]idreservation,[2]res_timestamp,[3]chcekin_date,[4]checkout_date,[5]status,[6]total_guest,[7]total_price,[8]notes,[19]url_bukti_pembayaran,[10]idvilla,
         //[11]villa_name,[12]iduser,[13]fullname,[14]display_name[15],phone_number,[16]email,[17]no_ktp;;
         //333;;2021-06-14 16:35:00.0;;2021-06-15;;2021-06-17;;PENDING;;2;;3600000;;Tolong sediakan grill;;null;;1;;The La Llorona;;1;;Jasti Ohanna;;jasti;;08123456789;;jasti@gmail.com;;3315060711900001
-
-
-        
-        
-        
-        
     }
-    
-    
-    
-    
-    
+
+    WaitingForCall waitingForCall;
+    DatagramSocket datagramSocket;
+
+    DatagramPacket sendPacket;
+    DatagramPacket incomingPacket;
+
+    boolean onCall = false;
+
+    public void setOnCall(boolean _onCall) {
+        onCall = _onCall;
+    }
+
+    class WaitingForCall implements Runnable {
+
+        Thread callThread;
+        FormDashboard parent;
+
+        byte[] sendData;
+        byte[] receiveData;
+
+        public WaitingForCall(FormDashboard _parent) {
+            this.parent = _parent;
+            try {
+                datagramSocket = new DatagramSocket(5000);
+                if (callThread == null) {
+                    callThread = new Thread(this, "CallWaitingThread");
+                    callThread.start();
+                }
+            } catch (Exception ex) {
+                System.out.println("Datagram Socket Error : " + ex);
+            }
+        }
+
+        @Override
+        public void run() {
+            while (true) {
+                byte[] sendData = new byte[2048];
+                byte[] receiveData = new byte[2048];
+
+                try {
+                    incomingPacket = new DatagramPacket(receiveData, receiveData.length);
+                    System.out.println("Waiting For Client Packet");
+                    datagramSocket.receive(incomingPacket);
+
+                    String received = new String(incomingPacket.getData(), incomingPacket.getOffset(), incomingPacket.getLength());
+                    System.out.println("Data Received!");
+                    System.out.println("Data : " + received);
+
+                    if (received.contains("AudioCall")) {
+
+                        InetAddress ipClient = incomingPacket.getAddress();
+                        int portClient = incomingPacket.getPort();
+
+                        if (parent.onCall == false) {
+                            // Biar saat lagi request telephon, gabisa di call sm orang lain
+                            parent.setOnCall(true);
+                            int answer = JOptionPane.showConfirmDialog(parent, "Anda di telephon oleh " + ipClient + " dari port " + portClient, "Call Masuk", JOptionPane.YES_NO_OPTION);
+
+                            if (answer == 0) { // Yes
+                                String kirim = "yes";
+                                sendData = kirim.getBytes();
+                                sendPacket = new DatagramPacket(sendData, sendData.length, ipClient, portClient);
+                                datagramSocket.send(sendPacket);
+
+                                AudioServer form = new AudioServer(ipClient, portClient, parent);
+                                form.setVisible(true);
+                                parent.setVisible(false);
+                            } else {
+                                parent.setOnCall(false);
+                                String kirim = "decline";
+                                sendData = kirim.getBytes();
+                                sendPacket = new DatagramPacket(sendData, sendData.length, ipClient, portClient);
+                                datagramSocket.send(sendPacket);
+                            }
+
+                        } else {
+                            String kirim = "no";
+                            sendData = kirim.getBytes();
+                            sendPacket = new DatagramPacket(sendData, sendData.length, ipClient, portClient);
+                            datagramSocket.send(sendPacket);
+                        }
+
+                    } else if (received.contains("VideoCall")) {
+                        InetAddress ipAudioClient = incomingPacket.getAddress();
+                        int portAudioClient = incomingPacket.getPort();
+
+                        if (parent.onCall == false) {
+                            // Biar saat lagi request telephon, gabisa di call sm orang lain
+                            parent.setOnCall(true);
+                            int answer = JOptionPane.showConfirmDialog(parent, "Anda di telephon oleh " + ipAudioClient + " dari port " + portAudioClient, "Call Masuk", JOptionPane.YES_NO_OPTION);
+
+                            if (answer == 0) { // Yes
+                                String kirim = "yes";
+                                sendData = kirim.getBytes();
+                                sendPacket = new DatagramPacket(sendData, sendData.length, ipAudioClient, portAudioClient);
+                                datagramSocket.send(sendPacket);
+
+                                System.out.println("Waiting for another packet");
+                                datagramSocket.receive(incomingPacket);
+                                System.out.println("Packet received");
+                                InetAddress ipVideoClient = incomingPacket.getAddress();
+                                int portVideoClient = incomingPacket.getPort();
+
+                                System.out.println("Anda di telephon oleh " + String.valueOf(ipAudioClient) + " dari port " + String.valueOf(portAudioClient));
+                                System.out.println("Lalu di vidcall oleh " + String.valueOf(ipVideoClient) + " dari port " + String.valueOf(portVideoClient));
+
+                                VideoAudioServer form = new VideoAudioServer(ipAudioClient, portAudioClient, ipVideoClient, portVideoClient, parent);
+                                form.setVisible(true);
+                                parent.setVisible(false);
+                            } else {
+                                parent.setOnCall(false);
+                                String kirim = "decline";
+                                sendData = kirim.getBytes();
+                                sendPacket = new DatagramPacket(sendData, sendData.length, ipAudioClient, portAudioClient);
+                                datagramSocket.send(sendPacket);
+                            }
+
+                        } else {
+                            String kirim = "no";
+                            sendData = kirim.getBytes();
+                            sendPacket = new DatagramPacket(sendData, sendData.length, ipAudioClient, portAudioClient);
+                            datagramSocket.send(sendPacket);
+                        }
+                    }
+                } catch (IOException ex) {
+                    System.out.println("Threading Error : " + ex);
+                }
+            }
+        }
+
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -710,22 +783,19 @@ public class FormDashboard extends javax.swing.JFrame implements Runnable {
         textChat.setText("");
         String info = comboBoxClient.getSelectedItem().toString();
         String[] arr = info.split("\\(");
-        String emailDest = arr[1].substring(0,arr[1].length()-1);
-        System.out.println("Email Dest : " + emailDest);
+        String emailDest = arr[1].substring(0, arr[1].length() - 1);
+//        System.out.println("Email Dest : " + emailDest);
         this.SimpanChat(emailAdmin, emailDest, msg);
-      
-        
-        
-        
+
+
     }//GEN-LAST:event_buttonSendActionPerformed
 
     private void comboBoxClientItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_comboBoxClientItemStateChanged
-        
-        
+
         String info = comboBoxClient.getSelectedItem().toString();
 
         String[] arr = info.split("\\(");
-        String emailDest = arr[1].substring(0,arr[1].length()-1);
+        String emailDest = arr[1].substring(0, arr[1].length() - 1);
 
         textEmail.setText(emailDest);
 
@@ -737,129 +807,106 @@ public class FormDashboard extends javax.swing.JFrame implements Runnable {
         textArea.append("----------------------Chat Sebelumnya-----------------------\n\n");
         ScrollDown();
 
-        for(HandleSocket client : clientsArr)
-        {
+        for (HandleSocket client : clientsArr) {
 
-            if(comboBoxClient.getSelectedItem().toString().contains(client.email))
-            {
-                if(client.chatWithBot == false)
-                {
+            if (comboBoxClient.getSelectedItem().toString().contains(client.email)) {
+                if (client.chatWithBot == false) {
                     labelBot.setText("OFF");
                     labelBot.setForeground(Color.red);
-                }
-                else
-                {
+                } else {
                     labelBot.setText("ON");
                     labelBot.setForeground(Color.green);
                 }
             }
 
-
         }
-            
+
     }//GEN-LAST:event_comboBoxClientItemStateChanged
 
     private void buttonCheckActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonCheckActionPerformed
-        String checkIn = ((JTextField)dateCheckIn.getDateEditor().getUiComponent()).getText();
-        String checkOut = ((JTextField)dateCheckOut.getDateEditor().getUiComponent()).getText();
-        System.out.println("601");
+        String checkIn = ((JTextField) dateCheckIn.getDateEditor().getUiComponent()).getText();
+        String checkOut = ((JTextField) dateCheckOut.getDateEditor().getUiComponent()).getText();
+//        System.out.println("601");
         String[] arr = comboBoxVillaType.getSelectedItem().toString().split("\\)");
         Integer villaId = Integer.parseInt(arr[0]);
-        System.out.println("604");
+//        System.out.println("604");
         String[] arr2 = checkAvailability(villaId, checkIn, checkOut).split(";;");
         String status = "";
-        
-        if(arr2[1].equals("true"))
-        {
+
+        if (arr2[1].equals("true")) {
             status = "Villa Tersedia untuk Pemesanan";
-        }
-        else if(arr2[1].equals("false"))
-        {
+        } else if (arr2[1].equals("false")) {
             status = "Villa Tidak Tersedia";
-        }
-        else
-        {
+        } else {
             status = arr2[1];
         }
         JOptionPane.showMessageDialog(null, status);
-       
+
     }//GEN-LAST:event_buttonCheckActionPerformed
 
     private void buttonBookActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonBookActionPerformed
-        String checkIn = ((JTextField)dateCheckIn.getDateEditor().getUiComponent()).getText();
-        String checkOut = ((JTextField)dateCheckOut.getDateEditor().getUiComponent()).getText();
+        String checkIn = ((JTextField) dateCheckIn.getDateEditor().getUiComponent()).getText();
+        String checkOut = ((JTextField) dateCheckOut.getDateEditor().getUiComponent()).getText();
         String[] arr = comboBoxVillaType.getSelectedItem().toString().split("\\)");
         Integer villaId = Integer.parseInt(arr[0]);
         String emailClient = textEmail.getText();
         Integer totalGuest = textTotalGuest.getValue();
         Integer idClient = 0;
         String clientNote = textNotes.getText();
-        
-        for(HandleSocket clt : clientsArr)
-        {
-            if(clt.email.equals(emailClient))
-            {
+
+        for (HandleSocket clt : clientsArr) {
+            if (clt.email.equals(emailClient)) {
                 idClient = Integer.parseInt(clt.idUser);
             }
         }
-        
-        String[] arr2 = insertReservation(checkIn, checkOut,totalGuest, clientNote, idClient, villaId).split(";;");
+
+        String[] arr2 = insertReservation(checkIn, checkOut, totalGuest, clientNote, idClient, villaId).split(";;");
         String status = "";
-        
-        if(arr2[1].equals("true"))
-        {
+
+        if (arr2[1].equals("true")) {
             status = "Villa berhasil dibooking";
-            SendChatToOne(status + "\n Id Nota adalah  " +  arr2[2]);
-            textArea.append("Admin : " + status + "\nAdmin : Id Nota adalah  " +  arr2[2] + "\n");
+            SendChatToOne(status + "\n Id Nota adalah  " + arr2[2]);
+            textArea.append("Admin : " + status + "\nAdmin : Id Nota adalah  " + arr2[2] + "\n");
             SimpanChat(emailAdmin, emailClient, status);
-            SimpanChat(emailAdmin, emailClient, "Id Nota adalah  " +  arr2[2]);
-        }
-        else if(arr2[1].equals("false"))
-        {
+            SimpanChat(emailAdmin, emailClient, "Id Nota adalah  " + arr2[2]);
+        } else if (arr2[1].equals("false")) {
             status = "Mohon maaf, villa Tidak Tersedia";
             SendChatToOne(status);
-        }
-        else
-        {
+        } else {
             status = arr2[1];
         }
-        
-        JOptionPane.showMessageDialog(null,status + "\nOrder ID : " + arr2[2]);
-        
-      
+
+        JOptionPane.showMessageDialog(null, status + "\nOrder ID : " + arr2[2]);
+
+
     }//GEN-LAST:event_buttonBookActionPerformed
 
     private void tableOrderMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableOrderMouseClicked
-        JTable source = (JTable)evt.getSource();
-        int row = source.rowAtPoint( evt.getPoint() );
-        String id = source.getModel().getValueAt(row, 0)+"";
-        
+        JTable source = (JTable) evt.getSource();
+        int row = source.rowAtPoint(evt.getPoint());
+        String id = source.getModel().getValueAt(row, 0) + "";
+
         String result = displayReservationAll("idreservation", id);
-        
+
         FormOrderDetail fod = new FormOrderDetail(result);
         fod.setVisible(true);
-        
+
     }//GEN-LAST:event_tableOrderMouseClicked
 
     private void buttonSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonSearchActionPerformed
         String kriteria = "";
         String dicari = textSearch.getText();
-        
-        if(comboBoxFindOrder.getSelectedItem().toString().equals("Client Name"))
-        {
+
+        if (comboBoxFindOrder.getSelectedItem().toString().equals("Client Name")) {
             kriteria = "fullname";
-            System.out.println("Client Name");
-        }
-        else if(comboBoxFindOrder.getSelectedItem().toString().equals("Villa"))
-        {
+//            System.out.println("Client Name");
+        } else if (comboBoxFindOrder.getSelectedItem().toString().equals("Villa")) {
             kriteria = "name";
-            System.out.println("Villa");
-        }
-        else
-        {
+//            System.out.println("Villa");
+        } else {
             kriteria = comboBoxFindOrder.getSelectedItem().toString();
         }
-        
+
         TampilReservasi(kriteria, dicari);
     }//GEN-LAST:event_buttonSearchActionPerformed
 
@@ -868,32 +915,23 @@ public class FormDashboard extends javax.swing.JFrame implements Runnable {
     }//GEN-LAST:event_buttonRefreshActionPerformed
 
     private void textSearchKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textSearchKeyTyped
-       
+
         String kriteria = "";
         String dicari = textSearch.getText();
-        
-        if(comboBoxFindOrder.getSelectedItem().toString().equals("Client Name"))
-        {
+
+        if (comboBoxFindOrder.getSelectedItem().toString().equals("Client Name")) {
             kriteria = "fullname";
-            
-        }
-        else if(comboBoxFindOrder.getSelectedItem().toString().equals("Villa"))
-        {
+
+        } else if (comboBoxFindOrder.getSelectedItem().toString().equals("Villa")) {
             kriteria = "name";
-           
-        }
-        else
-        {
+
+        } else {
             kriteria = comboBoxFindOrder.getSelectedItem().toString();
         }
-        
+
         TampilReservasi(kriteria, dicari);
     }//GEN-LAST:event_textSearchKeyTyped
 
-
-    
-    
-    
     /**
      * @param args the command line arguments
      */
@@ -968,9 +1006,8 @@ public class FormDashboard extends javax.swing.JFrame implements Runnable {
 
     @Override
     public void run() {
-        while(true)
-        {
-           
+        while (true) {
+
             try {
                 client = ss.accept();
                 HandleSocket hs = new HandleSocket(this, client);
@@ -978,8 +1015,7 @@ public class FormDashboard extends javax.swing.JFrame implements Runnable {
             } catch (IOException ex) {
                 Logger.getLogger(FormDashboard.class.getName()).log(Level.SEVERE, null, ex);
             }
-                
-           
+
         }
     }
 
@@ -994,8 +1030,6 @@ public class FormDashboard extends javax.swing.JFrame implements Runnable {
         com.ubaya.disprog.WebServiceServer port = service.getWebServiceServerPort();
         return port.insertChat(emailSender, emailReceiver, messages);
     }
-
-    
 
     public static String displayVillaAll() {
         com.ubaya.disprog.WebServiceServer_Service service = new com.ubaya.disprog.WebServiceServer_Service();
@@ -1032,8 +1066,6 @@ public class FormDashboard extends javax.swing.JFrame implements Runnable {
         com.ubaya.disprog.WebServiceServer port = service.getWebServiceServerPort();
         return port.displayReservationAll(kriteria, dicari);
     }
-
-   
 
     public static String changeStatus(java.lang.String status, java.lang.Integer idreservation) {
         com.ubaya.disprog.WebServiceServer_Service service = new com.ubaya.disprog.WebServiceServer_Service();
