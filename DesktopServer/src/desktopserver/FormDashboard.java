@@ -853,32 +853,42 @@ public class FormDashboard extends javax.swing.JFrame implements Runnable {
         Integer totalGuest = textTotalGuest.getValue();
         Integer idClient = 0;
         String clientNote = textNotes.getText();
+     
+        String hasil = getUserIdBasedOnEmail(emailClient);
+        if(hasil.contains("false"))
+        {
+            JOptionPane.showMessageDialog(null, "Tidak ditemukan user dengan alamat email : " + emailClient);
+        }
+        else
+        {
+            String[] arrResult = hasil.split(";;");
+            idClient = Integer.parseInt(arrResult[1]);
+                    
+                    
+            String[] arr2 = insertReservation(checkIn, checkOut, totalGuest, clientNote, idClient, villaId).split(";;");
+            String status = "";
 
-        for (HandleSocket clt : clientsArr) {
-            if (clt.email.equals(emailClient)) {
-                idClient = Integer.parseInt(clt.idUser);
+            if (arr2[1].equals("true")) {
+                status = "Villa berhasil dibooking";
+                //SendChatToOne(status + "\n Id Nota adalah  " + arr2[2]);
+                //textArea.append("Admin : " + status + "\nAdmin : Id Nota adalah  " + arr2[2] + "\n");
+                //SimpanChat(emailAdmin, emailClient, status);
+                //SimpanChat(emailAdmin, emailClient, "Id Nota adalah  " + arr2[2]);
+            } else if (arr2[1].equals("false")) {
+                status = "Mohon maaf, villa Tidak Tersedia";
+                //SendChatToOne(status);
+            } else {
+                status = arr2[1];
             }
+
+            JOptionPane.showMessageDialog(null, status + "\nOrder ID : " + arr2[2]);
         }
+        
+        
 
-        String[] arr2 = insertReservation(checkIn, checkOut, totalGuest, clientNote, idClient, villaId).split(";;");
-        String status = "";
+        
 
-        if (arr2[1].equals("true")) {
-            status = "Villa berhasil dibooking";
-            SendChatToOne(status + "\n Id Nota adalah  " + arr2[2]);
-            textArea.append("Admin : " + status + "\nAdmin : Id Nota adalah  " + arr2[2] + "\n");
-            SimpanChat(emailAdmin, emailClient, status);
-            SimpanChat(emailAdmin, emailClient, "Id Nota adalah  " + arr2[2]);
-        } else if (arr2[1].equals("false")) {
-            status = "Mohon maaf, villa Tidak Tersedia";
-            SendChatToOne(status);
-        } else {
-            status = arr2[1];
-        }
-
-        JOptionPane.showMessageDialog(null, status + "\nOrder ID : " + arr2[2]);
-
-
+        
     }//GEN-LAST:event_buttonBookActionPerformed
 
     private void tableOrderMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableOrderMouseClicked
@@ -1077,5 +1087,11 @@ public class FormDashboard extends javax.swing.JFrame implements Runnable {
         com.ubaya.disprog.WebServiceServer_Service service = new com.ubaya.disprog.WebServiceServer_Service();
         com.ubaya.disprog.WebServiceServer port = service.getWebServiceServerPort();
         return port.updateReservation(email, totalGuest, notes, orderId);
+    }
+
+    private static String getUserIdBasedOnEmail(java.lang.String email) {
+        com.ubaya.disprog.WebServiceServer_Service service = new com.ubaya.disprog.WebServiceServer_Service();
+        com.ubaya.disprog.WebServiceServer port = service.getWebServiceServerPort();
+        return port.getUserIdBasedOnEmail(email);
     }
 }

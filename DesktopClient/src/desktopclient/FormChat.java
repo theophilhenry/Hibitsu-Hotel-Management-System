@@ -19,6 +19,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 /**
@@ -75,6 +76,9 @@ public class FormChat extends javax.swing.JFrame implements Runnable {
                 t = new Thread(this, "client");
                 t.start();
             }
+            //FormChat fc = (FormChat)this;
+            //fc.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            
 
         } catch (IOException ex) {
             Logger.getLogger(FormChat.class.getName()).log(Level.SEVERE, null, ex);
@@ -464,7 +468,10 @@ public class FormChat extends javax.swing.JFrame implements Runnable {
     private void buttonClose1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonClose1ActionPerformed
         try {
             output.writeBytes("LOGOUT \n");
+            
+            
             this.dispose();
+           
         } catch (IOException ex) {
             Logger.getLogger(FormChat.class.getName()).log(Level.SEVERE, null, ex);
         }
