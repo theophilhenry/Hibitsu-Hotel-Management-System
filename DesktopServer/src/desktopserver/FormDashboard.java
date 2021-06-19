@@ -428,7 +428,7 @@ public class FormDashboard extends javax.swing.JFrame implements Runnable {
         jLabel10 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setLocation(new java.awt.Point(850, 200));
+        setLocation(new java.awt.Point(900, 150));
 
         jLabel1.setFont(new java.awt.Font("Rubik", 1, 24)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(29, 212, 121));

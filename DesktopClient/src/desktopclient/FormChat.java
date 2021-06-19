@@ -125,7 +125,7 @@ public class FormChat extends javax.swing.JFrame implements Runnable {
 
             } else {
                 System.out.println("80");
-                textArea.append(" Admin : " + message + "\n\n");
+                textArea.append(" Admin : " + message + "\n");
 
             }
 
@@ -139,7 +139,14 @@ public class FormChat extends javax.swing.JFrame implements Runnable {
     private void SendChat(String msg) {
         try {
             output.writeBytes(email + ";;" + msg + "\n");
-            textArea.append(" \n\nMe : " + msg + "\n\n");
+            if(chatWithBot == true)
+            {
+                textArea.append(" \nMe : " + msg + "\n\n");
+            }
+            else
+            {
+                textArea.append(" Me : " + msg + "\n");
+            }
             ScrollDown();
 
         } catch (IOException ex) {
@@ -207,6 +214,7 @@ public class FormChat extends javax.swing.JFrame implements Runnable {
         txtVideoCall.setFont(new java.awt.Font("Rubik", 1, 14)); // NOI18N
         txtVideoCall.setForeground(new java.awt.Color(29, 212, 121));
         txtVideoCall.setText("VIDEO");
+        txtVideoCall.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         txtVideoCall.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 txtVideoCallMouseClicked(evt);
@@ -216,6 +224,7 @@ public class FormChat extends javax.swing.JFrame implements Runnable {
         txtAudioCall.setFont(new java.awt.Font("Rubik", 1, 14)); // NOI18N
         txtAudioCall.setForeground(new java.awt.Color(29, 212, 121));
         txtAudioCall.setText("AUDIO");
+        txtAudioCall.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         txtAudioCall.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 txtAudioCallMouseClicked(evt);
@@ -225,6 +234,7 @@ public class FormChat extends javax.swing.JFrame implements Runnable {
         jLabelChat2.setFont(new java.awt.Font("Rubik", 1, 14)); // NOI18N
         jLabelChat2.setForeground(new java.awt.Color(29, 212, 121));
         jLabelChat2.setText("CHAT");
+        jLabelChat2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jLabelChat2.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jLabelChat2MouseClicked(evt);
@@ -232,6 +242,7 @@ public class FormChat extends javax.swing.JFrame implements Runnable {
         });
 
         jLabelChat.setIcon(new javax.swing.ImageIcon(getClass().getResource("/desktopclient/icon/CHAT.png"))); // NOI18N
+        jLabelChat.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jLabelChat.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jLabelChatMouseClicked(evt);
@@ -239,6 +250,7 @@ public class FormChat extends javax.swing.JFrame implements Runnable {
         });
 
         btnAudioCall.setIcon(new javax.swing.ImageIcon(getClass().getResource("/desktopclient/icon/AUDIO.png"))); // NOI18N
+        btnAudioCall.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnAudioCall.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnAudioCallMouseClicked(evt);
@@ -248,6 +260,7 @@ public class FormChat extends javax.swing.JFrame implements Runnable {
         btnVideoCall.setIcon(new javax.swing.ImageIcon(getClass().getResource("/desktopclient/icon/VIDEO.png"))); // NOI18N
         btnVideoCall.setToolTipText("");
         btnVideoCall.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
+        btnVideoCall.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnVideoCall.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btnVideoCall.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {

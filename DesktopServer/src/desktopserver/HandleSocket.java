@@ -104,12 +104,17 @@ public class HandleSocket extends Thread{
                 }
                 else if(tmp.contains("CHATWITHBOT"))
                 {
+                    
+                    System.out.println("108");
+                    
                     String selectedComboBox =  parent.comboBoxClient.getSelectedItem().toString();
                     String thisClient = email ;
+                    botStep = 0;
+                    statusBot = "";
                     System.out.println("MASUK CHAT WITH BOT");
                     if(tmp.contains("true"))
                     {
-                        chatWithBot = false;
+                        chatWithBot = true;
                         String msgWelcome = "Selamat Datang Kembali!\n"
                             + "Jika ingin berbicara dengan saya(BotChat),\nanda dapat melakukannya dengan memilih salah satu angka dari opsi di bawah :\n" 
                             + "1) Reservasi\n" 
@@ -131,8 +136,7 @@ public class HandleSocket extends Thread{
                     }
                     else
                     {
-                        botStep = 0;
-                        statusBot = "";
+                        
                         chatWithBot = false;
                         
                         if(selectedComboBox.contains(thisClient))

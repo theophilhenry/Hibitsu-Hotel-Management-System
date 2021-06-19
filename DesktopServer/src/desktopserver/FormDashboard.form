@@ -4,7 +4,7 @@
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="3"/>
     <Property name="location" type="java.awt.Point" editor="org.netbeans.beaninfo.editors.PointEditor">
-      <Point value="[850, 200]"/>
+      <Point value="[900, 150]"/>
     </Property>
   </Properties>
   <SyntheticProperties>
