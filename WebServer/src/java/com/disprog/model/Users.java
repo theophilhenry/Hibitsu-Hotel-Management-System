@@ -228,16 +228,51 @@ public class Users extends DbConnection {
 
                 //nanti mau diatur lagi return nya seperti apa
                 String ket = "[1]hasilDisplayClient,[2]fullname,[3]display_name,[4]phone_number,[5]email,[6]no_ktp;;";
-                String hasil="";
+                String hasil = "";
                 while (result.next()) {
-                     hasil = hasil +ket + String.valueOf(result.getInt("iduser"))+";;"
-                            +result.getString("fullname")+";;"
-                            +result.getString("display_name")+";;"
-                            +result.getString("phone_number")+";;"
-                            +result.getString("email")+";;"
-                            +result.getString("no_ktp")+";;";
+                    hasil = hasil + ket + String.valueOf(result.getInt("iduser")) + ";;"
+                            + result.getString("fullname") + ";;"
+                            + result.getString("display_name") + ";;"
+                            + result.getString("phone_number") + ";;"
+                            + result.getString("email") + ";;"
+                            + result.getString("no_ktp") + ";;";
                 }
                 return hasil;
+            } else {
+                System.out.println("Tidak terkoneksi database");
+            }
+        } catch (Exception ex) {
+            System.out.println("Error Login" + ex);
+        }
+        return null;
+    }
+
+    public String GetUserIdBasedOnEmail(String email) {
+        try {
+            if (!connect.isClosed()) {
+                //set query
+                String query = "SELECT * "
+                        + "FROM `users` WHERE `role`='CLIENT' and `email`=?";
+                //set preparedStatement
+                PreparedStatement sql = (PreparedStatement) connect.prepareStatement(query);
+                sql.setString(1, email);
+
+                result = sql.executeQuery();
+                //nanti mau diatur lagi return nya seperti apa
+
+                String hasil = "";
+                if (result.next()) {
+                    String ket = "[1]hasilDisplayClient,[2]fullname,[3]display_name,[4]phone_number,[5]email,[6]no_ktp;;";
+                    return ket + String.valueOf(result.getInt("iduser")) + ";;"
+                            + result.getString("fullname") + ";;"
+                            + result.getString("display_name") + ";;"
+                            + result.getString("phone_number") + ";;"
+                            + result.getString("email") + ";;"
+                            + result.getString("no_ktp") + ";;";
+                } else {
+                    String ket = "[1]hasilDisplayClient;;";
+                    return ket+false;
+                }
             } else {
                 System.out.println("Tidak terkoneksi database");
             }

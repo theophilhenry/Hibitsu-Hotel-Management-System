@@ -88,7 +88,7 @@ public class WebServiceServer extends DbConnection {
         }
         return null;
     }
-    
+
     @WebMethod(operationName = "CalculateTotalPrice")
     public String CalculateTotalPrice(@WebParam(name = "idvilla") Integer idvilla,
             @WebParam(name = "checkin") String checkIn,
@@ -243,20 +243,15 @@ public class WebServiceServer extends DbConnection {
     //[ORDERDETAILS]
     @WebMethod(operationName = "UpdateReservation")
     public String UpdateReservation(@WebParam(name = "email") String email,
-            @WebParam(name = "checkin_date") String checkIn,
-            @WebParam(name = "checkout_date") String checkOut,
             @WebParam(name = "total_guest") Integer total_guest,
             @WebParam(name = "notes") String notes,
-            @WebParam(name = "iduser") Integer iduser,
-            @WebParam(name = "idvilla") Integer idvilla,
-             @WebParam(name = "orderId") Integer orderId) {
+            @WebParam(name = "orderId") Integer orderId) {
+            String resultStr = "";
         try {
-            Date checkInDate = Date.valueOf(checkIn);
-            Date checkOutDate = Date.valueOf(checkOut);
-            String result = model_Reservation.UpdateReservation(email, checkInDate, checkOutDate, total_guest, notes, iduser,orderId);
-            return result;
+            resultStr = model_Reservation.UpdateReservation(email,total_guest, notes, orderId);
+            return resultStr;
         } catch (Exception ex) {
-            System.out.println("Error Insert Chat: " + ex);
+            System.out.println("Error UpdateReservation: " + ex +";;"+resultStr);
         }
         return null;
     }
@@ -311,6 +306,17 @@ public class WebServiceServer extends DbConnection {
             return result;
         } catch (Exception ex) {
             System.out.println("Error Display Contacts: " + ex);
+        }
+        return null;
+    }
+
+    @WebMethod(operationName = "GetUserIdBasedOnEmail")
+    public String GetUserIdBasedOnEmail(@WebParam(name = "email") String email) {
+        try {
+            String result = model_User.GetUserIdBasedOnEmail(email);
+            return result;
+        } catch (Exception ex) {
+            System.out.println("Error GetUserIdBasedOnEmail: " + ex);
         }
         return null;
     }

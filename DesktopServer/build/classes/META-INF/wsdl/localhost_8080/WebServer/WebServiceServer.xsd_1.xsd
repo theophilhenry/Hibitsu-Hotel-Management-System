@@ -48,6 +48,10 @@
 
 <xs:element name="DisplayVillaIdWebResponse" type="tns:DisplayVillaIdWebResponse"/>
 
+<xs:element name="GetUserIdBasedOnEmail" type="tns:GetUserIdBasedOnEmail"/>
+
+<xs:element name="GetUserIdBasedOnEmailResponse" type="tns:GetUserIdBasedOnEmailResponse"/>
+
 <xs:element name="InsertChat" type="tns:InsertChat"/>
 
 <xs:element name="InsertChatResponse" type="tns:InsertChatResponse"/>
@@ -114,6 +118,16 @@
 </xs:sequence>
 </xs:complexType>
 
+<xs:complexType name="DisplayVillaAllWeb">
+<xs:sequence/>
+</xs:complexType>
+
+<xs:complexType name="DisplayVillaAllWebResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
 <xs:complexType name="DisplayVillaId">
 <xs:sequence>
 <xs:element name="idvilla" type="xs:int" minOccurs="0"/>
@@ -126,11 +140,13 @@
 </xs:sequence>
 </xs:complexType>
 
-<xs:complexType name="DisplayVillaAllWeb">
-<xs:sequence/>
+<xs:complexType name="GetUserIdBasedOnEmail">
+<xs:sequence>
+<xs:element name="email" type="xs:string" minOccurs="0"/>
+</xs:sequence>
 </xs:complexType>
 
-<xs:complexType name="DisplayVillaAllWebResponse">
+<xs:complexType name="GetUserIdBasedOnEmailResponse">
 <xs:sequence>
 <xs:element name="return" type="xs:string" minOccurs="0"/>
 </xs:sequence>
@@ -139,12 +155,8 @@
 <xs:complexType name="UpdateReservation">
 <xs:sequence>
 <xs:element name="email" type="xs:string" minOccurs="0"/>
-<xs:element name="checkin_date" type="xs:string" minOccurs="0"/>
-<xs:element name="checkout_date" type="xs:string" minOccurs="0"/>
 <xs:element name="total_guest" type="xs:int" minOccurs="0"/>
 <xs:element name="notes" type="xs:string" minOccurs="0"/>
-<xs:element name="iduser" type="xs:int" minOccurs="0"/>
-<xs:element name="idvilla" type="xs:int" minOccurs="0"/>
 <xs:element name="orderId" type="xs:int" minOccurs="0"/>
 </xs:sequence>
 </xs:complexType>
@@ -253,20 +265,6 @@
 </xs:sequence>
 </xs:complexType>
 
-<xs:complexType name="InsertChat">
-<xs:sequence>
-<xs:element name="email_sender" type="xs:string" minOccurs="0"/>
-<xs:element name="email_receiver" type="xs:string" minOccurs="0"/>
-<xs:element name="messages" type="xs:string" minOccurs="0"/>
-</xs:sequence>
-</xs:complexType>
-
-<xs:complexType name="InsertChatResponse">
-<xs:sequence>
-<xs:element name="return" type="xs:string" minOccurs="0"/>
-</xs:sequence>
-</xs:complexType>
-
 <xs:complexType name="CalculateTotalPrice">
 <xs:sequence>
 <xs:element name="idvilla" type="xs:int" minOccurs="0"/>
@@ -276,6 +274,20 @@
 </xs:complexType>
 
 <xs:complexType name="CalculateTotalPriceResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="InsertChat">
+<xs:sequence>
+<xs:element name="email_sender" type="xs:string" minOccurs="0"/>
+<xs:element name="email_receiver" type="xs:string" minOccurs="0"/>
+<xs:element name="messages" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="InsertChatResponse">
 <xs:sequence>
 <xs:element name="return" type="xs:string" minOccurs="0"/>
 </xs:sequence>
@@ -299,6 +311,23 @@
 </xs:complexType>
 
 <xs:complexType name="DisplayAllClientResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="Registration">
+<xs:sequence>
+<xs:element name="fullname" type="xs:string" minOccurs="0"/>
+<xs:element name="display_name" type="xs:string" minOccurs="0"/>
+<xs:element name="phoneNumber" type="xs:string" minOccurs="0"/>
+<xs:element name="email" type="xs:string" minOccurs="0"/>
+<xs:element name="password" type="xs:string" minOccurs="0"/>
+<xs:element name="no_ktp" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="RegistrationResponse">
 <xs:sequence>
 <xs:element name="return" type="xs:string" minOccurs="0"/>
 </xs:sequence>
@@ -328,23 +357,6 @@
 </xs:complexType>
 
 <xs:complexType name="InsertReservationResponse">
-<xs:sequence>
-<xs:element name="return" type="xs:string" minOccurs="0"/>
-</xs:sequence>
-</xs:complexType>
-
-<xs:complexType name="Registration">
-<xs:sequence>
-<xs:element name="fullname" type="xs:string" minOccurs="0"/>
-<xs:element name="display_name" type="xs:string" minOccurs="0"/>
-<xs:element name="phoneNumber" type="xs:string" minOccurs="0"/>
-<xs:element name="email" type="xs:string" minOccurs="0"/>
-<xs:element name="password" type="xs:string" minOccurs="0"/>
-<xs:element name="no_ktp" type="xs:string" minOccurs="0"/>
-</xs:sequence>
-</xs:complexType>
-
-<xs:complexType name="RegistrationResponse">
 <xs:sequence>
 <xs:element name="return" type="xs:string" minOccurs="0"/>
 </xs:sequence>
