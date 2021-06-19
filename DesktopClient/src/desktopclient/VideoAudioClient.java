@@ -337,7 +337,6 @@ public class VideoAudioClient extends javax.swing.JFrame {
 
                         sendVideoPacket = new DatagramPacket(data, data.length, InetAddress.getByName("localhost"), 7800);
                         videoSock.send(sendVideoPacket);
-
                         // Resize To Fit My Cam
                         Image image = sendImageIcon.getImage();
                         Image newimg = image.getScaledInstance(imgMyCam.getWidth(), imgMyCam.getHeight(), java.awt.Image.SCALE_SMOOTH); // scale it the smooth way
