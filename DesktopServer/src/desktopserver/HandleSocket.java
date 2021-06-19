@@ -18,6 +18,7 @@ import java.util.logging.Logger;
  *
  * @author TOTO
  */
+
 public class HandleSocket extends Thread{
     FormDashboard parent;
     Socket client;
@@ -103,12 +104,17 @@ public class HandleSocket extends Thread{
                 }
                 else if(tmp.contains("CHATWITHBOT"))
                 {
+                    
+                    System.out.println("108");
+                    
                     String selectedComboBox =  parent.comboBoxClient.getSelectedItem().toString();
                     String thisClient = email ;
+                    botStep = 0;
+                    statusBot = "";
                     System.out.println("MASUK CHAT WITH BOT");
                     if(tmp.contains("true"))
                     {
-                        chatWithBot = false;
+                        chatWithBot = true;
                         String msgWelcome = "Selamat Datang Kembali!\n"
                             + "Jika ingin berbicara dengan saya(BotChat),\nanda dapat melakukannya dengan memilih salah satu angka dari opsi di bawah :\n" 
                             + "1) Reservasi\n" 
@@ -130,8 +136,7 @@ public class HandleSocket extends Thread{
                     }
                     else
                     {
-                        botStep = 0;
-                        statusBot = "";
+                        
                         chatWithBot = false;
                         
                         if(selectedComboBox.contains(thisClient))
@@ -190,6 +195,7 @@ public class HandleSocket extends Thread{
                     client.close();
                     parent.clientsArr.remove(this);
                     
+                    
                 }
                 else if(chatWithBot == true)
                 {
@@ -232,6 +238,7 @@ public class HandleSocket extends Thread{
                             else
                             {
                                 msg = "Harap menginputkan angka sesuai dengan menu yang ada.";
+                                botStep = 0;
                             }
                             
                         }
@@ -240,6 +247,7 @@ public class HandleSocket extends Thread{
                             System.out.println("163");
                             msg = "Harap memberi input dalam bentuk angka saja sesuai opsi.";
                             System.out.println(ex);
+                            botStep = 0;
                                     
                             
                         }
@@ -292,6 +300,7 @@ public class HandleSocket extends Thread{
                                 else
                                 {
                                      msg = "Harap menginputkan angka sesuai dengan menu yang ada.";
+                                     botStep = 1;
                                 }
                             }
                             else
@@ -351,6 +360,7 @@ public class HandleSocket extends Thread{
                             System.out.println("163");
                             msg = "Harap memberi input dalam bentuk angka saja sesuai opsi.";
                             System.out.println(ex);
+                            botStep = 1;
                                     
                             
                         }
@@ -481,6 +491,7 @@ public class HandleSocket extends Thread{
                         {
                             msg = "Harap memberi input dalam bentuk angka sesuai format yang ada.";
                             System.out.println(ex);
+                            botStep = 1;
                         }
                         
                         

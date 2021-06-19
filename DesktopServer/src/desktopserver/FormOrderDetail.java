@@ -7,6 +7,11 @@ package desktopserver;
 
 import static desktopserver.FormDashboard.displayVillaAll;
 import java.awt.Color;
+import java.awt.Cursor;
+import java.awt.Desktop;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
@@ -27,6 +32,7 @@ public class FormOrderDetail extends javax.swing.JFrame {
     String email,villaName,buktiBayar,notes,status,idReservation;
     Integer villaId,totalGuest,idUser;
     Date checkin,checkout;
+    FormDashboard parent;
     /**
      * Creates new form FormOrderDetail
      */
@@ -34,12 +40,13 @@ public class FormOrderDetail extends javax.swing.JFrame {
         initComponents();
     }
     
-    public FormOrderDetail(String item) {
+    public FormOrderDetail(String item, FormDashboard _parent) {
         try {
             initComponents();
             String[] arr1 = item.split("\\|\\|");
             String[] arr2 = arr1[0].split(";;");
             
+            parent = _parent;
             email = arr2[16];
             status = arr2[5];
             villaName = arr2[11];
@@ -59,6 +66,12 @@ public class FormOrderDetail extends javax.swing.JFrame {
             if(buktiBayar.equals("null"))
             {
                 buktiBayar = "BELUM ADA BUKTI PEMBAYARAN";
+                labelBuktiBayar.setForeground(Color.red);
+            }
+            else
+            {
+                labelBuktiBayar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+                labelBuktiBayar.setForeground(Color.blue.darker());
             }
             
             labelBuktiBayar.setText(buktiBayar);
@@ -69,7 +82,8 @@ public class FormOrderDetail extends javax.swing.JFrame {
             textTotalGuest.setToolTipText(totalGuest+"");
             textNotes.setText(notes);
             comboBoxStatus.setSelectedItem(status);
-             this.getContentPane().setBackground(Color.WHITE);
+            textTotalPrice.setText(arr2[7]);
+            this.getContentPane().setBackground(Color.WHITE);
             
             //[1]idreservation,[2]res_timestamp,[3]chcekin_date,[4]checkout_date,[5]status,[6]total_guest,[7]total_price,[8]notes,[19]url_bukti_pembayaran,[10]idvilla,
             //[11]villa_name,[12]iduser,[13]fullname,[14]display_name[15],phone_number,[16]email,[17]no_ktp;;
@@ -131,21 +145,32 @@ public class FormOrderDetail extends javax.swing.JFrame {
         buttonChange = new javax.swing.JButton();
         buttonCancel = new javax.swing.JButton();
         buttonClose = new javax.swing.JButton();
+        textTotalPrice = new javax.swing.JTextField();
+        jLabel11 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setLocation(new java.awt.Point(600, 150));
 
         labelOrderDetailId.setFont(new java.awt.Font("Rubik", 1, 24)); // NOI18N
         labelOrderDetailId.setForeground(new java.awt.Color(29, 212, 121));
+        labelOrderDetailId.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         labelOrderDetailId.setText("Reservasion Detail 001");
 
         jLabel10.setFont(new java.awt.Font("Rubik", 0, 14)); // NOI18N
         jLabel10.setText("Bukti Pembayaran");
 
-        labelBuktiBayar.setFont(new java.awt.Font("Rubik", 1, 24)); // NOI18N
+        labelBuktiBayar.setFont(new java.awt.Font("Rubik", 1, 14)); // NOI18N
+        labelBuktiBayar.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         labelBuktiBayar.setText("BELUM ADA BUKTI PEMBAYARAN");
+        labelBuktiBayar.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        labelBuktiBayar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                labelBuktiBayarMouseClicked(evt);
+            }
+        });
 
         textEmail.setFont(new java.awt.Font("Rubik", 0, 14)); // NOI18N
+        textEmail.setEnabled(false);
 
         jLabel3.setFont(new java.awt.Font("Rubik", 0, 14)); // NOI18N
         jLabel3.setText("Email");
@@ -217,63 +242,70 @@ public class FormOrderDetail extends javax.swing.JFrame {
             }
         });
 
+        textTotalPrice.setFont(new java.awt.Font("Rubik", 0, 14)); // NOI18N
+        textTotalPrice.setEnabled(false);
+
+        jLabel11.setFont(new java.awt.Font("Rubik", 0, 14)); // NOI18N
+        jLabel11.setText("Total Price ");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(82, 82, 82)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(labelBuktiBayar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel10)
+                    .addComponent(labelOrderDetailId))
+                .addContainerGap(92, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(buttonClose, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(12, 12, 12))
+            .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(59, 59, 59)
+                        .addComponent(jLabel3)
+                        .addGap(18, 18, 18)
+                        .addComponent(textEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel9)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(comboBoxStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel7)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(textTotalGuest, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel6)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(dateCheckOut, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel5)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(dateCheckIn, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel4)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(comboBoxVillaType, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel8)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(textNotes, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(buttonCancel, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(buttonChange, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel3)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(textEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addComponent(jLabel11)
+                                .addGap(18, 18, 18)
+                                .addComponent(textTotalPrice, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(labelBuktiBayar))
+                                .addComponent(jLabel9)
+                                .addGap(18, 18, 18)
+                                .addComponent(comboBoxStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(147, 147, 147)
-                                .addComponent(jLabel10))
+                                .addComponent(jLabel7)
+                                .addGap(18, 18, 18)
+                                .addComponent(textTotalGuest, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(79, 79, 79)
-                                .addComponent(labelOrderDetailId)))
-                        .addGap(0, 8, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(buttonClose, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap())
+                                .addComponent(jLabel6)
+                                .addGap(18, 18, 18)
+                                .addComponent(dateCheckOut, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel5)
+                                .addGap(18, 18, 18)
+                                .addComponent(dateCheckIn, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel4)
+                                .addGap(18, 18, 18)
+                                .addComponent(comboBoxVillaType, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel8)
+                                .addGap(18, 18, 18)
+                                .addComponent(textNotes, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(buttonCancel, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(buttonChange, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -282,13 +314,13 @@ public class FormOrderDetail extends javax.swing.JFrame {
                 .addComponent(labelOrderDetailId)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel10)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(1, 1, 1)
                 .addComponent(labelBuktiBayar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(textEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(comboBoxVillaType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -314,7 +346,11 @@ public class FormOrderDetail extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel8)
                     .addComponent(textNotes, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel11)
+                    .addComponent(textTotalPrice, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 14, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel9)
                     .addComponent(comboBoxStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -322,7 +358,7 @@ public class FormOrderDetail extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(buttonCancel)
                     .addComponent(buttonChange))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
+                .addGap(10, 10, 10)
                 .addComponent(buttonClose)
                 .addContainerGap())
         );
@@ -400,14 +436,31 @@ public class FormOrderDetail extends javax.swing.JFrame {
         }
         
         JOptionPane.showMessageDialog(null, message);
+        parent.TampilReservasi("", "");
         
       
        
     }//GEN-LAST:event_buttonChangeActionPerformed
 
     private void buttonCloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonCloseActionPerformed
+        
+        
         this.dispose();
     }//GEN-LAST:event_buttonCloseActionPerformed
+
+    private void labelBuktiBayarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labelBuktiBayarMouseClicked
+        try {
+
+            if(!labelBuktiBayar.getText().equals("BELUM ADA BUKTI PEMBAYARAN"))
+            {
+                Desktop.getDesktop().browse(new URI(labelBuktiBayar.getText()));
+                
+            }
+
+        } catch (IOException | URISyntaxException e1) {
+            e1.printStackTrace();
+        }
+    }//GEN-LAST:event_labelBuktiBayarMouseClicked
 
     /**
      * @param args the command line arguments
@@ -453,6 +506,7 @@ public class FormOrderDetail extends javax.swing.JFrame {
     private com.toedter.calendar.JDateChooser dateCheckIn;
     private com.toedter.calendar.JDateChooser dateCheckOut;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -465,5 +519,6 @@ public class FormOrderDetail extends javax.swing.JFrame {
     private javax.swing.JTextField textEmail;
     private javax.swing.JTextField textNotes;
     private com.toedter.components.JSpinField textTotalGuest;
+    private javax.swing.JTextField textTotalPrice;
     // End of variables declaration//GEN-END:variables
 }

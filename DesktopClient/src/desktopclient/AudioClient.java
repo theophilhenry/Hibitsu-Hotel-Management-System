@@ -253,6 +253,7 @@ public class AudioClient extends javax.swing.JFrame {
         txtTimer = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Audio Client");
 
         btnEnd.setText("End Call");
         btnEnd.addActionListener(new java.awt.event.ActionListener() {
