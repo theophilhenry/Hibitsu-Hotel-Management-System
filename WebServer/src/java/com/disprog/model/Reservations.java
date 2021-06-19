@@ -371,7 +371,7 @@ public class Reservations extends DbConnection {
                 }
 
                 String query = "SELECT idreservation FROM reservations WHERE idvilla = ? &&"
-                        + "checkin_date < ? AND checkout_date > ?";
+                        + "checkin_date < ? AND checkout_date > ? AND (status ='PENDING' or status='APPROVED')";
                 // set preparedStatement
                 PreparedStatement sql = (PreparedStatement) connect.prepareStatement(query);
                 sql.setInt(1, idvilla);

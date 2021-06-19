@@ -90,7 +90,7 @@ public class Chats extends DbConnection {
            
             if (!connect.isClosed()) {
                 
-                query = "INSERT INTO chats (idsender, idreceiver, message) "
+                query = "INSERT INTO chats (idsender, idreceiver, messages) "
                         + "values ((SELECT iduser FROM users WHERE email =?),"
                         + "(SELECT iduser FROM users WHERE email =?), ?)";
 
@@ -144,10 +144,10 @@ public class Chats extends DbConnection {
                 sql.setString(4, email_sender);
 
                 result = sql.executeQuery();
-                String ket = "[1]hasilInsertChats[2]idsender[3]message;;";
+                String ket = "[1]hasilInsertChats[2]idsender[3]messages;;";
                 while (result.next()) {
                     String hasil = String.valueOf(result.getInt("idsender"))
-                            + ";;" +  result.getString("message") + "||";
+                            + ";;" +  result.getString("messages") + "||";
                     grandHasil += ket + hasil;
                 }
                // connect.close();
