@@ -147,7 +147,7 @@ public class Reservations extends DbConnection {
     //</editor-fold>
 
     //<editor-fold defaultstate="collapsed" desc="Methods">
-    public Integer CalculateTotalPrice(Integer idvilla,Date checkIn, Date checkout) {
+    public Integer CalculateTotalPrice(Integer idvilla, Date checkIn, Date checkout) {
         try {
             if (!connect.isClosed()) {
                 // calculate different days
@@ -231,61 +231,41 @@ public class Reservations extends DbConnection {
         return null;
     }
 
-    public String UpdateReservation(String email, Date checkIn, Date checkOut, Integer total_guest, String notes, Integer idvilla,Integer orderId) {
+    public String UpdateReservation(String email, Integer total_guest, String notes, Integer orderId) {
 
         String message = "";
         String query = "";
+        String ket = "[1]hasilUpdateReservation;;";
         try {
             if (!connect.isClosed()) {
-                
                 //get totalPrice
-                Integer totalPrice = this.CalculateTotalPrice(idvilla, checkIn, checkOut);              
-                String check = this.CheckAvailability(idvilla, checkIn, checkOut);
-                if (check.contains("false")) {
-                    String ket = "[1]hasilUpdateReservation;;";
-                    if(!(check.contains(orderId.toString()))){
-                        return ket+"false";
-                    }
-                }
 
                 // set query
                 query = "UPDATE `reservations` r INNER JOIN `users` u ON r.iduser = u.iduser "
-                        + "SET`res_timestamp`=CURRENT_TIMESTAMP,`checkin_date`=?,"
-                        + "`checkout_date`=?,`total_guest`=?, "
-                        + "`notes`= ?,`total_price`=?,`idvilla`=? "
+                        + "SET `total_guest`=?, "
+                        + "`notes`= ? "
                         + "WHERE u.email = ? AND  r.idreservation= ?";
                 // set preparedStatement
-                PreparedStatement sql = (PreparedStatement) connect.prepareStatement(query,PreparedStatement.RETURN_GENERATED_KEYS);
+                PreparedStatement sql = (PreparedStatement) connect.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS);
 
                 //set paramater
-                sql.setDate(1, checkIn);
-                sql.setDate(2, checkOut);
-                sql.setInt(3, total_guest);
-                sql.setString(4, notes);
-                sql.setInt(5, totalPrice);
-                sql.setInt(6, idvilla);
-                sql.setString(7, email);
-                sql.setInt(8, orderId);
-                
+                sql.setInt(1, total_guest);
+                sql.setString(2, notes);               
+                sql.setString(3, email);
+                sql.setInt(4, orderId);
 
                 int affectedResult = sql.executeUpdate();
 
                 if (affectedResult > 0) {
-                    String ket = "[1]hasilUpdateReservation,[2]idreservation;;";
-                    ResultSet generatedKeys = sql.getGeneratedKeys();
-                    if (generatedKeys.next()) {
-                        idreservation = generatedKeys.getInt(1);
-                    }
-                    return ket + "true;;" + idreservation;
+                    return ket + "true";
                 } else {
-                    String ket = "[1]hasilInsertReservation;;";
                     return ket + "false";
                 }
             } else {
                 System.out.println("Tidak terkoneksi database");
             }
         } catch (Exception ex) {
-            System.out.println("Error UpdateReservation: " + ex);
+            System.out.println("Error UpdateReservationClass: " + ex);
         }
         return message;
     }
@@ -383,9 +363,8 @@ public class Reservations extends DbConnection {
         String message = "";
         try {
             if (!connect.isClosed()) {
-                
-                //check tanggal dulu
 
+                //check tanggal dulu
                 if (checkIn.after(checkOut)) {
                     String ket = "[1]hasilCheckAvailability;;";
                     return ket + "Please input checkout date greater than checkin date";
@@ -403,7 +382,7 @@ public class Reservations extends DbConnection {
 
                 if (result.next()) {
                     String ket = "[1]hasilCheckAvailability,[2]orderid;;";
-                    return ket + "false;;"+result.getString("idreservation");//karena ditemukan yg bentrok
+                    return ket + "false;;" + result.getString("idreservation");//karena ditemukan yg bentrok
                 } else {
                     String ket = "[1]hasilCheckAvailability;;";
                     return ket + "true";
@@ -431,7 +410,7 @@ public class Reservations extends DbConnection {
                         + "WHERE idreservation = ?;";
                 PreparedStatement sql = (PreparedStatement) connect.prepareStatement(query);
                 sql.setInt(1, idreservation);
-                
+
                 result = sql.executeQuery();
 
                 if (result.next()) {

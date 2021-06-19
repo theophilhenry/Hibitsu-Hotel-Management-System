@@ -41,6 +41,7 @@ public class ObjectFactory {
     private final static QName _DisplayVillaAllWeb_QNAME = new QName("http://disprog.ubaya.com/", "DisplayVillaAllWeb");
     private final static QName _UploadPayment_QNAME = new QName("http://disprog.ubaya.com/", "UploadPayment");
     private final static QName _ChangeStatus_QNAME = new QName("http://disprog.ubaya.com/", "ChangeStatus");
+    private final static QName _GetUserIdBasedOnEmailResponse_QNAME = new QName("http://disprog.ubaya.com/", "GetUserIdBasedOnEmailResponse");
     private final static QName _InsertChatResponse_QNAME = new QName("http://disprog.ubaya.com/", "InsertChatResponse");
     private final static QName _TrackOrder1Response_QNAME = new QName("http://disprog.ubaya.com/", "TrackOrder1Response");
     private final static QName _TrackOrder1_QNAME = new QName("http://disprog.ubaya.com/", "TrackOrder1");
@@ -65,6 +66,7 @@ public class ObjectFactory {
     private final static QName _DisplayVillaAll_QNAME = new QName("http://disprog.ubaya.com/", "DisplayVillaAll");
     private final static QName _DisplayVillaIdResponse_QNAME = new QName("http://disprog.ubaya.com/", "DisplayVillaIdResponse");
     private final static QName _CheckAvailability_QNAME = new QName("http://disprog.ubaya.com/", "CheckAvailability");
+    private final static QName _GetUserIdBasedOnEmail_QNAME = new QName("http://disprog.ubaya.com/", "GetUserIdBasedOnEmail");
     private final static QName _UpdateReservation_QNAME = new QName("http://disprog.ubaya.com/", "UpdateReservation");
     private final static QName _DisplayChat_QNAME = new QName("http://disprog.ubaya.com/", "DisplayChat");
     private final static QName _InsertReservationResponse_QNAME = new QName("http://disprog.ubaya.com/", "InsertReservationResponse");
@@ -114,6 +116,14 @@ public class ObjectFactory {
      */
     public TrackOrderAppResponse createTrackOrderAppResponse() {
         return new TrackOrderAppResponse();
+    }
+
+    /**
+     * Create an instance of {@link GetUserIdBasedOnEmail }
+     * 
+     */
+    public GetUserIdBasedOnEmail createGetUserIdBasedOnEmail() {
+        return new GetUserIdBasedOnEmail();
     }
 
     /**
@@ -290,6 +300,14 @@ public class ObjectFactory {
      */
     public DisplayPayment createDisplayPayment() {
         return new DisplayPayment();
+    }
+
+    /**
+     * Create an instance of {@link GetUserIdBasedOnEmailResponse }
+     * 
+     */
+    public GetUserIdBasedOnEmailResponse createGetUserIdBasedOnEmailResponse() {
+        return new GetUserIdBasedOnEmailResponse();
     }
 
     /**
@@ -582,6 +600,15 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link GetUserIdBasedOnEmailResponse }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://disprog.ubaya.com/", name = "GetUserIdBasedOnEmailResponse")
+    public JAXBElement<GetUserIdBasedOnEmailResponse> createGetUserIdBasedOnEmailResponse(GetUserIdBasedOnEmailResponse value) {
+        return new JAXBElement<GetUserIdBasedOnEmailResponse>(_GetUserIdBasedOnEmailResponse_QNAME, GetUserIdBasedOnEmailResponse.class, null, value);
+    }
+
+    /**
      * Create an instance of {@link JAXBElement }{@code <}{@link InsertChatResponse }{@code >}}
      * 
      */
@@ -795,6 +822,15 @@ public class ObjectFactory {
     @XmlElementDecl(namespace = "http://disprog.ubaya.com/", name = "CheckAvailability")
     public JAXBElement<CheckAvailability> createCheckAvailability(CheckAvailability value) {
         return new JAXBElement<CheckAvailability>(_CheckAvailability_QNAME, CheckAvailability.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link GetUserIdBasedOnEmail }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://disprog.ubaya.com/", name = "GetUserIdBasedOnEmail")
+    public JAXBElement<GetUserIdBasedOnEmail> createGetUserIdBasedOnEmail(GetUserIdBasedOnEmail value) {
+        return new JAXBElement<GetUserIdBasedOnEmail>(_GetUserIdBasedOnEmail_QNAME, GetUserIdBasedOnEmail.class, null, value);
     }
 
     /**

@@ -154,18 +154,21 @@ public class FormOrderDetail extends javax.swing.JFrame {
         jLabel4.setText("Villa Type");
 
         comboBoxVillaType.setFont(new java.awt.Font("Rubik", 0, 14)); // NOI18N
+        comboBoxVillaType.setEnabled(false);
 
         jLabel5.setFont(new java.awt.Font("Rubik", 0, 14)); // NOI18N
         jLabel5.setText("Check In");
 
         dateCheckIn.setBackground(java.awt.Color.white);
         dateCheckIn.setDateFormatString("yyyy-MM-dd");
+        dateCheckIn.setEnabled(false);
 
         jLabel6.setFont(new java.awt.Font("Rubik", 0, 14)); // NOI18N
         jLabel6.setText("Check Out");
 
         dateCheckOut.setBackground(java.awt.Color.white);
         dateCheckOut.setDateFormatString("yyyy-MM-dd");
+        dateCheckOut.setEnabled(false);
 
         jLabel7.setFont(new java.awt.Font("Rubik", 0, 14)); // NOI18N
         jLabel7.setText("Total Guests");
@@ -340,8 +343,8 @@ public class FormOrderDetail extends javax.swing.JFrame {
     private void buttonChangeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonChangeActionPerformed
         String sEmail = textEmail.getText();
         String sNotes = textNotes.getText();
-        String sCheckIn = ((JTextField)dateCheckIn.getDateEditor().getUiComponent()).getText();
-        String sCheckOut = ((JTextField)dateCheckOut.getDateEditor().getUiComponent()).getText();
+//        String sCheckIn = ((JTextField)dateCheckIn.getDateEditor().getUiComponent()).getText();
+//        String sCheckOut = ((JTextField)dateCheckOut.getDateEditor().getUiComponent()).getText();
         String[] arrVilla = comboBoxVillaType.getSelectedItem().toString().split("\\)");
         Integer sVillaId = Integer.parseInt(arrVilla[0]);
         System.out.println("IdVilla : " +sVillaId);
@@ -357,13 +360,13 @@ public class FormOrderDetail extends javax.swing.JFrame {
             }
             else
             {
-                 resultUpdate = FormDashboard.updateReservation(sEmail, sCheckIn, sCheckOut, sTotalGuest, sNotes, idUser, sVillaId,Integer.parseInt(idReservation));
+                 resultUpdate = FormDashboard.updateReservation(sEmail, sTotalGuest, sNotes ,Integer.parseInt(idReservation));
                  resultStatus = FormDashboard.changeStatus(sStatus,Integer.parseInt(idReservation));
             }
         }
         else
         {
-             resultUpdate = FormDashboard.updateReservation(sEmail, sCheckIn, sCheckOut, sTotalGuest, sNotes, idUser, sVillaId,Integer.parseInt(idReservation));
+             resultUpdate = FormDashboard.updateReservation(sEmail, sTotalGuest, sNotes ,Integer.parseInt(idReservation));
              resultStatus = FormDashboard.changeStatus(sStatus,Integer.parseInt(idReservation));
         }
         
