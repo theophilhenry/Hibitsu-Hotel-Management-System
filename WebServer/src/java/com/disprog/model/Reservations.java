@@ -234,20 +234,22 @@ public class Reservations extends DbConnection {
     public String UpdateReservation(String email, Date checkIn, Date checkOut, Integer total_guest, String notes, Integer idvilla,Integer orderId) {
 
         String message = "";
+        String query = "";
         try {
             if (!connect.isClosed()) {
-
+                
                 //get totalPrice
-                Integer totalPrice = this.CalculateTotalPrice(idvilla, checkIn, checkOut);
-
+                Integer totalPrice = this.CalculateTotalPrice(idvilla, checkIn, checkOut);              
                 String check = this.CheckAvailability(idvilla, checkIn, checkOut);
                 if (check.contains("false")) {
                     String ket = "[1]hasilUpdateReservation;;";
-                    return ket + "false";
+                    if(!(check.contains(orderId.toString()))){
+                        return ket+"false";
+                    }
                 }
 
                 // set query
-                String query = "UPDATE `reservations` r INNER JOIN `users` u ON r.iduser = u.iduser "
+                query = "UPDATE `reservations` r INNER JOIN `users` u ON r.iduser = u.iduser "
                         + "SET`res_timestamp`=CURRENT_TIMESTAMP,`checkin_date`=?,"
                         + "`checkout_date`=?,`total_guest`=?, "
                         + "`notes`= ?,`total_price`=?,`idvilla`=? "
@@ -381,19 +383,15 @@ public class Reservations extends DbConnection {
         String message = "";
         try {
             if (!connect.isClosed()) {
-                String ket = "[1]hasilCheckAvailability;;";
+                
                 //check tanggal dulu
 
                 if (checkIn.after(checkOut)) {
+                    String ket = "[1]hasilCheckAvailability;;";
                     return ket + "Please input checkout date greater than checkin date";
                 }
-                // set query
-//                String query = "SELECT * FROM reservations WHERE idvilla = ? &&"
-//                        + "((checkin_date <= ? AND checkout_date >= ?) || "
-//                        + "(checkin_date <= ? AND checkout_date >= ?)|| "
-//                        + "(checkin_date >= ? AND checkout_date <= ?))";
 
-                String query = "SELECT * FROM reservations WHERE idvilla = ? &&"
+                String query = "SELECT idreservation FROM reservations WHERE idvilla = ? &&"
                         + "checkin_date < ? AND checkout_date > ?";
                 // set preparedStatement
                 PreparedStatement sql = (PreparedStatement) connect.prepareStatement(query);
@@ -401,19 +399,13 @@ public class Reservations extends DbConnection {
                 sql.setDate(2, checkOut);
                 sql.setDate(3, checkIn);
 
-                //set paramater
-//                sql.setInt(1, idvilla);
-//                sql.setDate(2, checkIn);
-//                sql.setDate(3, checkIn);
-//                sql.setDate(4, checkOut);
-//                sql.setDate(5, checkOut);
-//                sql.setDate(6, checkIn);
-//                sql.setDate(7, checkOut);
                 result = sql.executeQuery();
 
                 if (result.next()) {
-                    return ket + "false";//karena ditemukan yg bentrok
+                    String ket = "[1]hasilCheckAvailability,[2]orderid;;";
+                    return ket + "false;;"+result.getString("idreservation");//karena ditemukan yg bentrok
                 } else {
+                    String ket = "[1]hasilCheckAvailability;;";
                     return ket + "true";
                 }
             } else {
