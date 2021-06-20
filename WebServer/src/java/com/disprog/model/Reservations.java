@@ -685,7 +685,7 @@ public class Reservations extends DbConnection {
                             + "FROM reservations r "
                             + "INNER JOIN villas v ON r.idvilla = v.idvilla "
                             + "INNER JOIN users u ON r.iduser = u.iduser "
-                            + "WHERE " + kriteria + " LIKE '%" + dicari + "%' AND checkout_date >= CURDATE();"
+                            + "WHERE " + kriteria + " LIKE '%" + dicari + "%' AND checkout_date >= CURDATE() "
                             + "ORDER BY r.idreservation;";
                 }
 

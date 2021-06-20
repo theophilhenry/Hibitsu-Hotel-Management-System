@@ -505,7 +505,7 @@ public class FormDashboard extends javax.swing.JFrame implements Runnable {
 
             },
             new String [] {
-                "Id Reservation", "Client Name", "Villla", "CheckIn Date", "CheckOut Date", "Status"
+                "Id Reservation", "Client Name", "Villla", "CheckIn_Date", "CheckOut_Date", "Status"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -915,6 +915,7 @@ public class FormDashboard extends javax.swing.JFrame implements Runnable {
 
         } else {
             kriteria = comboBoxFindOrder.getSelectedItem().toString();
+            System.out.println(kriteria);
         }
 
         TampilReservasi(kriteria, dicari);
