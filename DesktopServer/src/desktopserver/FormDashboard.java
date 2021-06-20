@@ -439,7 +439,7 @@ public class FormDashboard extends javax.swing.JFrame implements Runnable {
 
         jLabel1.setFont(new java.awt.Font("Rubik", 1, 24)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(29, 212, 121));
-        jLabel1.setText("Owner Dashboard");
+        jLabel1.setText("Admin Dashboard");
 
         panelChat.setBackground(new java.awt.Color(255, 255, 255));
         panelChat.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
@@ -491,7 +491,7 @@ public class FormDashboard extends javax.swing.JFrame implements Runnable {
 
         jLabel9.setFont(new java.awt.Font("Rubik", 1, 24)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(29, 212, 121));
-        jLabel9.setText("Find Order");
+        jLabel9.setText("Find Reservation");
 
         textSearch.setFont(new java.awt.Font("Rubik", 0, 14)); // NOI18N
         textSearch.addKeyListener(new java.awt.event.KeyAdapter() {
