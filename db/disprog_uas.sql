@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 20, 2021 at 10:01 AM
+-- Generation Time: Jun 20, 2021 at 12:02 PM
 -- Server version: 10.4.13-MariaDB
 -- PHP Version: 7.4.8
 
@@ -30,7 +30,7 @@ SET time_zone = "+00:00";
 CREATE TABLE `chats` (
   `idchat` int(11) NOT NULL,
   `cht_timestamp` timestamp NOT NULL DEFAULT current_timestamp(),
-  `messages` varchar(255) NOT NULL,
+  `messages` text NOT NULL,
   `idsender` int(11) NOT NULL,
   `idreceiver` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
