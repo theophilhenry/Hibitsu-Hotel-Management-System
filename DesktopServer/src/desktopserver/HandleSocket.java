@@ -60,7 +60,7 @@ public class HandleSocket extends Thread{
         {
             try {
                 String tmp = input.readLine();
-                System.out.println("58 ReadLine : " + tmp);
+               
                 if(tmp.contains("JOIN"))
                 {
                     chatWithBot = true;
@@ -77,7 +77,7 @@ public class HandleSocket extends Thread{
                             + "2) Track Order Booking\n";
                     String historyChat =  parent.TampilChat(email, parent.emailAdmin,"client");
                     
-                    System.out.println(historyChat);
+                    
                     
                     
                    
@@ -91,7 +91,7 @@ public class HandleSocket extends Thread{
                    
                     if(selectedComboBox.contains(thisClient))
                     {
-                        System.out.println("95");
+                        
                         parent.textArea.append("BotChat :\n" + msgWelcome + "\n");
                         parent.ScrollDown();
                     }
@@ -108,13 +108,13 @@ public class HandleSocket extends Thread{
                 else if(tmp.contains("CHATWITHBOT"))
                 {
                     
-                    System.out.println("108");
+                   
                     
                     String selectedComboBox =  parent.comboBoxClient.getSelectedItem().toString();
                     String thisClient = email ;
                     botStep = 0;
                     statusBot = "";
-                    System.out.println("MASUK CHAT WITH BOT");
+                    
                     if(tmp.contains("true"))
                     {
                         chatWithBot = true;
@@ -218,7 +218,7 @@ public class HandleSocket extends Thread{
                         
                         try
                         {
-                            System.out.println("146");
+                            
                             botStep = 1;
                             Integer hasil = Integer.parseInt(arr[1]);
                             
@@ -247,7 +247,7 @@ public class HandleSocket extends Thread{
                         }
                         catch(Exception ex)
                         {
-                            System.out.println("163");
+                           
                             msg = "Harap memberi input dalam bentuk angka saja sesuai opsi.";
                             System.out.println(ex);
                             botStep = 0;
@@ -360,7 +360,7 @@ public class HandleSocket extends Thread{
                         }
                         catch(Exception ex)
                         {
-                            System.out.println("163");
+                            
                             msg = "Harap memberi input dalam bentuk angka saja sesuai opsi.";
                             System.out.println(ex);
                             botStep = 1;
@@ -446,7 +446,7 @@ public class HandleSocket extends Thread{
                                 else
                                 {
                                     //Contoh : 2#2021-06-15#2021-06-20#5#Butuh kompor 2
-                                    System.out.println("Hasil : " + hasil);
+                                    
                                     String[] arrBook = hasil.split("#");
                                     
                                     Date in = new SimpleDateFormat("yyyy-MM-dd").parse(arrBook[1]);  
@@ -462,12 +462,12 @@ public class HandleSocket extends Thread{
                                         String[] checkin = arrBook[1].split("-");
                                         String[] checkout = arrBook[2].split("-");
 
-                                        System.out.println("362");
+                                       
                                         Integer villaId = Integer.parseInt(arrBook[0]);
-                                        System.out.println("364");
+                                        
 
                                         Integer totalGuest = Integer.parseInt(arrBook[3]);
-                                        System.out.println("367");
+                                        
                                         Integer test;
 
                                         for (int i = 0; i < 3; i++) 
@@ -475,20 +475,19 @@ public class HandleSocket extends Thread{
                                             test = Integer.parseInt(checkin[i]);
 
                                         }
-                                        System.out.println("372");
+                                       
                                         for (int i = 0; i < 3; i++) 
                                         {
                                             test = Integer.parseInt(checkout[i]);
 
                                         }
 
-                                        System.out.println("379");
+                                        
                                         String result = FormDashboard.insertReservation(arrBook[1], arrBook[2], totalGuest, arrBook[4], Integer.parseInt(idUser), villaId);
-                                        System.out.println("384");
-                                        System.out.println("Result : " + result);
+                                        
                                         String[] arrResult = result.split(";;");
 
-                                        System.out.println("386");
+                                      
 
                                         if(arrResult[1].equals("true"))
                                         {
@@ -529,7 +528,7 @@ public class HandleSocket extends Thread{
                        
                     }
                     
-                    //System.out.println("Selected Combo Box : " + selectedComboBox + "\n email Client ini : " + thisClient + "\n Hasil : " + selectedComboBox.contains(thisClient));
+                    
                     SendChat(msg);
                     parent.SimpanChat(parent.emailAdmin, email, msg);
                     if(selectedComboBox.contains(thisClient))
@@ -550,7 +549,7 @@ public class HandleSocket extends Thread{
                     String[] arr = tmp.split(";;");
                     parent.SimpanChat(email, parent.emailAdmin, arr[1]);
                     
-                    //System.out.println("Selected Combo Box : " + selectedComboBox + "\n email Client ini : " + thisClient + "\n Hasil : " + selectedComboBox.contains(thisClient));
+                    
                     
                     if(selectedComboBox.contains(thisClient))
                     {
