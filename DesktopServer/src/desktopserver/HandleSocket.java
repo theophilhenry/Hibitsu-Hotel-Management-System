@@ -11,6 +11,8 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.Socket;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -385,46 +387,60 @@ public class HandleSocket extends Thread{
                                 if(statusBot.equals("cekVilla"))
                                 {
                                     String[] arrCek = hasil.split("#");
-                                    String[] checkin = arrCek[1].split("-");
-                                    String[] checkout = arrCek[2].split("-");
                                     
-                                    Integer villaId = Integer.parseInt(arrCek[0]);
-                                    Integer test;
-                              
+                                    Date in = new SimpleDateFormat("yyyy-MM-dd").parse(arrCek[1]);  
+                                    Date out = new SimpleDateFormat("yyyy-MM-dd").parse(arrCek[2]);  
                                     
-                                    for (int i = 0; i < 3; i++) 
+                                    if(in.after(out))
                                     {
-                                        test = Integer.parseInt(checkin[i]);
+                                        msg = "Tolong masukkan tanggal checkin lebih dulu daripada tanggal checkout.";
                                         
-                                    }
-                                    
-                                    for (int i = 0; i < 3; i++) 
-                                    {
-                                        test = Integer.parseInt(checkout[i]);
-                                        
-                                    }
-                                    String result = FormDashboard.checkAvailability(villaId, arrCek[1], arrCek[2]);
-                                    
-                                    if(result.contains("true"))
-                                    {
-                                        msg = "Villa tersedia pada tanggal " + arrCek[1] + "-" + arrCek[2] +"\n"
-                                                + "Opsi Menu : \n"
-                                                + "0) Kembali\n"
-                                                + "1) Cek Ketersediaan Villa pada tanggal tertentu\n"
-                                                + "2) Booking Villa\n";
-                                        statusBot = "reservasi";
-                                        botStep = 1;
                                     }
                                     else
                                     {
-                                         msg = "Villa tidak tersedia pada tanggal " + arrCek[1] + "-" + arrCek[2] +"\n"
-                                                + "Opsi Menu : \n"
-                                                + "0) Kembali\n"
-                                                + "1) Cek Ketersediaan Villa pada tanggal tertentu\n"
-                                                + "2) Booking Villa\n";;
-                                        statusBot = "reservasi";
-                                        botStep = 1;
+                                        String[] checkin = arrCek[1].split("-");
+                                        String[] checkout = arrCek[2].split("-");
+
+                                        Integer villaId = Integer.parseInt(arrCek[0]);
+                                        Integer test;
+
+
+                                        for (int i = 0; i < 3; i++) 
+                                        {
+                                            test = Integer.parseInt(checkin[i]);
+
+                                        }
+
+                                        for (int i = 0; i < 3; i++) 
+                                        {
+                                            test = Integer.parseInt(checkout[i]);
+
+                                        }
+                                        String result = FormDashboard.checkAvailability(villaId, arrCek[1], arrCek[2]);
+
+                                        if(result.contains("true"))
+                                        {
+                                            msg = "Villa tersedia pada tanggal " + arrCek[1] + "-" + arrCek[2] +"\n"
+                                                    + "Opsi Menu : \n"
+                                                    + "0) Kembali\n"
+                                                    + "1) Cek Ketersediaan Villa pada tanggal tertentu\n"
+                                                    + "2) Booking Villa\n";
+                                            statusBot = "reservasi";
+                                            botStep = 1;
+                                        }
+                                        else
+                                        {
+                                             msg = "Villa tidak tersedia pada tanggal " + arrCek[1] + "-" + arrCek[2] +"\n"
+                                                    + "Opsi Menu : \n"
+                                                    + "0) Kembali\n"
+                                                    + "1) Cek Ketersediaan Villa pada tanggal tertentu\n"
+                                                    + "2) Booking Villa\n";;
+                                            statusBot = "reservasi";
+                                            botStep = 1;
+                                        }
                                     }
+                                    
+                                    
                                     
                                 }
                                 else
@@ -432,59 +448,72 @@ public class HandleSocket extends Thread{
                                     //Contoh : 2#2021-06-15#2021-06-20#5#Butuh kompor 2
                                     System.out.println("Hasil : " + hasil);
                                     String[] arrBook = hasil.split("#");
-                                    String[] checkin = arrBook[1].split("-");
-                                    String[] checkout = arrBook[2].split("-");
                                     
-                                    System.out.println("362");
-                                    Integer villaId = Integer.parseInt(arrBook[0]);
-                                    System.out.println("364");
+                                    Date in = new SimpleDateFormat("yyyy-MM-dd").parse(arrBook[1]);  
+                                    Date out = new SimpleDateFormat("yyyy-MM-dd").parse(arrBook[2]);  
                                     
-                                    Integer totalGuest = Integer.parseInt(arrBook[3]);
-                                    System.out.println("367");
-                                    Integer test;
-                                   
-                                    for (int i = 0; i < 3; i++) 
+                                    if(in.after(out))
                                     {
-                                        test = Integer.parseInt(checkin[i]);
+                                        msg = "Tolong masukkan tanggal checkin lebih dulu daripada tanggal checkout.";
                                         
-                                    }
-                                    System.out.println("372");
-                                    for (int i = 0; i < 3; i++) 
-                                    {
-                                        test = Integer.parseInt(checkout[i]);
-                                        
-                                    }
-                                    
-                                    System.out.println("379");
-                                    String result = FormDashboard.insertReservation(arrBook[1], arrBook[2], totalGuest, arrBook[4], Integer.parseInt(idUser), villaId);
-                                    System.out.println("384");
-                                    System.out.println("Result : " + result);
-                                    String[] arrResult = result.split(";;");
-                                    
-                                    System.out.println("386");
-                                    
-                                    if(arrResult[1].equals("true"))
-                                    {
-                                        msg = "Villa sudah terbooking. Silahkan mengupload bukti pembayaran sebelum tanggal checkin\n"
-                                                + "Order Id reservasi : " + arrResult[2] + "\n"
-                                                + "Opsi Menu : \n"
-                                                + "0) Kembali\n"
-                                                + "1) Cek Ketersediaan Villa pada tanggal tertentu\n"
-                                                + "2) Booking Villa\n";;
-                                        statusBot = "reservasi";
-                                        botStep = 1;
                                     }
                                     else
                                     {
-                                        msg = "Villa tidak dapat dibooking.\nKarena ada jadwal reservasi bertabrakan dengan pesanan lain.\n"
-                                                + "Opsi Menu : \n"
-                                                + "0) Kembali\n"
-                                                + "1) Cek Ketersediaan Villa pada tanggal tertentu\n"
-                                                + "2) Booking Villa\n";;
-                                        statusBot = "reservasi";
-                                        botStep = 1;
-                                               
+                                        String[] checkin = arrBook[1].split("-");
+                                        String[] checkout = arrBook[2].split("-");
+
+                                        System.out.println("362");
+                                        Integer villaId = Integer.parseInt(arrBook[0]);
+                                        System.out.println("364");
+
+                                        Integer totalGuest = Integer.parseInt(arrBook[3]);
+                                        System.out.println("367");
+                                        Integer test;
+
+                                        for (int i = 0; i < 3; i++) 
+                                        {
+                                            test = Integer.parseInt(checkin[i]);
+
+                                        }
+                                        System.out.println("372");
+                                        for (int i = 0; i < 3; i++) 
+                                        {
+                                            test = Integer.parseInt(checkout[i]);
+
+                                        }
+
+                                        System.out.println("379");
+                                        String result = FormDashboard.insertReservation(arrBook[1], arrBook[2], totalGuest, arrBook[4], Integer.parseInt(idUser), villaId);
+                                        System.out.println("384");
+                                        System.out.println("Result : " + result);
+                                        String[] arrResult = result.split(";;");
+
+                                        System.out.println("386");
+
+                                        if(arrResult[1].equals("true"))
+                                        {
+                                            msg = "Villa sudah terbooking. Silahkan mengupload bukti pembayaran sebelum tanggal checkin\n"
+                                                    + "Order Id reservasi : " + arrResult[2] + "\n"
+                                                    + "Opsi Menu : \n"
+                                                    + "0) Kembali\n"
+                                                    + "1) Cek Ketersediaan Villa pada tanggal tertentu\n"
+                                                    + "2) Booking Villa\n";;
+                                            statusBot = "reservasi";
+                                            botStep = 1;
+                                        }
+                                        else
+                                        {
+                                            msg = "Villa tidak dapat dibooking.\nKarena ada jadwal reservasi bertabrakan dengan pesanan lain.\n"
+                                                    + "Opsi Menu : \n"
+                                                    + "0) Kembali\n"
+                                                    + "1) Cek Ketersediaan Villa pada tanggal tertentu\n"
+                                                    + "2) Booking Villa\n";;
+                                            statusBot = "reservasi";
+                                            botStep = 1;
+
+                                        }
                                     }
+                                    
                                 }
                             }
                         }
