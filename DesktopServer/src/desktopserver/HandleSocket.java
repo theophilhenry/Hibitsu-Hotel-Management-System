@@ -75,17 +75,17 @@ public class HandleSocket extends Thread{
                             + "2) Track Order Booking\n";
                     String historyChat =  parent.TampilChat(email, parent.emailAdmin,"client");
                     
+                    System.out.println(historyChat);
                     
                     
-                    
-                    
+                   
                     
                     
                                   
                     
                     String selectedComboBox =  parent.comboBoxClient.getSelectedItem().toString();
                     String thisClient = email ;
-                    
+                     parent.SimpanChat(parent.emailAdmin,email, msgWelcome);
                    
                     if(selectedComboBox.contains(thisClient))
                     {
@@ -93,11 +93,12 @@ public class HandleSocket extends Thread{
                         parent.textArea.append("BotChat :\n" + msgWelcome + "\n");
                         parent.ScrollDown();
                     }
+                    
                     msgWelcome += "EndFromBot";
                     SendChat(historyChat + "\n;;DONE;;");
                     SendChat(msgWelcome);
                    
-                    parent.SimpanChat(parent.emailAdmin,email, msgWelcome);
+                    
                                
                    
                                       

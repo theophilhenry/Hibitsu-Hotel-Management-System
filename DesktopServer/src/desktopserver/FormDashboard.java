@@ -34,19 +34,25 @@ public class FormDashboard extends javax.swing.JFrame implements Runnable {
     public ArrayList<HandleSocket> clientsArr = new ArrayList<HandleSocket>();
     Thread t;
     HandleSocket hs;
-    public String emailAdmin, idAdmin;
+    public String emailAdmin;//, idAdmin;
     public Boolean adaClient;
 
     /**
      * Creates new form FormDashboard
      */
-    public FormDashboard() {
+    
+    public FormDashboard()
+    {
+        initComponents();
+    }
+    
+    public FormDashboard(String emailLoginAdmin) {
         try {
             initComponents();
 
             this.ss = new ServerSocket(12345);
-            emailAdmin = "toto@gmail.com";
-            idAdmin = "3";
+            emailAdmin = emailLoginAdmin;
+            //idAdmin = "3";
             adaClient = false;
             labelBot.setText("NONE");
 
@@ -119,7 +125,8 @@ public class FormDashboard extends javax.swing.JFrame implements Runnable {
 
     public void SimpanChat(String emailSend, String emailReceiv, String msg) {
 
-//        System.out.println(insertChat(emailSend ,emailReceiv,msg ));
+        System.out.println("SIMPAN CHAT : " + msg);
+        System.out.println(insertChat(emailSend ,emailReceiv,msg ));
     }
 
     public String TampilChat(String emailSend, String emailReceiv, String untukSiapa) {
@@ -186,7 +193,7 @@ public class FormDashboard extends javax.swing.JFrame implements Runnable {
                     }
                 }
             }
-            //hasil += "========================================\n";
+           
         }
 
         return hasil;

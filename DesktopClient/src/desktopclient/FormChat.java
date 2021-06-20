@@ -34,7 +34,7 @@ public class FormChat extends javax.swing.JFrame implements Runnable {
     DataOutputStream output;
     Thread t;
     Boolean chatWithBot, cekChatHistory;
-    Integer oneTimePrint;
+    Integer oneTimePrint,count;
 
     /**
      * Creates new form FormChat
@@ -61,7 +61,8 @@ public class FormChat extends javax.swing.JFrame implements Runnable {
             cekChatHistory = false;
             oneTimePrint = 0;
             output.writeBytes("JOIN \n");
-
+            count = 0;
+            
             // Audio Socket
             audioSock = new MulticastSocket(null);
             audioSock.setReuseAddress(true);
@@ -94,17 +95,33 @@ public class FormChat extends javax.swing.JFrame implements Runnable {
         try {
 
             String message = input.readLine();
+            
+            if (cekChatHistory == false) 
+            {
+                
+                if (message.equals("false")) 
+                {
 
-            if (cekChatHistory == false) {
-                if (message.equals("false")) {
-
-                } else {
+                } 
+                else 
+                {
                     if (message.equals(";;DONE;;")) {
                         cekChatHistory = true;
-                        textArea.append("----------------------Chat Sebelumnya-----------------------\n\n");
+                        count += 1;
+                        
+                        if(count == 1)
+                        {
+                            textArea.append("----------------------Welcome to Hibitsu Chat-----------------------\n\n");
+                        }
+                        else
+                        {
+                            count = 0;
+                            textArea.append("----------------------Chat Sebelumnya-----------------------\n\n");
+                        }
+                        
                     } else {
                         textArea.append(" " + message + "\n");
-
+                        count += 1;
                     }
 
                 }

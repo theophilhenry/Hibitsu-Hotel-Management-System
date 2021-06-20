@@ -122,11 +122,11 @@ public class FormLoginAdmin extends javax.swing.JFrame {
 
         String email = textEmail.getText();
         String psw = textPassword.getText();
-
+        
         String[] hasil = loginAdmin(email, psw).split(";;");
 
         if (hasil[1].equals("true")) {
-            FormDashboard fd = new FormDashboard();
+            FormDashboard fd = new FormDashboard(email);
             fd.setVisible(true);
             this.dispose();
 
