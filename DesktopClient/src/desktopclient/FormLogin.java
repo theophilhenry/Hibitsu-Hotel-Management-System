@@ -67,14 +67,12 @@ public class FormLogin extends javax.swing.JFrame {
         jLabel2.setText("Email");
 
         txtEmail.setFont(new java.awt.Font("Rubik", 0, 14)); // NOI18N
-        txtEmail.setText("theo@gmail.com");
         txtEmail.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
 
         jLabel3.setFont(new java.awt.Font("Rubik", 0, 14)); // NOI18N
         jLabel3.setText("Password");
 
         txtPassword.setFont(new java.awt.Font("Rubik", 0, 14)); // NOI18N
-        txtPassword.setText("theo");
         txtPassword.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
 
         btnLogin.setBackground(new java.awt.Color(8, 191, 91));

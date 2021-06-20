@@ -79,7 +79,7 @@ public class FormOrderDetail extends javax.swing.JFrame {
             IsiComboBoxVilla();
             dateCheckIn.setDate(checkin);
             dateCheckOut.setDate(checkout);
-            textTotalGuest.setToolTipText(totalGuest+"");
+            textTotalGuest.setValue(totalGuest);
             textNotes.setText(notes);
             comboBoxStatus.setSelectedItem(status);
             textTotalPrice.setText(arr2[7]);

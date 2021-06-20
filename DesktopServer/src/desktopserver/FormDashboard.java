@@ -876,8 +876,9 @@ public class FormDashboard extends javax.swing.JFrame implements Runnable {
             } else {
                 status = arr2[1];
             }
-
+            TampilReservasi("", "");
             JOptionPane.showMessageDialog(null, status + "\nOrder ID : " + arr2[2]);
+            
         }
         
         
