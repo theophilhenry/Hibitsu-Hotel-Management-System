@@ -522,13 +522,9 @@ public class HandleSocket extends Thread{
                             System.out.println(ex);
                             botStep = 1;
                         }
-                        
-                        
-                        
-                       
+                     
                     }
-                    
-                    
+                   
                     SendChat(msg);
                     parent.SimpanChat(parent.emailAdmin, email, msg);
                     if(selectedComboBox.contains(thisClient))
