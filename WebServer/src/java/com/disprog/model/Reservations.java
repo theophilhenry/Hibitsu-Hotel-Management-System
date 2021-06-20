@@ -675,7 +675,8 @@ public class Reservations extends DbConnection {
                             + "FROM reservations r "
                             + "INNER JOIN villas v ON r.idvilla = v.idvilla "
                             + "INNER JOIN users u ON r.iduser = u.iduser "
-                            + "WHERE checkout_date >= CURDATE();";
+                            + "WHERE checkout_date >= CURDATE()"
+                            + "ORDER BY r.idreservation;";
                 } else {
                     query = "SELECT r.idreservation, r.res_timestamp, r.checkin_date, "
                             + "r.checkout_date, r.status, r.total_guest, r.total_price, r.notes, r.url_bukti_pembayaran, "
@@ -684,7 +685,8 @@ public class Reservations extends DbConnection {
                             + "FROM reservations r "
                             + "INNER JOIN villas v ON r.idvilla = v.idvilla "
                             + "INNER JOIN users u ON r.iduser = u.iduser "
-                            + "WHERE " + kriteria + " LIKE '%" + dicari + "%' AND checkout_date >= CURDATE();";
+                            + "WHERE " + kriteria + " LIKE '%" + dicari + "%' AND checkout_date >= CURDATE();"
+                            + "ORDER BY r.idreservation;";
                 }
 
                 PreparedStatement sql = (PreparedStatement) connect.prepareStatement(query);
