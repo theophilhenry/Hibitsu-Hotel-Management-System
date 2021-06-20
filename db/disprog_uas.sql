@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 11, 2021 at 12:44 PM
+-- Generation Time: Jun 20, 2021 at 10:01 AM
 -- Server version: 10.4.13-MariaDB
 -- PHP Version: 7.4.8
 
@@ -30,10 +30,18 @@ SET time_zone = "+00:00";
 CREATE TABLE `chats` (
   `idchat` int(11) NOT NULL,
   `cht_timestamp` timestamp NOT NULL DEFAULT current_timestamp(),
-  `messges` varchar(255) NOT NULL,
+  `messages` varchar(255) NOT NULL,
   `idsender` int(11) NOT NULL,
   `idreceiver` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `chats`
+--
+
+INSERT INTO `chats` (`idchat`, `cht_timestamp`, `messages`, `idsender`, `idreceiver`) VALUES
+(1, '2021-06-19 11:42:55', 'Selamat siang, pak', 1, 3),
+(2, '2021-06-19 11:45:56', 'Selamat siang, bu. Apakah ada yang bisa dibantu?', 3, 1);
 
 -- --------------------------------------------------------
 
@@ -60,7 +68,10 @@ CREATE TABLE `reservations` (
 --
 
 INSERT INTO `reservations` (`idreservation`, `res_timestamp`, `checkin_date`, `checkout_date`, `status`, `total_guest`, `notes`, `total_price`, `url_bukti_pembayaran`, `iduser`, `idvilla`) VALUES
-(1, '2021-06-11 10:41:27', '2021-06-15 17:40:51', '2021-06-17 17:40:51', 'PENDING', 2, '-', 1000, NULL, 2, 1);
+(1, '2021-06-18 17:36:41', '2021-06-15 00:00:00', '2021-06-17 00:00:00', 'DECLINED', 0, '-', 4000000, 'www.disprog.com', 2, 2),
+(2, '2021-06-19 11:27:53', '2021-07-06 00:00:00', '2021-07-08 00:00:00', 'PENDING', 3, 'no gril', 3600000, '-', 1, 1),
+(3, '2021-06-19 11:28:10', '2021-06-07 00:00:00', '2021-06-09 00:00:00', 'PENDING', 2, '-', 3600000, NULL, 1, 1),
+(4, '2021-06-19 11:28:37', '2021-07-15 00:00:00', '2021-07-17 00:00:00', 'PENDING', 0, 'add extra bed', 4000000, NULL, 4, 2);
 
 -- --------------------------------------------------------
 
@@ -86,7 +97,10 @@ CREATE TABLE `users` (
 INSERT INTO `users` (`iduser`, `fullname`, `display_name`, `phone_number`, `email`, `password`, `role`, `no_ktp`) VALUES
 (1, 'Jasti Ohanna', 'jasti', '08123456789', 'jasti@gmail.com', 'jasti', 'CLIENT', '3315060711900001'),
 (2, 'Theophil Henry Soegianto', 'theo', '08123456789', 'theo@gmail.com', 'theo', 'CLIENT', '3315143107800001'),
-(3, 'Christopher Tri Anugrah', 'toto', '08123456789', 'toto@gmail.com', 'toto', 'ADMIN', '3315142512700001');
+(3, 'Christopher Tri Anugrah', 'toto', '08123456789', 'toto@gmail.com', 'toto', 'ADMIN', '3315142512700001'),
+(4, 'ananda', 'ana', '08123345678', 'ana@gmail,com', 'ana', 'CLIENT', '7321239000001'),
+(5, 'ananda', 'ana', '08123345678', 'ana@gmail,com', 'ana', 'CLIENT', '7321239000001'),
+(6, 'ananda', 'ana', '08123345678', 'ana@gmail,com', 'ana', 'CLIENT', '7321239000001');
 
 -- --------------------------------------------------------
 
@@ -153,16 +167,22 @@ ALTER TABLE `villas`
 --
 
 --
+-- AUTO_INCREMENT for table `chats`
+--
+ALTER TABLE `chats`
+  MODIFY `idchat` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
 -- AUTO_INCREMENT for table `reservations`
 --
 ALTER TABLE `reservations`
-  MODIFY `idreservation` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `idreservation` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `iduser` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `iduser` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `villas`
