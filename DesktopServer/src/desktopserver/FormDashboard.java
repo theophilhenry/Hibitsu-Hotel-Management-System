@@ -822,10 +822,10 @@ public class FormDashboard extends javax.swing.JFrame implements Runnable {
     private void buttonCheckActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonCheckActionPerformed
         String checkIn = ((JTextField) dateCheckIn.getDateEditor().getUiComponent()).getText();
         String checkOut = ((JTextField) dateCheckOut.getDateEditor().getUiComponent()).getText();
-//        System.out.println("601");
+
         String[] arr = comboBoxVillaType.getSelectedItem().toString().split("\\)");
         Integer villaId = Integer.parseInt(arr[0]);
-//        System.out.println("604");
+
         String[] arr2 = checkAvailability(villaId, checkIn, checkOut).split(";;");
         String status = "";
 
@@ -916,7 +916,7 @@ public class FormDashboard extends javax.swing.JFrame implements Runnable {
 
         } else {
             kriteria = comboBoxFindOrder.getSelectedItem().toString();
-            System.out.println(kriteria);
+            
         }
 
         TampilReservasi(kriteria, dicari);

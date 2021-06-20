@@ -141,7 +141,7 @@ public class FormChat extends javax.swing.JFrame implements Runnable {
                 }
 
             } else {
-                System.out.println("80");
+               
                 textArea.append(" Admin : " + message + "\n");
 
             }
