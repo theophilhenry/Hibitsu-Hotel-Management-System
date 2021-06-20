@@ -41,7 +41,7 @@
                             <a class="nav-link rubik-normal" href="index.jsp">Home</a>
                         </li>
                         <li class="nav-item me-3">
-                            <a class="nav-link active rubik-bold color-green" aria-current="page" href="book1.html">Book
+                            <a class="nav-link active rubik-bold color-green" aria-current="page" href="book1.jsp">Book
                                 Now</a>
                         </li>
                         <% if (session.getAttribute("idUser") == null) { %>

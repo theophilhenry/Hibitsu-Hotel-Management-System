@@ -78,7 +78,7 @@
                 <div class="grid-right" style="align-items: center;">
                     <%
                         if (session.getAttribute("idReservation") == null) {
-                            response.sendRedirect("book2.jsp");
+                            response.sendRedirect("book1.jsp");
                             return;
                         }
                         

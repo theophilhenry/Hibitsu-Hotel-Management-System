@@ -24,6 +24,8 @@ import javax.xml.namespace.QName;
 @XmlRegistry
 public class ObjectFactory {
 
+    private final static QName _CalculateTotalPrice_QNAME = new QName("http://disprog.ubaya.com/", "CalculateTotalPrice");
+    private final static QName _CalculateTotalPriceResponse_QNAME = new QName("http://disprog.ubaya.com/", "CalculateTotalPriceResponse");
     private final static QName _ChangeStatus_QNAME = new QName("http://disprog.ubaya.com/", "ChangeStatus");
     private final static QName _ChangeStatusResponse_QNAME = new QName("http://disprog.ubaya.com/", "ChangeStatusResponse");
     private final static QName _CheckAvailability_QNAME = new QName("http://disprog.ubaya.com/", "CheckAvailability");
@@ -46,6 +48,8 @@ public class ObjectFactory {
     private final static QName _DisplayVillaIdResponse_QNAME = new QName("http://disprog.ubaya.com/", "DisplayVillaIdResponse");
     private final static QName _DisplayVillaIdWeb_QNAME = new QName("http://disprog.ubaya.com/", "DisplayVillaIdWeb");
     private final static QName _DisplayVillaIdWebResponse_QNAME = new QName("http://disprog.ubaya.com/", "DisplayVillaIdWebResponse");
+    private final static QName _GetUserIdBasedOnEmail_QNAME = new QName("http://disprog.ubaya.com/", "GetUserIdBasedOnEmail");
+    private final static QName _GetUserIdBasedOnEmailResponse_QNAME = new QName("http://disprog.ubaya.com/", "GetUserIdBasedOnEmailResponse");
     private final static QName _InsertChat_QNAME = new QName("http://disprog.ubaya.com/", "InsertChat");
     private final static QName _InsertChatResponse_QNAME = new QName("http://disprog.ubaya.com/", "InsertChatResponse");
     private final static QName _InsertReservation_QNAME = new QName("http://disprog.ubaya.com/", "InsertReservation");
@@ -72,6 +76,22 @@ public class ObjectFactory {
      * 
      */
     public ObjectFactory() {
+    }
+
+    /**
+     * Create an instance of {@link CalculateTotalPrice }
+     * 
+     */
+    public CalculateTotalPrice createCalculateTotalPrice() {
+        return new CalculateTotalPrice();
+    }
+
+    /**
+     * Create an instance of {@link CalculateTotalPriceResponse }
+     * 
+     */
+    public CalculateTotalPriceResponse createCalculateTotalPriceResponse() {
+        return new CalculateTotalPriceResponse();
     }
 
     /**
@@ -251,6 +271,22 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link GetUserIdBasedOnEmail }
+     * 
+     */
+    public GetUserIdBasedOnEmail createGetUserIdBasedOnEmail() {
+        return new GetUserIdBasedOnEmail();
+    }
+
+    /**
+     * Create an instance of {@link GetUserIdBasedOnEmailResponse }
+     * 
+     */
+    public GetUserIdBasedOnEmailResponse createGetUserIdBasedOnEmailResponse() {
+        return new GetUserIdBasedOnEmailResponse();
+    }
+
+    /**
      * Create an instance of {@link InsertChat }
      * 
      */
@@ -408,6 +444,24 @@ public class ObjectFactory {
      */
     public UploadPaymentResponse createUploadPaymentResponse() {
         return new UploadPaymentResponse();
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link CalculateTotalPrice }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://disprog.ubaya.com/", name = "CalculateTotalPrice")
+    public JAXBElement<CalculateTotalPrice> createCalculateTotalPrice(CalculateTotalPrice value) {
+        return new JAXBElement<CalculateTotalPrice>(_CalculateTotalPrice_QNAME, CalculateTotalPrice.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link CalculateTotalPriceResponse }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://disprog.ubaya.com/", name = "CalculateTotalPriceResponse")
+    public JAXBElement<CalculateTotalPriceResponse> createCalculateTotalPriceResponse(CalculateTotalPriceResponse value) {
+        return new JAXBElement<CalculateTotalPriceResponse>(_CalculateTotalPriceResponse_QNAME, CalculateTotalPriceResponse.class, null, value);
     }
 
     /**
@@ -606,6 +660,24 @@ public class ObjectFactory {
     @XmlElementDecl(namespace = "http://disprog.ubaya.com/", name = "DisplayVillaIdWebResponse")
     public JAXBElement<DisplayVillaIdWebResponse> createDisplayVillaIdWebResponse(DisplayVillaIdWebResponse value) {
         return new JAXBElement<DisplayVillaIdWebResponse>(_DisplayVillaIdWebResponse_QNAME, DisplayVillaIdWebResponse.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link GetUserIdBasedOnEmail }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://disprog.ubaya.com/", name = "GetUserIdBasedOnEmail")
+    public JAXBElement<GetUserIdBasedOnEmail> createGetUserIdBasedOnEmail(GetUserIdBasedOnEmail value) {
+        return new JAXBElement<GetUserIdBasedOnEmail>(_GetUserIdBasedOnEmail_QNAME, GetUserIdBasedOnEmail.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link GetUserIdBasedOnEmailResponse }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "http://disprog.ubaya.com/", name = "GetUserIdBasedOnEmailResponse")
+    public JAXBElement<GetUserIdBasedOnEmailResponse> createGetUserIdBasedOnEmailResponse(GetUserIdBasedOnEmailResponse value) {
+        return new JAXBElement<GetUserIdBasedOnEmailResponse>(_GetUserIdBasedOnEmailResponse_QNAME, GetUserIdBasedOnEmailResponse.class, null, value);
     }
 
     /**

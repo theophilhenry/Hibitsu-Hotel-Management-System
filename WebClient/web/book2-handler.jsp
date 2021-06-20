@@ -30,10 +30,12 @@
 
             // Melihat jika available atau tidak
             if (keteranganSuksesGagal.equals("true")) {
-                pesanBalik = "Villa is available on <br>" + new SimpleDateFormat("dd MMMM yyyy").format(new SimpleDateFormat("yyyy-MM-dd").parse(checkIn)) + " - " + new SimpleDateFormat("dd MMMM yyyy").format(new SimpleDateFormat("yyyy-MM-dd").parse(checkOut));
+                pesanBalik = "Villa is available on <br>" + new SimpleDateFormat("dd MMMM yyyy").format(new SimpleDateFormat("yyyy-MM-dd").parse(checkIn)) + " - " 
+                        + new SimpleDateFormat("dd MMMM yyyy").format(new SimpleDateFormat("yyyy-MM-dd").parse(checkOut));
                 warnaPesan = "color-green";
             } else if (keteranganSuksesGagal.equals("false")) {
-                pesanBalik = "Villa is unavailable on <br>" + new SimpleDateFormat("dd MMMM yyyy").format(new SimpleDateFormat("yyyy-MM-dd").parse(checkIn)) + " - " + new SimpleDateFormat("dd MMMM yyyy").format(new SimpleDateFormat("yyyy-MM-dd").parse(checkOut));
+                pesanBalik = "Villa is unavailable on <br>" + new SimpleDateFormat("dd MMMM yyyy").format(new SimpleDateFormat("yyyy-MM-dd").parse(checkIn)) + " - " 
+                        + new SimpleDateFormat("dd MMMM yyyy").format(new SimpleDateFormat("yyyy-MM-dd").parse(checkOut));
                 warnaPesan = "color-red";
             } else {
                 pesanBalik = resultSplitted[1];

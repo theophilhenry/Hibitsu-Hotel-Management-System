@@ -18,12 +18,9 @@ import javax.xml.bind.annotation.XmlType;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
  *       &lt;sequence&gt;
  *         &lt;element name="email" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
- *         &lt;element name="checkin_date" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
- *         &lt;element name="checkout_date" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
  *         &lt;element name="total_guest" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/&gt;
  *         &lt;element name="notes" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
- *         &lt;element name="iduser" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/&gt;
- *         &lt;element name="idvilla" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/&gt;
+ *         &lt;element name="orderId" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/&gt;
  *       &lt;/sequence&gt;
  *     &lt;/restriction&gt;
  *   &lt;/complexContent&gt;
@@ -35,25 +32,17 @@ import javax.xml.bind.annotation.XmlType;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "UpdateReservation", propOrder = {
     "email",
-    "checkinDate",
-    "checkoutDate",
     "totalGuest",
     "notes",
-    "iduser",
-    "idvilla"
+    "orderId"
 })
 public class UpdateReservation {
 
     protected String email;
-    @XmlElement(name = "checkin_date")
-    protected String checkinDate;
-    @XmlElement(name = "checkout_date")
-    protected String checkoutDate;
     @XmlElement(name = "total_guest")
     protected Integer totalGuest;
     protected String notes;
-    protected Integer iduser;
-    protected Integer idvilla;
+    protected Integer orderId;
 
     /**
      * Gets the value of the email property.
@@ -77,54 +66,6 @@ public class UpdateReservation {
      */
     public void setEmail(String value) {
         this.email = value;
-    }
-
-    /**
-     * Gets the value of the checkinDate property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getCheckinDate() {
-        return checkinDate;
-    }
-
-    /**
-     * Sets the value of the checkinDate property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setCheckinDate(String value) {
-        this.checkinDate = value;
-    }
-
-    /**
-     * Gets the value of the checkoutDate property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getCheckoutDate() {
-        return checkoutDate;
-    }
-
-    /**
-     * Sets the value of the checkoutDate property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setCheckoutDate(String value) {
-        this.checkoutDate = value;
     }
 
     /**
@@ -176,51 +117,27 @@ public class UpdateReservation {
     }
 
     /**
-     * Gets the value of the iduser property.
+     * Gets the value of the orderId property.
      * 
      * @return
      *     possible object is
      *     {@link Integer }
      *     
      */
-    public Integer getIduser() {
-        return iduser;
+    public Integer getOrderId() {
+        return orderId;
     }
 
     /**
-     * Sets the value of the iduser property.
+     * Sets the value of the orderId property.
      * 
      * @param value
      *     allowed object is
      *     {@link Integer }
      *     
      */
-    public void setIduser(Integer value) {
-        this.iduser = value;
-    }
-
-    /**
-     * Gets the value of the idvilla property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link Integer }
-     *     
-     */
-    public Integer getIdvilla() {
-        return idvilla;
-    }
-
-    /**
-     * Sets the value of the idvilla property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link Integer }
-     *     
-     */
-    public void setIdvilla(Integer value) {
-        this.idvilla = value;
+    public void setOrderId(Integer value) {
+        this.orderId = value;
     }
 
 }
