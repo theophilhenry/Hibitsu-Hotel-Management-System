@@ -1,0 +1,23 @@
+.track-container {
+    width: 340px;
+
+    margin: 0 auto;
+
+    text-align: center;
+}
+
+.track-details {
+    padding: 28px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.25);
+
+    position: relative;
+}
+
+.information p {
+    margin: 0;
+    padding: 0;
+}
+
+.information {
+    margin-bottom: 30px;
+}

@@ -1,0 +1,48 @@
+.carousel {
+    width: 46vw !important;
+}
+
+.carousel-item img {
+    border-radius: 14px!important;
+}
+
+.img-home2 {
+    width: 24vw;
+}
+
+.img-home3 {
+    width: 38vw;
+    border-radius: 32px;
+}
+
+
+.grid-container p {
+    width: 80%;
+}
+
+/* || Save Environment */
+.env-grid {
+    display: grid;
+    grid-template-columns: auto auto auto;
+ 
+    margin-top: 44px;
+}
+
+.env-rule img {
+    height: 64px;
+}
+
+@media (max-width: 992px){
+    .carousel {
+        width: 100% !important;
+    }
+    .img-home2 {
+        width: 100%;
+    }
+    .img-home3 {
+        width: 100%;
+    }
+    .env-grid {
+        grid-template-columns: auto;
+    }
+}

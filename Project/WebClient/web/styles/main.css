@@ -1,0 +1,186 @@
+/* Import Rubik and Carla */
+@import url('https://fonts.googleapis.com/css2?family=Karla:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,200;1,300;1,400;1,500;1,600;1,700;1,800&family=Rubik:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+/* 
+font-family: 'Karla', sans-serif;
+font-family: 'Rubik', sans-serif; 
+*/
+
+/* Font Settings */
+.karla-normal {
+    font-family: Karla !important;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 1rem;
+
+    color: #000000;
+}
+
+.karla-bold {
+    font-family: Karla !important;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 1rem;
+
+    color: #000000;
+}
+
+.rubik-normal {
+    font-family: Rubik !important;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 1rem;
+
+    color: #000000;
+}
+
+.rubik-bold {
+    font-family: Rubik !important;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 1rem;
+
+    color: #000000;
+}
+
+.drop-shadow-0-4-10 {
+    filter: drop-shadow(0px 4px 10px rgba(0, 0, 0, 0.25));
+}
+
+.color-green {
+    color: #08BF5B !important;
+}
+
+.color-red {
+    color: #ff726f;
+}
+
+.color-white {
+    color: #FFFFFF !important;
+}
+
+.background-green {
+    background: #08BF5B !important;
+    border: none;
+}
+
+.background-green:hover {
+    background: #079145 !important;
+}
+
+.border-green {
+    border-color: #08BF5B !important;
+}
+
+.border-green:hover {
+    background: #08BF5B !important;
+    color: #FFFFFF !important;
+}
+
+/*
+* {
+    padding: 0px;
+    margin: 0px;
+    box-sizing: border-box;
+}
+*/
+
+/* Add Background 
+html {
+    background: url(../images/background-trees.png) no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+*/
+
+/* Grid */
+.grid-container {
+    display: grid;
+    grid-template-areas: "left right";
+}
+
+.grid-left {
+    grid-area: left;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+
+    padding: 18px;
+}
+
+.grid-right {
+    grid-area: right;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+
+    padding: 18px;
+}
+
+.box-model {
+    padding: 40px;
+    margin: 64px 14% 64px 14%;
+}
+
+.box-model1 {
+    background: #F2F2F2;
+    border-radius: 16px;
+}
+
+.box-model2 {
+    border: 1px solid #4b4b4b;
+    border-radius: 16px;
+}
+
+nav {
+    transition: background-color 0.2s linear !important;
+}
+
+.solid-nav {
+    background-color: rgba(255, 255, 255, 0.8) !important;
+    transition: background-color 0.2s linear !important;
+}
+
+
+.status-declined {
+    color: red;
+}
+.status-canceled {
+    color: red;
+}
+
+.status-pending {
+    color: #B0A16A;
+;
+}
+
+.status-approved {
+    color: #08BF5B;
+}
+
+@media (max-width: 992px) {
+    .grid-container {
+        grid-template-areas:
+            "left"
+            "right";
+    }
+
+    .grid-container-reverse {
+        grid-template-areas:
+            "right"
+            "left";
+    }
+
+    .grid-left {
+        align-items: center;
+    }
+
+    .grid-right {
+        align-items: center;
+    }
+}

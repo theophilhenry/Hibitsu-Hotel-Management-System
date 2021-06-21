@@ -1,0 +1,102 @@
+
+/* || Book1 */
+.img-hotel {
+    border-radius: 16px;
+    width: 60vh;
+}
+
+.grid-book1 {
+    grid-template-columns : 1fr 1fr;
+}
+
+.grid-left img {
+    width: 100%;
+}
+
+/* || Book2 */
+.book-container {
+    text-align: center;
+}
+.villa-description {
+    margin: 0 auto;
+    width: 340px;
+    padding: 30px;
+}
+
+.villa-details {
+    width: 70%;
+    margin: 0 auto;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.25);
+}
+
+.information p {
+    margin: 0;
+    padding: 0;
+}
+
+.information {
+    margin-bottom: 30px;
+}
+
+.grid-container-more-left {
+    grid-template-areas: 'left left left right right';
+}
+
+
+.book-property {
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.25);
+}
+.book-check {
+    margin-left: 20px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.25);
+}
+
+/* || Book 3 */
+.client-order-container {
+    width: 70%;
+    margin: 0 auto;
+
+    background: #F2F2F2;
+}
+
+.client-order-card {
+    background: white;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.25);
+    padding: 20px;
+    width: 100%;
+
+    text-align: center;
+}
+
+@media (max-width: 992px) {
+    .grid-container-reverse {
+        grid-template-areas: 
+            'right'
+            'left'
+            ;
+    }
+
+    .grid-container {
+        grid-template-areas: 
+            'left'
+            'right'
+            ;
+    }
+
+    .grid-book1 {
+        grid-template-columns : auto auto;
+    }
+
+    .grid-left {
+        text-align: center;
+    }
+
+    .book-check {
+        margin-left: 0;
+        margin-bottom: 30px;
+    }
+
+    .img-hotel {
+        width: 100%;
+    }
+}
