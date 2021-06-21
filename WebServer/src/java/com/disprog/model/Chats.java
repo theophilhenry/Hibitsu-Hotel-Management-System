@@ -121,13 +121,10 @@ public class Chats extends DbConnection {
     }
 
     public String DisplayChat(String email_sender, String email_receiver) {
-        //ArrayList<String> listOfChat = new ArrayList<>();
-        String message = "";
         String grandHasil = "";
         System.out.println("Masuk DisplayChat 126");
         try {
             if (!connect.isClosed()) {
-                // set query
                 String query = "SELECT * FROM chats "
                         + "WHERE (idsender =(SELECT iduser FROM users where email=?) "
                         + "and idreceiver =(SELECT iduser FROM users where email=?)) "
@@ -136,8 +133,6 @@ public class Chats extends DbConnection {
                         + "ORDER BY cht_timestamp;";
                 // set preparedStatement
                 PreparedStatement sql = (PreparedStatement) connect.prepareStatement(query);
-
-                //set paramater
                 sql.setString(1, email_sender);
                 sql.setString(2, email_receiver);
                 sql.setString(3, email_receiver);
@@ -150,7 +145,6 @@ public class Chats extends DbConnection {
                             + ";;" +  result.getString("messages") + "||";
                     grandHasil += ket + hasil;
                 }
-               // connect.close();
                 return grandHasil;
             } else {
                 System.out.println("Tidak terkoneksi database");

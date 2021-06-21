@@ -122,14 +122,10 @@ public class Villas extends DbConnection {
     public String DisplayVillaAll() {
         try {
             if (!connect.isClosed()) {
-                //set query
                 String query = "SELECT `idvilla`,`name`,`description`,`url_photo` FROM `villas`";
-
-                //set preparedStatement
                 PreparedStatement sql = (PreparedStatement) connect.prepareStatement(query);
                 result = sql.executeQuery();
                 String grandResult = "";
-                //nanti mau diatur lagi return nya seperti apa
                 while (result.next()) {
                     String ket = "[1]idvilla,[2]name,[3]description,[4]url_photo;;";
                     String hasil = String.valueOf(result.getInt("idvilla")) + ";;"
@@ -154,17 +150,10 @@ public class Villas extends DbConnection {
             if (!connect.isClosed()) {
                 //set query
                 String query = "SELECT `idvilla`,`name`,`description`,`url_photo` FROM `villas`";
-
-                //set preparedStatement
                 PreparedStatement sql = (PreparedStatement) connect.prepareStatement(query);
                 result = sql.executeQuery();
                 String grandResult = "";
-                //nanti mau diatur lagi return nya seperti apa
                 while (result.next()) {
-//                    String hasil = String.valueOf(result.getInt("idvilla")) + ";;"
-//                            + result.getString("name") + ";;"
-//                            + result.getString("description") + ";;"
-//                            + result.getString("url_photo") + "||";
                     String hasil = ""
                             + "<div class='grid-container grid-book1 box-model box-model1' style='padding: 0'> "
                             + "<div class='grid-left' style='padding: 0'> "
@@ -197,13 +186,9 @@ public class Villas extends DbConnection {
             if (!connect.isClosed()) {
                 //set query
                 String query = "SELECT * FROM `villas` WHERE idvilla = ?";
-
-                //set preparedStatement
                 PreparedStatement sql = (PreparedStatement) connect.prepareStatement(query);
                 sql.setInt(1, idvilla);
                 result = sql.executeQuery();
-
-                //nanti mau diatur lagi return nya seperti apa
                 if (result.next()) {
                     String ket = "[1]hasilDisplayVillaId,[2]idvilla,[3]name,"
                             + "[4]address,[5]total_bedroom,[5]total_bathroom,"
@@ -238,25 +223,11 @@ public class Villas extends DbConnection {
             if (!connect.isClosed()) {
                 //set query
                 String query = "SELECT * FROM `villas` WHERE idvilla = ?";
-
-                //set preparedStatement
                 PreparedStatement sql = (PreparedStatement) connect.prepareStatement(query);
                 sql.setInt(1, idvilla);
                 result = sql.executeQuery();
-
-                //nanti mau diatur lagi return nya seperti apa
                 if (result.next()) {
                     String ket = "[1]Keterangan Hasil [2] DOM;;";
-//                    String hasil = String.valueOf(result.getInt("idvilla")) + ";;"
-//                            + result.getString("name") + ";;"
-//                            + result.getString("address") + ";;"
-//                            + String.valueOf(result.getInt("total_bedroom")) + ";;"
-//                            + String.valueOf(result.getInt("total_bathroom")) + ";;"
-//                            + result.getString("facilities") + ";;"
-//                            + result.getString("unit_size") + ";;"
-//                            + result.getString("url_photo") + ";;"
-//                            + String.valueOf(result.getInt("price")) + ";;"
-//                            + result.getString("description") + ";;";
                     String hasil = ""
                             + "            <img src='" + result.getString("url_photo") + "' class='img-hotel' alt='Foto Hotel'>"
                             + "            <div class='villa-description'> "

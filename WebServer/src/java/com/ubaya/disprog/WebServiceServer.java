@@ -129,7 +129,6 @@ public class WebServiceServer extends DbConnection {
     public String TrackOrder2(@WebParam(name = "idreservation") Integer idreservation) {
         String result = model_Reservation.TrackOrderBook3(idreservation);
         return result;
-        //belum di code
     }
 
     //[TRACKORDER]
@@ -137,7 +136,6 @@ public class WebServiceServer extends DbConnection {
     public String TrackOrder1(@WebParam(name = "idreservation") Integer idreservation) {
         String result = model_Reservation.TrackOrderMainWeb(idreservation);
         return result;
-        //belum di code
     }
 
     //[UPLOADPAYMENT]

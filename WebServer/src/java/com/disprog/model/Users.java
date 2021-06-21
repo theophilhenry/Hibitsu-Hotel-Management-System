@@ -113,20 +113,13 @@ public class Users extends DbConnection {
     public String LoginClient(String email, String password) {
         try {
             if (!connect.isClosed()) {
-                //set query
                 String query = "SELECT `iduser`,`fullname`,`display_name`,`email`"
                         + "FROM `users` WHERE `email`= ? AND `password`= ? AND `role`='CLIENT'";
-
-                //set preparedStatement
                 PreparedStatement sql = (PreparedStatement) connect.prepareStatement(query);
-
-                //set paramater
                 sql.setString(1, email);
                 sql.setString(2, password);
-
+                
                 result = sql.executeQuery();
-
-                //nanti mau diatur lagi return nya seperti apa
                 if (result.next()) {
                     String ket = "[1]hasilLoginClient,[2]iduser,[3]fullname,[4]display_name,[5]email,[6]role;;";
                     String hasil = result.getInt("iduser") + ";;"
@@ -151,20 +144,13 @@ public class Users extends DbConnection {
     public String LoginAdmin(String email, String password) {
         try {
             if (!connect.isClosed()) {
-                //set query
                 String query = "SELECT * "
                         + "FROM `users` WHERE `email`= ? AND `password`= ? AND `role`='ADMIN'";
-
-                //set preparedStatement
                 PreparedStatement sql = (PreparedStatement) connect.prepareStatement(query);
-
-                //set paramater
                 sql.setString(1, email);
                 sql.setString(2, password);
-
+                
                 result = sql.executeQuery();
-
-                //nanti mau diatur lagi return nya seperti apa
                 String ket = "[1]hasilLoginAdmin;;";
                 if (result.next()) {
                     return ket + "true;;";
@@ -180,17 +166,14 @@ public class Users extends DbConnection {
         return null;
     }
 
-    public String Registration(String fullname, String display_name, String phoneNumber, String email, String password, String no_ktp) {
+    public String Registration(String fullname, String display_name, String phoneNumber, 
+            String email, String password, String no_ktp) {
         try {
             if (!connect.isClosed()) {
-                // set query
-                String query = "INSERT INTO users(`fullname`,`display_name`,`phone_number`,`email`,`password`,`no_ktp`) "
+                String query = "INSERT INTO users(`fullname`,`display_name`,"
+                        + "`phone_number`,`email`,`password`,`no_ktp`) "
                         + "VALUES(?,?,?,?,?,?)";
-
-                // set preparedStatement
                 PreparedStatement sql = (PreparedStatement) connect.prepareStatement(query);
-
-                //set paramater
                 sql.setString(1, fullname);
                 sql.setString(2, display_name);
                 sql.setString(3, phoneNumber);
@@ -219,15 +202,13 @@ public class Users extends DbConnection {
     public String DisplayAllClient() {
         try {
             if (!connect.isClosed()) {
-                //set query
                 String query = "SELECT * "
                         + "FROM `users` WHERE `role`='CLIENT'";
                 //set preparedStatement
                 PreparedStatement sql = (PreparedStatement) connect.prepareStatement(query);
                 result = sql.executeQuery();
-
-                //nanti mau diatur lagi return nya seperti apa
-                String ket = "[1]hasilDisplayClient,[2]fullname,[3]display_name,[4]phone_number,[5]email,[6]no_ktp;;";
+                String ket = "[1]hasilDisplayClient,[2]fullname,[3]display_name,"
+                        + "[4]phone_number,[5]email,[6]no_ktp;;";
                 String hasil = "";
                 while (result.next()) {
                     hasil = hasil + ket + String.valueOf(result.getInt("iduser")) + ";;"
@@ -253,16 +234,13 @@ public class Users extends DbConnection {
                 //set query
                 String query = "SELECT * "
                         + "FROM `users` WHERE `role`='CLIENT' and `email`=?";
-                //set preparedStatement
                 PreparedStatement sql = (PreparedStatement) connect.prepareStatement(query);
                 sql.setString(1, email);
 
                 result = sql.executeQuery();
-                //nanti mau diatur lagi return nya seperti apa
-
-                String hasil = "";
                 if (result.next()) {
-                    String ket = "[1]hasilDisplayClient,[2]fullname,[3]display_name,[4]phone_number,[5]email,[6]no_ktp;;";
+                    String ket = "[1]hasilDisplayClient,[2]fullname,[3]display_name,"
+                            + "[4]phone_number,[5]email,[6]no_ktp;;";
                     return ket + String.valueOf(result.getInt("iduser")) + ";;"
                             + result.getString("fullname") + ";;"
                             + result.getString("display_name") + ";;"
