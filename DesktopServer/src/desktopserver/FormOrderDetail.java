@@ -148,7 +148,7 @@ public class FormOrderDetail extends javax.swing.JFrame {
         textTotalPrice = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setLocation(new java.awt.Point(600, 150));
 
         labelOrderDetailId.setFont(new java.awt.Font("Rubik", 1, 24)); // NOI18N
@@ -170,18 +170,22 @@ public class FormOrderDetail extends javax.swing.JFrame {
         });
 
         textEmail.setFont(new java.awt.Font("Rubik", 0, 14)); // NOI18N
+        textEmail.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         textEmail.setEnabled(false);
 
         jLabel3.setFont(new java.awt.Font("Rubik", 0, 14)); // NOI18N
+        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel3.setText("Email");
 
         jLabel4.setFont(new java.awt.Font("Rubik", 0, 14)); // NOI18N
+        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel4.setText("Villa Type");
 
         comboBoxVillaType.setFont(new java.awt.Font("Rubik", 0, 14)); // NOI18N
         comboBoxVillaType.setEnabled(false);
 
         jLabel5.setFont(new java.awt.Font("Rubik", 0, 14)); // NOI18N
+        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel5.setText("Check In");
 
         dateCheckIn.setBackground(java.awt.Color.white);
@@ -189,6 +193,7 @@ public class FormOrderDetail extends javax.swing.JFrame {
         dateCheckIn.setEnabled(false);
 
         jLabel6.setFont(new java.awt.Font("Rubik", 0, 14)); // NOI18N
+        jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel6.setText("Check Out");
 
         dateCheckOut.setBackground(java.awt.Color.white);
@@ -196,17 +201,20 @@ public class FormOrderDetail extends javax.swing.JFrame {
         dateCheckOut.setEnabled(false);
 
         jLabel7.setFont(new java.awt.Font("Rubik", 0, 14)); // NOI18N
+        jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel7.setText("Total Guests");
 
         textTotalGuest.setBackground(java.awt.Color.white);
         textTotalGuest.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
 
         jLabel8.setFont(new java.awt.Font("Rubik", 0, 14)); // NOI18N
+        jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel8.setText("Notes");
 
         textNotes.setFont(new java.awt.Font("Rubik", 0, 14)); // NOI18N
 
         jLabel9.setFont(new java.awt.Font("Rubik", 0, 14)); // NOI18N
+        jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel9.setText("STATUS");
 
         comboBoxStatus.setFont(new java.awt.Font("Rubik", 0, 14)); // NOI18N
@@ -246,6 +254,7 @@ public class FormOrderDetail extends javax.swing.JFrame {
         textTotalPrice.setEnabled(false);
 
         jLabel11.setFont(new java.awt.Font("Rubik", 0, 14)); // NOI18N
+        jLabel11.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel11.setText("Total Price ");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());

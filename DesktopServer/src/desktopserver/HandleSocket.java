@@ -75,6 +75,7 @@ public class HandleSocket extends Thread{
                             + "Jika ingin berbicara dengan saya(BotChat),\nanda dapat melakukannya dengan memilih salah satu angka dari opsi di bawah :\n" 
                             + "1) Reservasi\n" 
                             + "2) Track Order Booking\n";
+                    
                     String historyChat =  parent.TampilChat(email, parent.emailAdmin,"client");
                     
                     

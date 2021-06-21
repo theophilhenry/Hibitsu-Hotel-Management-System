@@ -798,10 +798,18 @@ public class FormDashboard extends javax.swing.JFrame implements Runnable {
         String historyChat = TampilChat(emailAdmin, emailDest, "admin");
 
         textArea.setText("");
-
-        textArea.append(historyChat + "\n");
-        textArea.append("----------------------Chat Sebelumnya-----------------------\n\n");
-        ScrollDown();
+       
+        if (historyChat.equals("false")) 
+        {
+            textArea.append("----------------------This is a New Client-----------------------\n\n");
+        }
+        else
+        {
+            textArea.append(historyChat + "\n");
+            textArea.append("----------------------Chat Sebelumnya-----------------------\n\n");
+            ScrollDown();
+        }
+        
 
         for (HandleSocket client : clientsArr) {
 
