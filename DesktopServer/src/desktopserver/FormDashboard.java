@@ -840,7 +840,7 @@ public class FormDashboard extends javax.swing.JFrame implements Runnable {
         if (arr2[1].equals("true")) {
             status = "Villa Tersedia untuk Pemesanan";
         } else if (arr2[1].equals("false")) {
-            status = "Villa Tidak Tersedia";
+            status = "Mohon Maaf, Villa Tidak Tersedia";
         } else {
             status = arr2[1];
         }
@@ -873,19 +873,17 @@ public class FormDashboard extends javax.swing.JFrame implements Runnable {
             String status = "";
 
             if (arr2[1].equals("true")) {
-                status = "Villa berhasil dibooking";
-                //SendChatToOne(status + "\n Id Nota adalah  " + arr2[2]);
-                //textArea.append("Admin : " + status + "\nAdmin : Id Nota adalah  " + arr2[2] + "\n");
-                //SimpanChat(emailAdmin, emailClient, status);
-                //SimpanChat(emailAdmin, emailClient, "Id Nota adalah  " + arr2[2]);
+                status = "Villa berhasil dibooking " + "\nOrder ID : " + arr2[2];
+               
             } else if (arr2[1].equals("false")) {
-                status = "Mohon maaf, villa Tidak Tersedia";
+                status = "Mohon Maaf, Villa Tidak Tersedia";
                 //SendChatToOne(status);
             } else {
                 status = arr2[1];
             }
             TampilReservasi("", "");
-            JOptionPane.showMessageDialog(null, status + "\nOrder ID : " + arr2[2]);
+            
+            JOptionPane.showMessageDialog(null, status);
             
         }
         
